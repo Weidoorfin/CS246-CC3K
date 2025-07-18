@@ -1,9 +1,14 @@
 export module entity;
 
 import position;
+import subject;
 
-export class Entity {
-    Position position;
+export class Entity: public Subject {
+    char Symbol;
+    int Colour;
+  protected:
+    Position Pos;
   public:
-    Position getPos();
+    char getSymbol() const;
+    int getColour() const;
 };
