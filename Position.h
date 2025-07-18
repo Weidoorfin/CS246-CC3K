@@ -4,6 +4,6 @@ export class Position {
     int x, y;
   public:
     Position(int x, int y);
-    Position getPos();
+    Position getPos() const;
     ~Position();
 };
