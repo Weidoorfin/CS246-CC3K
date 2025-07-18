@@ -2,15 +2,16 @@ export module game;
 
 // import syslibs here
 import <vector>;
+import <memory>;
 // import module here
-import observer;
+import floor;
 import player;
 import enums;
 
-export class Game: public Subject {
+export class Game{
     int currFloor;
-    vector<Floor> floor(5);
-    Player player;
+    unique_ptr<Floor> floor;
+    unique_ptr<Player> player;
 
   public:
     void run(PlayerRace race);
