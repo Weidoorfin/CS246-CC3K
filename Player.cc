@@ -1,4 +1,4 @@
-export module player
+export module player;
 
 import enums;
 
