@@ -1,8 +1,8 @@
-// export module chamber;
+export module chamber;
 
-// import <vector>;
+import <vector>;
 
-// import position;
+import position;
 
 #ifndef CHAMBER_H
 #define CHAMBER_H

@@ -22,7 +22,7 @@ int main() {
         // ... further complete
         string choice;
         cin >> choice;
-    }
+    } // while
 
     return 0;
 } // main
