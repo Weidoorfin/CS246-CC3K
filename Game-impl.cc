@@ -27,11 +27,8 @@ void Game::run() {
             floor->attach(td);
             floor->init(); 
         }
-
-        if (!player->isAlive()) {
-            endGame();  // If player is dead, end the game
-        }
     }
+    endGame();
 }
 
 void Game::endGame() {
