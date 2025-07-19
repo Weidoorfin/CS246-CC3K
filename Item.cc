@@ -5,8 +5,8 @@ import entity;
 
 export class Item: public Entity {
   public:
-    virtual void use();
-    virtual unique_ptr<Item> RandomPotion();
-    virtual unique_ptr<Item> RandomTreasure();
+    void use();
+    // virtual unique_ptr<Item> RandomPotion();
+    // virtual unique_ptr<Item> RandomTreasure();
 };
 

@@ -4,12 +4,15 @@ import entity;
 import enums;
 
 export class Character: public Entity {
+    int MaxHP, Atk, Def;
   protected:
-    int CurrentHP, MaxHP, Atk, Def;
+    int CurrentHP;
   public:
-    virtual void Attack(Direction dir) = 0;
-    virtual void Defence(Direction dir) = 0;
-    virtual void onHit(Character &whoFrom) = 0;
-    virtual void Move(Direction dir);
-    virtual bool isAlive() const = 0;
+    int getAtk();
+    int getDef();
+    int getMaxHP();
+    void move(Direction dir);
+    bool isAlive();
+    void onHit(Character &whoFrom);
+    virtual ~Character() = 0;
 };
