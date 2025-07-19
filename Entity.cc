@@ -1,23 +1,16 @@
-// export module entity;
+export module entity;
 
-// import position;
-// import subject;
-
-#ifndef ENTITY_H
-#define ENTITY_H
-
-#include "Position.h"
-#include "Subject.h"
+import position;
+import subject;
 
 export class Entity: public Subject {
     char Symbol;
     int Colour;
   protected:
+    // characters need to change their posiiton
     Position Pos;
   public:
     char getSymbol() const;
     int getColour() const;
+    virtual ~Entity() = 0;
 };
-
-#endif
-

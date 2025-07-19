@@ -1,13 +1,12 @@
-export module display;
+export module TextDisplay;
 
 import <iostream>;
 import <vector>;
-
 import subject;
 
-export class Display: public Subject {
+export class Display: public Observer {
     Subject* entity;
-    vector<vector<char>> Grid;
+    std::vector<std::vector<char>> grid;
   public:
     void render();
     void notify();
