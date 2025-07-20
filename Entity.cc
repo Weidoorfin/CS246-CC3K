@@ -7,7 +7,7 @@ export class Entity: public Subject {
     char symbol;
     int colour;
   protected:
-    // characters need to change their posiiton
+    // characters need to change their position
     Position pos;
   public:
     char getSymbol() const;

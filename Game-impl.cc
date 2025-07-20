@@ -1,8 +1,5 @@
 module game;
 
-import <iostream>;
-import textdisplay;
-
 void Game::init() {
     currFloor = 1;
     td->startgame();
@@ -13,6 +10,7 @@ void Game::init() {
     td = std::make_unique<TextDisplay>(); 
     flor->attach(td);
     floor->init(); // initialize floor, spawning enemy and items, attach textdisplay
+    Merchant::hostile = false; // Merchant starts as non-hostile
 }
 
 void Game::run() {

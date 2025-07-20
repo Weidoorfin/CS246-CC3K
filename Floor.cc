@@ -8,7 +8,7 @@ import item;
 import position;
 import subject;
 
-export class Floor : public Subject {
+export class Floor : public Subject, public Observer {
     Position stair;
     bool complete;
     int level;
