@@ -1,5 +1,7 @@
 module game;
 
+import merchant;
+
 void Game::init() {
     currFloor = 1;
     cout << "Chamber Crawler 3000 (CC3K)!" << endl;
@@ -12,6 +14,7 @@ void Game::init() {
     td = std::make_unique<TextDisplay>(); 
     flor->attach(td);
     floor->init(); // initialize floor, spawning enemy and items, attach textdisplay
+    Merchant::hostile = false; // Merchant starts as non-hostile
 }
 
 void Game::run() {
