@@ -1,14 +1,15 @@
 module game;
 
+import <iostream>;
+import textdisplay;
+
 void Game::init() {
     currFloor = 1;
-    cout << "Chamber Crawler 3000 (CC3K)!" << endl;
-    cout << "Please select your Race to start" << endl;
+    td->startgame();
+    // TODO: read in first floor from emptyfloor.txt
+    player = std::make_unique<Player>(PlayerRace::Shade);
     // Initialize floor, player, and display
     floor = std::make_unique<Floor>(); 
-    // TODO: read in first floor from emptyfloor.txt
-
-    player = std::make_unique<Player>(PlayerRace::Shade);  
     td = std::make_unique<TextDisplay>(); 
     flor->attach(td);
     floor->init(); // initialize floor, spawning enemy and items, attach textdisplay
