@@ -8,7 +8,7 @@ import position;
 import chamber;
 
 export class Enemy: public Character, public Observer {
-    EnemyType Type;
+    EnemyType type;
   public:
     virtual void automove() = 0;
     virtual int dropGold() = 0;
