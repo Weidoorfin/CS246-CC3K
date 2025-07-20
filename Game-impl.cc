@@ -1,13 +1,19 @@
 module game;
 
+import <iostream>;
+import <memory>;
+
 import enums;
+import floor;
+import player;
+import textdisplay;
 
 void Game::init() {
     currFloor = 1;
     PlayerRace Race;
     td = std::make_unique<TextDisplay>(); 
     td->intro();
-    while (true) {
+    while (!player) {
         using namespace std;
         cout << "Please choose your race:" << endl;
         string raceChoice;
@@ -74,6 +80,7 @@ void Game::init() {
                 return; // Exit the game
             default:
                 cout << "Invalid choice. Please choose a valid race." << endl;
+                break; // Continue
         }
     }
     // Initialize the display grid or any other setup needed
