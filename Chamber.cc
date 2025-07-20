@@ -10,6 +10,5 @@ class Chamber {
     bool contains(Position pos) const;
     Position getRamdomFloorTile() const;
     bool isFloorTile(Position pos) const;
-    void tilevalid(Position pos) const; // returns true if the tile is an valid tile
 };
 

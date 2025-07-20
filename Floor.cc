@@ -16,6 +16,9 @@ export class Floor : public Subject, public Observer {
     vector<Enemy> enemies;
     vector<Item> items;
  public:
+    Floor() = default; // Default constructor
+    Floor(const Floor&) = delete; // Disable copy constructor
+    Floor& operator=(const Floor&) = delete; // Disable copy assignment operator
     void isComplete();
     void init();
 };

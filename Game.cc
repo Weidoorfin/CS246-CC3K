@@ -17,6 +17,7 @@ export class Game {
     unique_ptr<TextDisplay> td;
   public:
     Game() = default; // default constructor, creating the default game object
+    Game(std::istream &is){} // constructor with input stream, reading the floor from file
     void init(); // initializing the game
     void run();
     void setDisplay();
