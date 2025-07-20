@@ -25,6 +25,13 @@ Vampire::Vampire() : Player(PlayerRace::VAMPIRE) {
 // (50 HP, 25 Atk, 25 Def, gains 5 HP every successful attack and has no maximum HP) 
 // override onHit() and attack() behavior so it doesn't clamp HP increases.
 
+void Vampire::gainHP(int inc) {
+    currentHP += inc;
+}
+
+
+
+
 Goblin::Goblin() : Player(PlayerRace::GOBLIN) {
     maxHP = 110;
     atk = 15;

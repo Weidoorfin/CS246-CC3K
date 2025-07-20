@@ -1,6 +1,7 @@
 export module enemyfactory;
 
 import enemy;
+import concreteenemies;
 import chamber;
 import enums;
 import player;

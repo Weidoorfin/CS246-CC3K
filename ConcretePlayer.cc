@@ -19,6 +19,7 @@ export class Vampire : public Player {
 public:
     Vampire();
     ~Vampire() = default;
+    void gainHP(int inc) override;
 };
 
 export class Goblin : public Player {

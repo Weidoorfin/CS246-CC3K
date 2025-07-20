@@ -17,5 +17,8 @@ export class Player: public Character {
     void gainGold(int amount);
     virtual void onKill();
     virtual void onTurn(); // e.g. troll regenerates HP (default no-op)
+    void loseHP(int dec);
+    virtual void gainHP(int inc);
+
     
 };
