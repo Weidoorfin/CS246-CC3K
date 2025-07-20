@@ -1,18 +1,14 @@
-// syslibs
-import <iostream>;
-import <string>;
+// main.cc
+// This file is part of CC3K, a C++ roguelike game.
 
-// modules
 import game;
-import playerfactory;
 import display;
-import enums;
 
 using namespace std;
 
 int main() {
     Game g;
     g.setDisplay();
-    g.run();
+    g.init();
     return 0;
 } // main

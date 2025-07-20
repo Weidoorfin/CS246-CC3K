@@ -12,5 +12,5 @@ export class Display: public Observer {
   public:
     void render();
     void notify();
-    void startgame();
+    void intro();
 }
