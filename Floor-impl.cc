@@ -3,9 +3,26 @@ module floor;
 import <fstream>;
 import <vector>;
 
+import enums;
+
 void Floor::getEmptyMap(std::istream &is) {
     // Implementation for reading an empty map from the input stream
     // This will populate the grid and tileTypes with initial values
+    string line;
+    while (getline(is, line)) {
+        vector<TileType> row;
+        for (char c : line) {
+            switch (c) {
+                case '-': row.push_back(TileType::HorizontalWall); break;
+                case '|': row.push_back(TileType::VerticalWall); break;
+                case '.': row.push_back(TileType::Floor); break;
+                case '+': row.push_back(TileType::Door); break;
+                case '#': row.push_back(TileType::Corridor); break;
+                default: row.push_back(TileType::Nothing); break;
+            }
+        }
+        tileTypes.push_back(row);
+    }
 }
 
 void Floor::GenerateStairs() {
@@ -20,8 +37,34 @@ void Floor::GeneratePlayer() {
     // Implementation for generating the player on the floor
 }
 
+void Floor::readFromStream(std::istream &is) {
+    string line;
+    while (getline(is, line)) {
+        vector<TileType> row;
+        for (char c : line) {
+            switch (c) {
+                case '-': row.push_back(TileType::HorizontalWall); break;
+                case '|': row.push_back(TileType::VerticalWall); break;
+                case '.': row.push_back(TileType::Floor); break;
+                case '+': row.push_back(TileType::Door); break;
+                case '#': row.push_back(TileType::Corridor); break;
+                case '/': 
+                    row.push_back(TileType::Stair);
+                    stairs.push_back(Position{row.size(),TileType.size()});
+                    break;
+                // Handle generated entities
+                case 
+
+                default: row.push_back(TileType::Nothing); break;
+            }
+        }
+        tileTypes.push_back(row);
+    }
+}
+
 Floor::Floor(){
     // Initialize the grid with empty chambers
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
     GenerateStairs();
@@ -31,11 +74,13 @@ Floor::Floor(){
 }
 
 Floor::Floor(std::istream &is) {
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     readFromStream(is);
     notifyObservers(); // Notify observers that the floor has been initialized
 }
 
 Floor::Floor(std::istream &is, int seed) {
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     readFromStream(is);
     // Set the random seed for the floor
     notifyObservers(); // Notify observers that the floor has been initialized
