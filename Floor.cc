@@ -11,9 +11,8 @@ import abstractos;
 export class Floor : public Subject, public Observer {
     Position stair;
     bool complete;
-    vector<Chamber> chambers;
-    EnemyEngine enemyEngine;
-    vector<Item> items;
+    vector<vector<Entity>> grid; // 2D grid of entities on the floor
+
  public:
     Floor() = default; // Default constructor
     Floor(std::istream &is); // Constructor to read from input stream

@@ -5,13 +5,8 @@ import character;
 import position;
 
 export class Enemy: public Character {
-    EnemyType type;
-    void randomMove();
-    bool isInRange(Position pos) const;
-    void attack(); // auto attack the player, if player is in range
+    EnemyType type; 
   public:
-    Enemy(EnemyType type, int maxHP, int atk, int def);
-    virtual void update(); // update enemy state based on player's position, has a default implementation
+    Enemy(EnemyType type, int maxHP, int atk, int def, char symbol, int colour, Position pos);
     virtual ~Enemy() = default; // default destructor
 };
-

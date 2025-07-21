@@ -8,14 +8,13 @@ export class Character: public Entity {
   protected:
     int currentHP;
   public:
-    Character(int maxHP, int atk, int def);
+    Character(int maxHP, int atk, int def, char symbol, int colour, Position pos);
     virtual ~Character() = 0;
     virtual int getAtk() const;
     virtual int getDef() const;
     virtual int getMaxHP() const;
     bool isAlive() const;
-    bool move(Direction dir); // will return false if the move is invalid, and will not move the character
-
-    // virtual because some enemy need to override onHit to add custom logic
-    virtual void onHit(Character &whoFrom);
+    virtual bool move(Direction dir); // will return false if the move is invalid, and will not move the character
+    virtual void attack(Character &target); // Handle the attack logic
+    virtual void onHit(Character &whoFrom); // Handle the hit logic
 };

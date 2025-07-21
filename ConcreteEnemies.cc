@@ -4,45 +4,47 @@ import enemy;
 import enums;
 
 export class Human : public Enemy {
- public:
-    Human();
+  public:
+    Human(Position pos);
     ~Human();
 }
 
 export class Dwarf : public Enemy {
- public:
-    Dwarf();
+  public:
+    Dwarf(Position pos);
     ~Dwarf();
 }
 
 export class Elf : public Enemy {
- public:
-    Elf();
+  public:
+    Elf(Position pos);
     ~Elf();
 }
 
 export class Orc : public Enemy {
- public:
-    Orc();
+  public:
+    Orc(Position pos);
     ~Orc();
 }
 
 export class Merchant : public Enemy {
- public:
+  public:
     inline static bool hostile = false; // Merchant's global hostile state
-    Merchant();
+    Merchant(Position pos);
     ~Merchant();
     void onHit(Character &whoFrom) override; // Override onHit to handle hostile
+    void attack(Character &target) override; // override attack to only attack if hostile
 }
 
 export class Dragon : public Enemy {
- public:
-    Dragon();
+  public:
+    Dragon(Position pos);
     ~Dragon();
+    void move(Direction dir) override; // Override move to do nothing
 }
 
 export class Halfling : public Enemy {
- public:
-    Halfling();
+  public:
+    Halfling(Position pos);
     ~Halfling();
 }

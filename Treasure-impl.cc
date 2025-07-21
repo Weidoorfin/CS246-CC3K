@@ -1,8 +1,13 @@
 module treasure;
 
 import item;
+import entity;
+import player;
+import enums;
 
-Treasure::Treasure(int value) : value{value} {}
+Treasure::Treasure(int value) : value{value} {
+    entity = EntityType::TREASURE; // Set the entity type to TREASURE
+}
 
 int Treasure::getValue() const {
     return value;

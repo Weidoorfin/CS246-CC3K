@@ -148,7 +148,7 @@ GameState Game::run() {
             iss >> command; // Get the target direction for attack
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                player->attack(dir);
+                player->attack(dir); // attack(Enemy &enemy);
             } else {
                 std::cout << "Invalid direction for attack." << std::endl;
             }
@@ -156,7 +156,7 @@ GameState Game::run() {
             iss >> command; // Get the target direction for use item
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                player->useItem(dir); // player->useItem(Direction, PotionType);
+                player->useItem(dir); // player->useItem(ItemType);
                 
             } else {
                 std::cout << "Invalid direction for use item." << std::endl;

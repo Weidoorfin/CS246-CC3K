@@ -2,14 +2,15 @@ module character;
 
 import <cmath>;
 import position;
+import entity;
 import enums;
 
-Character::Character(int maxHP, int atk, int def)
-    : maxHP{maxHP}, atk{atk}, def{def} {}
+Character::Character(int maxHP, int atk, int def, char symbol, int colour, Position pos)
+    : Entity{symbol, colour, pos}, maxHP{maxHP}, atk{atk}, def{def}, currentHP{maxHP} {}
 int Character::getAtk() const { return atk; }
 int Character::getDef() const { return def; }
 int Character::getMaxHP() const { return maxHP; }
-bool Character::isAlive() const { return currentHP >= 0; }
+bool Character::isAlive() const { return currentHP > 0; }
 
 void Character::move(Direction dir) {
     // assumes the new direction is valid
@@ -40,13 +41,17 @@ void Character::move(Direction dir) {
     }
 }
 
+void Character::attack(Character &target) {
+    // Implements basic attack logic
+    target.onHit(*this);
+}
+
 void Character::onHit(Character &whoFrom) {
-    // Implement the logic for handling a hit from another character
+    // Implements basic hit logic
     int damage = ceil((100 / (100 + getDef())) * whoFrom.getAtk());
     if (damage < currentHP) {
         currentHP -= damage;
     } else {
         currentHP = 0; // Character dies
     }
-    notifyObservers();
 }

@@ -6,7 +6,7 @@ export class Treasure : public Item {
 protected:
     int value; // Amount of gold this treasure is worth
 public:
-    Treasure(int value);
+    explicit Treasure(int value);
     int getValue() const;
     std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
     virtual ~Treasure() = default;

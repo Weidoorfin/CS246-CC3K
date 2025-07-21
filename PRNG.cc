@@ -36,3 +36,4 @@ public:
         return operator()(u - l) + l;
     }
 };
+

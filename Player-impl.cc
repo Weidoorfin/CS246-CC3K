@@ -1,6 +1,13 @@
 module player;
 
-Player::Player(PlayerRace race) : Race{race}, Gold{0} {}
+import <cmath>;
+import enums;
+import entity;
+
+Player::Player(PlayerRace race, int maxHP, int atk, int def, Position pos)
+    : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
+    entity = EntityType::PLAYER;
+}
 
 PlayerRace Player::getRace() const {
     return Race;
@@ -24,6 +31,8 @@ void Player::onKill(Character &enemy) {}
 
 void Player::onTurn() {}
 
+void Player::onKill() {}
+
 void Player::loseHP(int dec) {
     if (currentHP - dec >= 0) {
         currentHP -= dec;
@@ -40,4 +49,21 @@ void Player::gainHP(int inc) {
     }
 }
 
+void Player::attack(Character &target) {
+    target.onHit(*this);
+    if( !target.isAlive()) {
+        onKill();
+    }
+}
 
+void Player::onHit(Character &whoFrom) {
+    int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
+    loseHP(damage);
+}
+
+void Player::useItem(Item &item) {
+    auto newPlayer = item.applyEffect(std::make_unique<Player>(*this));
+    if (newPlayer) {
+        *this = *newPlayer;
+    }
+}
