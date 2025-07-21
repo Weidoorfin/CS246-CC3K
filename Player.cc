@@ -13,7 +13,7 @@ export class Player: public Character {
     virtual ~Player() = default;
     PlayerRace getRace() const;
     virtual int getGold() const;
-    virtual int getTotGold() const;  // return amount of gold obtained in total
+    virtual double getScore() const;
     void gainGold(int amount);
     virtual void onKill();
     virtual void onTurn(); // e.g. troll regenerates HP (default no-op)

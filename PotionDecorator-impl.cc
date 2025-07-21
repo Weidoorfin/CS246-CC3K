@@ -21,7 +21,6 @@ std::unique_ptr<Player> PotionDecorator::reset() {
     return base->reset();
 }
 
-std::unique_ptr<Player> PotionDecorator::usePotion(const Potion &potion) {
-    auto wrapped = base->usePotion(potion);
-    return std::make_unique<PotionDecorator>(std::move(wrapped));
+std::unique_ptr<Player> PotionDecorator::applyEffect(std::unique_ptr<Player> player) const {
+    return std::make_unique<PotionDecorator>(std::move(player));
 }

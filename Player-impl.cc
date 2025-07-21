@@ -14,6 +14,10 @@ void Player::gainGold(int amount) {
     Gold += amount;
 }
 
+double Player::getScore() const {
+    return Gold;
+}
+
 // Default onKill does nothing, subclasses override if needed
 void Player::onKill(Character &enemy) {}
 

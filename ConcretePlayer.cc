@@ -7,10 +7,7 @@ export class Shade: public Player {
 public:
     Shade();
     ~Shade() = default; 
-    std::unique_ptr<Player> Shade::reset() {
-    return std::make_unique<Shade>(*this);
-}
-
+    double getScore() const override;
 };
 
 export class Drow: public Player {

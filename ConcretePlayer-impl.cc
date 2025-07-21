@@ -9,8 +9,8 @@ Shade::Shade() : Player{PlayerRace::SHADE} {
     currentHP = maxHP;
 }
 
-std::unique_ptr<Player> Shade::reset() {
-    return std::make_unique<Shade>(*this);
+double Shade::getScore() const {
+    return Gold * 1.5; 
 }
 
 Drow::Drow() : Player{PlayerRace::DROW} {
