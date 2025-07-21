@@ -12,10 +12,11 @@ int Player::getGold() const {
 
 void Player::gainGold(int amount) {
     Gold += amount;
+    totGold += amount;
 }
 
 double Player::getScore() const {
-    return Gold;
+    return totGold;
 }
 
 // Default onKill does nothing, subclasses override if needed

@@ -10,7 +10,7 @@ Shade::Shade() : Player{PlayerRace::SHADE} {
 }
 
 double Shade::getScore() const {
-    return Gold * 1.5; 
+    return totGold * 1.5; 
 }
 
 Drow::Drow() : Player{PlayerRace::DROW} {
