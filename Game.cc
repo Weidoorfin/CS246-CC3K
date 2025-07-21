@@ -12,7 +12,6 @@ const int MAXFLOOR = 5;
 
 export class Game {
     int currFloor;
-    int seed;
     vector<unique_ptr<Floor>> floors; // owns-a
     unique_ptr<Player> player;
     unique_ptr<TextDisplay> td;

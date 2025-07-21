@@ -8,7 +8,19 @@ import floor;
 import player;
 import textdisplay;
 
-void Game::init() {
+Game::Game(std::istream &is) {
+    for (int i = 0; i < MAXFLOOR; ++i) {
+        floors.push_back(std::make_unique<Floor>(is));
+    }
+}
+
+Game::Game(const std::string &filename, int seed) {
+    for (int i = 0; i < MAXFLOOR; ++i) {
+        floors.push_back(std::make_unique<Floor>(is));
+    }
+}
+
+bool Game::init() {
     currFloor = 1;
     PlayerRace Race;
     td = std::make_unique<TextDisplay>(); 
@@ -86,9 +98,6 @@ void Game::init() {
     // Initialize the display grid or any other setup needed
     // TODO: read in first floor from emptyfloor.txt
     player = std::make_unique<Player>(Race);
-    // Initialize floor, player, and display
-    floor = std::make_unique<Floor>();
-    game.run(); // Start the game loop
 }
 
 void Game::run() {
