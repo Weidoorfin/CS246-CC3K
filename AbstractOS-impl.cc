@@ -1,8 +1,7 @@
-module subject;
+module abstractos;
 
 import <vector>;
 import <algorithm>;
-import observer;
 
 Subject::attach(Observer *o) {
     observers.push_back(o);

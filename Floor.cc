@@ -6,7 +6,7 @@ import chamber;
 import enemy;
 import item;
 import position;
-import subject;
+import abstractos;
 
 export class Floor : public Subject, public Observer {
     Position stair;

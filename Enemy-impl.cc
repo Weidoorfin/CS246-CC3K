@@ -4,10 +4,11 @@ import <random>;
 import <algorithm>;
 import <chrono>;
 import <vector>;
+import <cstdint>;
 import enums;
 import character;
 import player;
-
+import PRNG;
 
 // Helper function to generate a random array of unique directions
 // this random array can be used in randomMove to try moving in a random direction
@@ -18,9 +19,11 @@ vector<Direction> genDirections() {
         Direction::S, Direction::SW, Direction::W, Direction::NW
     };
     // default time-based seed
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    uint32_t seed = std::chrono::system_clock::now().time_since_epoch().count();
     // TODO: set seed to global seed variable if it exists
-
+    if (global_seed != 0) {
+        seed = global_seed;
+    }
     std::default_random_engine rng{seed};
     std::shuffle(directions.begin(), directions.end(), rng);
     return directions; // return a random direction

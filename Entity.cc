@@ -1,7 +1,7 @@
 export module entity;
 
 import position;
-import subject;
+import abstractos;
 
 export class Entity: public Subject {
     char symbol;
