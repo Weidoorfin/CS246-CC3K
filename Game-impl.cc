@@ -8,9 +8,26 @@ import floor;
 import player;
 import textdisplay;
 
-void Game::init() {
-    currFloor = 1;
-    PlayerRace Race;
+Game::Game() {
+    for (int i = 0; i < MAXFLOOR; ++i) {
+        floors.push_back(std::make_unique<Floor>());
+    }
+    player = std::make_unique<Player>();
+}
+
+Game::Game(std::istream &is) {
+    for (int i = 0; i < MAXFLOOR; ++i) {
+        floors.push_back(std::make_unique<Floor>(is));
+    }
+}
+
+Game::Game(const std::string &filename, int seed) {
+    for (int i = 0; i < MAXFLOOR; ++i) {
+        floors.push_back(std::make_unique<Floor>(is, seed));
+    }
+}
+
+bool Game::init() {
     td = std::make_unique<TextDisplay>(); 
     td->intro();
     while (!player) {
@@ -77,7 +94,7 @@ void Game::init() {
                 break;
             case "q":
                 cout << "Quitting the game." << endl;
-                return; // Exit the game
+                return false; // Exit the game
             default:
                 cout << "Invalid choice. Please choose a valid race." << endl;
                 break; // Continue
@@ -86,29 +103,26 @@ void Game::init() {
     // Initialize the display grid or any other setup needed
     // TODO: read in first floor from emptyfloor.txt
     player = std::make_unique<Player>(Race);
-    // Initialize floor, player, and display
-    floor = std::make_unique<Floor>();
-    game.run(); // Start the game loop
+    return true; // Initialization successful
 }
 
 void Game::run() {
     while (player->isAlive()) {  
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
-        if (floor->isComplete()) {
-            if (currFloor < MAXFLOOR)
-            ++currFloor;
-            // replace current floor with new floor
-            floor = make_unique<Floor>();
-            // TODO: read in current floor from emptyfloor.txt
-            floor->attach(td);
-            floor->init(); 
+        if (floors[currFloor]->isComplete()) {
+            if (currFloor < MAXFLOOR) {
+                nextFloor();
+            } else {
+                endGame(true);
+                return; // End the game if all floors are completed
+            }
         }
     }
-    endGame();
+    endGame(false);
 }
 
-void Game::endGame() {
+void Game::endGame(bool win) {
     std::cout << "Game Over! Player has died.\n";
     // Clean up the game. Game is ready to be initialized again for reuse
     // TODO:
