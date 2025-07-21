@@ -2,7 +2,7 @@ module concreteplayer;
 
 import player;
 
-Shade::Shade() : Player(PlayerRace::SHADE, 150, 25, 25, position) {
+Shade::Shade() : Player(Race::SHADE, 150, 25, 25, position) {
 }
 
 double Shade::getScore() const {
@@ -13,7 +13,7 @@ std::unique_ptr<Player> Shade::reset() {
     return std::make_unique<Shade>(*this);
 }
 
-Drow::Drow() : Player{PlayerRace::DROW, 150, 25, 15, position} {
+Drow::Drow() : Player{Race::DROW, 150, 25, 15, position} {
     currentHP = maxHP;
 }
 
@@ -22,7 +22,7 @@ std::unique_ptr<Player> Drow::reset() {
     return std::make_unique<Drow>(*this);
 }
 
-Vampire::Vampire() : Player{PlayerRace::VAMPIRE, 50, 25, 25, position} {
+Vampire::Vampire() : Player{Race::VAMPIRE, 50, 25, 25, position} {
     currentHP = maxHP;
 }
 
@@ -47,7 +47,7 @@ std::unique_ptr<Player> Vampire::reset() {
 
 
 
-Goblin::Goblin() : Player{PlayerRace::GOBLIN, 110, 15, 20, position} {
+Goblin::Goblin() : Player{Race::GOBLIN, 110, 15, 20, position} {
     currentHP = maxHP;
 }
 
@@ -62,7 +62,7 @@ std::unique_ptr<Player> Goblin::reset() {
     return std::make_unique<Goblin>(*this);
 }
 
-Troll::Troll() : Player{PlayerRace::TROLL, 120, 25, 15, position} {
+Troll::Troll() : Player{Race::TROLL, 120, 25, 15, position} {
     currentHP = maxHP;
 }
 
