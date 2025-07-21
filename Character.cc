@@ -11,9 +11,9 @@ export class Character: public Entity {
   public:
     Character(Chamber &chamber, int maxHP, int atk, int def);
     virtual ~Character() = 0;
-    int getAtk() const;
-    int getDef() const;
-    int getMaxHP() const;
+    virtual int getAtk() const;
+    virtual int getDef() const;
+    virtual int getMaxHP() const;
     bool isAlive() const;
     Chamber &getChamber() const;
     bool move(Direction dir); // will return false if the move is invalid, and will not move the character

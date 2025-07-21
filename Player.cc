@@ -12,13 +12,14 @@ export class Player: public Character {
     Player(PlayerRace race);
     virtual ~Player() = default;
     PlayerRace getRace() const;
-    int getGold() const;
-    int getTotGold() const;  // return amount of gold obtained in total
+    virtual int getGold() const;
+    virtual int getTotGold() const;  // return amount of gold obtained in total
     void gainGold(int amount);
     virtual void onKill();
     virtual void onTurn(); // e.g. troll regenerates HP (default no-op)
-    void loseHP(int dec);
+    virtual void loseHP(int dec);
     virtual void gainHP(int inc);
-
     
+    virtual std::unique_ptr<Player> reset() const = 0;
+    virtual std::unique_ptr<Player> usePotion(const Potion &potion);
 };

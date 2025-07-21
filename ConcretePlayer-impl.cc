@@ -9,11 +9,19 @@ Shade::Shade() : Player{PlayerRace::SHADE} {
     currentHP = maxHP;
 }
 
+std::unique_ptr<Player> Shade::reset() {
+    return std::make_unique<Shade>(*this);
+}
+
 Drow::Drow() : Player{PlayerRace::DROW} {
     maxHP = 150;
     atk = 25;
     def = 15;
     currentHP = maxHP;
+}
+
+std::unique_ptr<Player> Drow::reset() {
+    return std::make_unique<Drow>(*this);
 }
 
 Vampire::Vampire() : Player(PlayerRace::VAMPIRE) {
@@ -29,6 +37,9 @@ void Vampire::gainHP(int inc) {
     currentHP += inc;
 }
 
+std::unique_ptr<Player> Vampire::reset() {
+    return std::make_unique<Vampire>(*this);
+}
 
 
 
@@ -43,6 +54,10 @@ void Goblin::onKill() {
     gainGold(5);
 }
 
+std::unique_ptr<Player> Goblin::reset() {
+    return std::make_unique<Goblin>(*this);
+}
+
 Troll::Troll() : Player(PlayerRace::TROLL) {
     maxHP = 120;
     atk = 25;
@@ -52,4 +67,8 @@ Troll::Troll() : Player(PlayerRace::TROLL) {
 
 void Troll::onTurn() {
     currentHP = (currentHP + 5 <= maxHP)? currentHP + 5 : maxHP;
+}
+
+std::unique_ptr<Player> Troll::reset() {
+    return std::make_unique<Troll>(*this);
 }

@@ -11,27 +11,18 @@ std::unique_ptr<Player> PH::usePotion(std::unique_ptr<Player> player) const {
 }
 
 
+std::unique_ptr<Player> BA::usePotion(std::unique_ptr<Player> player) const {
+    return std::make_unique<BAEff>(std::move(player));
+}
 
-export class BA: public potion {
-public:
-    std::unique_ptr<Player> usePotion(std::unique_ptr<Player> player) const override;
+std::unique_ptr<Player> BD::usePotion(std::unique_ptr<Player> player) const {
+    return std::make_unique<BDEff>(std::move(player));
+}
 
-};
+std::unique_ptr<Player> WA::usePotion(std::unique_ptr<Player> player) const {
+    return std::make_unique<WAEff>(std::move(player));
+}
 
-export class BD: public potion {
-public:
-    std::unique_ptr<Player> usePotion(std::unique_ptr<Player> player) const override;
-
-};
-
-export class WA: public potion {
-public:
-    std::unique_ptr<Player> usePotion(std::unique_ptr<Player> player) const override;
-
-};
-
-export class WD: public potion {
-public:
-    std::unique_ptr<Player> usePotion(std::unique_ptr<Player> player) const override;
-
-};
+std::unique_ptr<Player> WD::usePotion(std::unique_ptr<Player> player) const {
+    return std::make_unique<WDEff>(std::move(player));
+}
