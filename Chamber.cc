@@ -12,4 +12,3 @@ class Chamber {
     bool isFloorTile(Position pos) const;
     void tilevalid(Position pos) const; // returns true if the tile is an valid tile
 };
-

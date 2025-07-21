@@ -8,5 +8,5 @@ export class Potion {
 public:
     virtual ~Potion() = default;
 
-    virtual std::unique_ptr<Player> usePotion(std::unique_ptr<Player> player) const = 0;
+    virtual void applyEffect(Player &player) const = 0;
 };
