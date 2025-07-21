@@ -15,14 +15,17 @@ export class Game {
     vector<unique_ptr<Floor>> floors; // owns-a
     unique_ptr<Player> player;
     unique_ptr<TextDisplay> td;
+
+    void nextFloor();
+    Direction getDirection(string s);
+    bool isDirection(string s);
   public:
     Game();
     Game(std::istream &is); // constructor with input stream, reading the floor from file
     Game(const std::string &filename, int seed);
-    void init(); // initializing the game
-    void run();
-    void nextFloor();
-    void endGame();
+    bool init(); // initializing the game
+    GameState run();
+    bool endGame() const; // end the game, return true if win, false if lose
     ~Game() = default; // default destructor, only used when main() is terminated
 };
 
