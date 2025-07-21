@@ -1,12 +1,7 @@
 export module potion;
 
-import enums;
-
-
-export class Potion {
-    PotionType Type;
+export class Potion : public Item {
 public:
     virtual ~Potion() = default;
-
-    virtual void applyEffect(Player &player) const = 0;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const = 0;
 };

@@ -19,7 +19,10 @@ export class Player: public Character {
     virtual void onTurn(); // e.g. troll regenerates HP (default no-op)
     virtual void loseHP(int dec);
     virtual void gainHP(int inc);
-    
+
+
     virtual std::unique_ptr<Player> reset() const = 0;
-    virtual std::unique_ptr<Player> usePotion(const Potion &potion);
+    
+    // Unified potion application
+    virtual std::unique_ptr<Player> applyEffect(const Potion &potion) = 0;
 };

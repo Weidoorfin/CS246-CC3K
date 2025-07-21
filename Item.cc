@@ -2,11 +2,11 @@ export module item;
 
 import <memory>;
 import entity;
+import player;
 
-export class Item: public Entity {
-  public:
-    void use();
-    // virtual unique_ptr<Item> RandomPotion();
-    // virtual unique_ptr<Item> RandomTreasure();
+export class Item {
+public:
+    virtual ~Item() = default;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) = 0;
+
 };
-
