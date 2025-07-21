@@ -8,6 +8,22 @@ import floor;
 import player;
 import textdisplay;
 
+Direction Game::getDirection(string s) {
+    if (s == "N") return Direction::N;
+    else if (s == "NE") return Direction::NE;
+    else if (s == "E") return Direction::E;
+    else if (s == "SE") return Direction::SE;
+    else if (s == "S") return Direction::S;
+    else if (s == "SW") return Direction::SW;
+    else if (s == "W") return Direction::W;
+    else if (s == "NW") return Direction::NW;
+}
+
+bool Game::isDirection(string s) {
+    return (s == "N" || s == "NE" || s == "E" || s == "SE" ||
+            s == "S" || s == "SW" || s == "W" || s == "NW");
+}
+
 Game::Game() {
     for (int i = 0; i < MAXFLOOR; ++i) {
         floors.push_back(std::make_unique<Floor>());
@@ -106,7 +122,7 @@ bool Game::init() {
     return true; // Initialization successful
 }
 
-void Game::run() {
+GameState Game::run() {
     while (player->isAlive()) {  
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
@@ -114,16 +130,57 @@ void Game::run() {
             if (currFloor < MAXFLOOR) {
                 nextFloor();
             } else {
-                endGame(true);
-                return; // End the game if all floors are completed
+                endGame(true); // Player has completed all floors
+                return GameState::Finish; // Player has completed all floors
             }
         }
-    }
+        td->display();
+        string cmd;
+        std::cout << "Enter command: ";
+        getline(std::cin, cmd);
+        istringstream iss{cmd};
+        string command;
+        iss >> command;
+        if (isDirection(command)) {
+            auto dir = getDirection(command);
+            player->move(dir);
+        } else if (command == "a") {
+            iss >> command; // Get the target direction for attack
+            if (isDirection(command)) {
+                auto dir = getDirection(command);
+                player->attack(dir);
+            } else {
+                std::cout << "Invalid direction for attack." << std::endl;
+            }
+        } else if (command == "u") {
+            iss >> command; // Get the target direction for use item
+            if (isDirection(command)) {
+                auto dir = getDirection(command);
+                player->useItem(dir);
+            } else {
+                std::cout << "Invalid direction for use item." << std::endl;
+            }
+        } else if (command == "q") {
+            return GameState::Quit; // Quit the game
+        } else if (command == "f") {
+            enemy->movetoggle();
+        } else if (command == "r") {
+            return GameState::Restart; // Restart the game
+        } else {
+            std::cout << "Invalid command. Please try again." << std::endl;
+        } 
+    } // while (player->isAlive())
     endGame(false);
+    return GameState::Finish; // Player has died, end the game
 }
 
-void Game::endGame(bool win) {
-    std::cout << "Game Over! Player has died.\n";
-    // Clean up the game. Game is ready to be initialized again for reuse
-    // TODO:
+bool Game::endGame(bool win) const {
+    using namespace std;
+    if (win) {
+        cout << "Congratulations! You have completed all floors!" << endl;
+        cout << "Your final score is: " << player->getScore() << endl;
+    } else {
+        cout << "Game Over! You have died." << endl;
+    }
+    return win;
 }
