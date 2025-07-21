@@ -22,7 +22,7 @@ export class Game {
   public:
     Game();
     Game(std::istream &is); // constructor with input stream, reading the floor from file
-    Game(const std::string &filename, int seed);
+    Game(std::istream &is, int seed);
     bool init(); // initializing the game
     GameState run();
     bool endGame() const; // end the game, return true if win, false if lose
