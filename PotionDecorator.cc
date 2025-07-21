@@ -23,7 +23,6 @@ public:
     virtual void gainHP(int inc) override;
     virtual void loseHP(int dec) override;
 
-
-    std::unique_ptr<Player> reset() override;
-    std::unique_ptr<Player> PotionDecorator::usePotion(const Potion &potion) override;
+    virtual std::unique_ptr<Player> reset() override;
+    virtual std::unique_ptr<Player> usePotion(const Potion &potion) override;
 };
