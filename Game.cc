@@ -12,12 +12,14 @@ const int MAXFLOOR = 5;
 
 export class Game {
     int currFloor;
-    unique_ptr<Floor> floor; // owns-a
+    int seed;
+    vector<unique_ptr<Floor>> floors; // owns-a
     unique_ptr<Player> player;
     unique_ptr<TextDisplay> td;
   public:
     Game() = default; // default constructor, creating the default game object
-    Game(std::istream &is){} // constructor with input stream, reading the floor from file
+    Game(std::istream &is); // constructor with input stream, reading the floor from file
+    Game(const std::string &filename, int seed);
     void init(); // initializing the game
     void run();
     void setDisplay();
