@@ -22,6 +22,12 @@ Elf::Elf(Position pos)
 
 Elf::~Elf() {}
 
+void Elf::attack(Character &target) {
+    // Special attack logic for Elf
+    Character::attack(target); // Call base class attack
+    if (target.getR)
+}
+
 // Orc implementation //////////////////////////////
 Orc::Orc(Position pos)
     : Enemy{EnemyType::ORC, 180, 30, 25, 'O', 0, pos} {}

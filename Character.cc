@@ -13,6 +13,7 @@ export class Character: public Entity {
     virtual int getAtk() const;
     virtual int getDef() const;
     virtual int getMaxHP() const;
+    virtual 
     bool isAlive() const;
     virtual bool move(Direction dir); // will return false if the move is invalid, and will not move the character
     virtual void attack(Character &target); // Handle the attack logic
