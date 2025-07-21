@@ -4,7 +4,7 @@ import <cmath>;
 import enums;
 import entity;
 
-Player::Player(PlayerRace race, int maxHP, int atk, int def, Position pos)
+Player::Player(Race race, int maxHP, int atk, int def, Position pos)
     : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
     entity = EntityType::PLAYER;
 }

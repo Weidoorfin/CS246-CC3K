@@ -5,8 +5,8 @@ import position;
 import entity;
 import enums;
 
-Character::Character(int maxHP, int atk, int def, char symbol, int colour, Position pos)
-    : Entity{symbol, colour, pos}, maxHP{maxHP}, atk{atk}, def{def}, currentHP{maxHP} {}
+Character::Character(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos)
+    : Entity{symbol, colour, pos}, race{race}, maxHP{maxHP}, atk{atk}, def{def}, currentHP{maxHP} {}
 int Character::getAtk() const { return atk; }
 int Character::getDef() const { return def; }
 int Character::getMaxHP() const { return maxHP; }
@@ -39,6 +39,10 @@ void Character::move(Direction dir) {
             pos.x -= 1; pos.y += 1;
             break;
     }
+}
+
+Race Character::getRace() const {
+    return race;
 }
 
 void Character::attack(Character &target) {
