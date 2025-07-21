@@ -1,9 +1,31 @@
 module floor;
 
-void Floor::isComplete() return complete;
+import <fstream>;
+import <vector>;
 
-void Floor::init();
+Floor::Floor(){
+    // Initialize the grid with empty chambers
+    ifstream emptyMap("emptyfloor.txt");
+    getEmptyMap(emptyMap);
+    GenerateStairs();
+    GenerateEntities();
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
 
+Floor::Floor(std::istream &is) {
+    readFromStream(is);
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+Floor::Floor(std::istream &is, int seed) {
+    readFromStream(is);
+    // Set the random seed for the floor
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+bool Floor::isComplete() const {
+    return complete;
+}
 
 
 // enemy具体的attack和move的逻辑（比如merchant非hostile时不攻击，dragon不移动）由method override来实现，
@@ -31,6 +53,7 @@ vector<Direction> genDirections() {
     std::shuffle(directions.begin(), directions.end(), rng);
     return directions; // return a random direction
 }
+
 Enemy::randomMove() {
     std::vector<Direction> possibleMoves = genDirections();
     for (const Direction &dir : possibleMoves) {
@@ -39,11 +62,13 @@ Enemy::randomMove() {
         }
     }
 }
+
 Enemy::isInRange(Position pos) const {
     // Check if the position is within the range of the enemy
     return (pos.x >= pos.x - 1 && pos.x <= pos.x + 1 &&
             pos.y >= pos.y - 1 && pos.y <= pos.y + 1);
 }
+
 Enemy::update() {
     // Default implementation: random move if the player is not in range
     if (!isInRange(player.getPos())) {
