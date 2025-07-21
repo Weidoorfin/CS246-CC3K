@@ -2,7 +2,6 @@ export module enemy;
 
 import enums;
 import character;
-import subject;
 import position;
 import player;
 

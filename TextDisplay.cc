@@ -3,7 +3,7 @@ export module TextDisplay;
 import <iostream>;
 import <vector>;
 
-import subject;
+import abstractos;
 import enums;
 
 export class Display: public Observer {
