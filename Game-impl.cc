@@ -32,13 +32,25 @@ Game::Game() {
 
 Game::Game(std::istream &is) {
     for (int i = 0; i < MAXFLOOR; ++i) {
-        floors.push_back(std::make_unique<Floor>(is));
+        istream iss;
+        string line;
+        for (int i = 0; i < 25; i++) {
+            is >> line;
+            iss << line << '\n';
+        }
+        floors.push_back(std::make_unique<Floor>(iss));
     }
 }
 
 Game::Game(std::istream &is, int seed) {
     for (int i = 0; i < MAXFLOOR; ++i) {
-        floors.push_back(std::make_unique<Floor>(is, seed));
+        istream iss;
+        string line;
+        for (int i = 0; i < 25; i++) {
+            is >> line;
+            iss << line << '\n';
+        }
+        floors.push_back(std::make_unique<Floor>(iss, seed));
     }
 }
 

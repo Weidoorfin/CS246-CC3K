@@ -23,6 +23,7 @@ export class Floor : public Subject {
     void GenerateStairs(); // Generate stairs on the floor
     void GenerateEntities(); // Generate entities (enemies, items) on the floor
     void GeneratePlayer(); // Generate the player on the floor
+    void readFromStream(std::istream &is); // Read floor data from input stream
 
  public:
     Floor(); // Default constructor
