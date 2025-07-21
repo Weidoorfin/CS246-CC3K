@@ -21,7 +21,6 @@ export class Game {
     Game(const std::string &filename, int seed);
     void init(); // initializing the game
     void run();
-    void setDisplay();
     void nextFloor();
     void endGame();
     ~Game() = default; // default destructor, only used when main() is terminated
