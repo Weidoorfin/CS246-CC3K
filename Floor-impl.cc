@@ -3,12 +3,30 @@ module floor;
 import <fstream>;
 import <vector>;
 
+void Floor::getEmptyMap(std::istream &is) {
+    // Implementation for reading an empty map from the input stream
+    // This will populate the grid and tileTypes with initial values
+}
+
+void Floor::GenerateStairs() {
+    // Implementation for generating stairs on the floor
+}
+
+void Floor::GenerateEntities() {
+    // Implementation for generating entities (enemies, items) on the floor
+}
+
+void Floor::GeneratePlayer() {
+    // Implementation for generating the player on the floor
+}
+
 Floor::Floor(){
     // Initialize the grid with empty chambers
     ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
     GenerateStairs();
     GenerateEntities();
+    GeneratePlayer();
     notifyObservers(); // Notify observers that the floor has been initialized
 }
 
@@ -22,6 +40,12 @@ Floor::Floor(std::istream &is, int seed) {
     // Set the random seed for the floor
     notifyObservers(); // Notify observers that the floor has been initialized
 }
+
+void Floor::setPlayer(std::unique_ptr<Player> p) {
+    player = std::move(p);
+}
+
+
 
 bool Floor::isComplete() const {
     return complete;
