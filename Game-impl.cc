@@ -123,7 +123,7 @@ bool Game::init() {
 }
 
 GameState Game::run() {
-    while (player->isAlive()) {  
+    while (player->isAlive()) {
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
         if (floors[currFloor]->isComplete()) {
@@ -156,19 +156,23 @@ GameState Game::run() {
             iss >> command; // Get the target direction for use item
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                player->useItem(dir);
+                player->useItem(dir); // player->useItem(Direction, PotionType);
+                
             } else {
                 std::cout << "Invalid direction for use item." << std::endl;
             }
         } else if (command == "q") {
             return GameState::Quit; // Quit the game
         } else if (command == "f") {
-            enemy->movetoggle();
+            enemy->moveToggle();
         } else if (command == "r") {
             return GameState::Restart; // Restart the game
         } else {
             std::cout << "Invalid command. Please try again." << std::endl;
-        } 
+        }
+        // Auto Enemy move
+
+        player->onTurn();
     } // while (player->isAlive())
     endGame(false);
     return GameState::Finish; // Player has died, end the game

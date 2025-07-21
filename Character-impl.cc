@@ -4,45 +4,39 @@ import <cmath>;
 import position;
 import enums;
 
-Character::Character(Chamber &chamber, int maxHP, int atk, int def)
-    : chamber{chamber}, maxHP{maxHP}, atk{atk}, def{def} {}
+Character::Character(int maxHP, int atk, int def)
+    : maxHP{maxHP}, atk{atk}, def{def} {}
 int Character::getAtk() const { return atk; }
 int Character::getDef() const { return def; }
 int Character::getMaxHP() const { return maxHP; }
 bool Character::isAlive() const { return currentHP >= 0; }
-Chamber &getChamber() const { return chamber; }
 
 void Character::move(Direction dir) {
-    Position npos = pos;
+    // assumes the new direction is valid
     switch(dir) {
         case Direction::N:
-            npos.y += 1;
+            pos.y += 1;
             break;
         case Direction::NE:
-            npos.x += 1; npos.y += 1;
+            pos.x += 1; pos.y += 1;
         case Direction::E:
-            npos.x += 1;
+            pos.x += 1;
             break;
         case Direction::SE:
-            npos.x += 1; npos.y -= 1;
+            pos.x += 1; pos.y -= 1;
             break;
         case Direction::S:
-            npos.y -= 1;
+            pos.y -= 1;
             break;
         case Direction::SW:
-            npos.x -= 1; npos.y -= 1;
+            pos.x -= 1; pos.y -= 1;
             break;
         case Direction::W:
-            npos.x -= 1;
+            pos.x -= 1;
             break;
         case Direction::NW:
-            npos.x -= 1; npos.y += 1;
+            pos.x -= 1; pos.y += 1;
             break;
-    }
-    // check if the new position is valid
-    if (chamber.tilevalid(npos)) {
-        pos = npos; // update position
-        notifyObservers(); // notify observers of the move
     }
 }
 

@@ -47,3 +47,7 @@
 - Made floor a Subject AS WELL AS an Observer
 - Floor contains chamber, enemy, item, and stair
 - Floor's init() initializes floor, generates enemies
+
+##### Development note - Jul 20
+- Added enemyengine to centralize all enemy related operations and holding an
+- enemy vector

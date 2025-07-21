@@ -11,9 +11,8 @@ import abstractos;
 export class Floor : public Subject, public Observer {
     Position stair;
     bool complete;
-    int level;
     vector<Chamber> chambers;
-    vector<Enemy> enemies;
+    EnemyEngine enemyEngine;
     vector<Item> items;
  public:
     Floor() = default; // Default constructor

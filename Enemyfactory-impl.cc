@@ -3,19 +3,18 @@ module enemyfactory;
 import enemy;
 import concreteenemies;
 import enums;
-import chamber;
 
-Enemy EnemyFactory::createEnemy(EnemyType type, Chamber &chamber) {
+Enemy EnemyFactory::createEnemy(EnemyType type) {
     switch (type) {
         case EnemyType::DRAGON:
-            return Dragon{player, chamber};
+            return Dragon();
         case EnemyType::DWARF:
-            return Dwarf{player, chamber};
+            return Dwarf();
         case EnemyType::ELF:
-            return Elf{player, chamber};
+            return Elf();
         case EnemyType::HALFLING:
-            return Halfling{player, chamber};
+            return Halfling();
         case EnemyType::HUMAN:
-            return Human{player, chamber};
+          return Human();
     }
 }

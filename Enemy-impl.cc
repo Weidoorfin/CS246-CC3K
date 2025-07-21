@@ -7,7 +7,6 @@ import <vector>;
 import <cstdint>;
 import enums;
 import character;
-import player;
 import PRNG;
 
 // Helper function to generate a random array of unique directions
@@ -29,8 +28,8 @@ vector<Direction> genDirections() {
     return directions; // return a random direction
 }
 
-Enemy::Enemy(EnemyType type, Player &player, Chamber &chamber, int maxHP, int atk, int def)
-    : Character{chamber, maxHP, atk, def}, type{type}, player{player} {}
+Enemy::Enemy(EnemyType type, int maxHP, int atk, int def)
+    : Character{maxHP, atk, def}, type{type} {}
 
 Enemy::randomMove() {
     std::vector<Direction> possibleMoves = genDirections();
