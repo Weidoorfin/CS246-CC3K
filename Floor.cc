@@ -11,7 +11,7 @@ import abstractos;
 export class Floor : public Subject, public Observer {
     Position stair;
     bool complete;
-    vector<vector<Entity>> grid; // 2D grid of entities on the floor
+    vector<vector<std::unique_ptr<Entity>>> grid; // 2D grid of entities on the floor
 
  public:
     Floor() = default; // Default constructor
