@@ -1,9 +1,100 @@
 module floor;
 
-void Floor::isComplete() return complete;
+import <fstream>;
+import <vector>;
 
-void Floor::init();
+import enums;
 
+void Floor::getEmptyMap(std::istream &is) {
+    // Implementation for reading an empty map from the input stream
+    // This will populate the grid and tileTypes with initial values
+    string line;
+    while (getline(is, line)) {
+        vector<TileType> row;
+        for (char c : line) {
+            switch (c) {
+                case '-': row.push_back(TileType::HorizontalWall); break;
+                case '|': row.push_back(TileType::VerticalWall); break;
+                case '.': row.push_back(TileType::Floor); break;
+                case '+': row.push_back(TileType::Door); break;
+                case '#': row.push_back(TileType::Corridor); break;
+                default: row.push_back(TileType::Nothing); break;
+            }
+        }
+        tileTypes.push_back(row);
+    }
+}
+
+void Floor::GenerateStairs() {
+    // Implementation for generating stairs on the floor
+}
+
+void Floor::GenerateEntities() {
+    // Implementation for generating entities (enemies, items) on the floor
+}
+
+void Floor::GeneratePlayer() {
+    // Implementation for generating the player on the floor
+}
+
+void Floor::readFromStream(std::istream &is) {
+    string line;
+    while (getline(is, line)) {
+        vector<TileType> row;
+        for (char c : line) {
+            switch (c) {
+                case '-': row.push_back(TileType::HorizontalWall); break;
+                case '|': row.push_back(TileType::VerticalWall); break;
+                case '.': row.push_back(TileType::Floor); break;
+                case '+': row.push_back(TileType::Door); break;
+                case '#': row.push_back(TileType::Corridor); break;
+                case '/': 
+                    row.push_back(TileType::Stair);
+                    stairs.push_back(Position{row.size(),TileType.size()});
+                    break;
+                // Handle generated entities
+                case 
+
+                default: row.push_back(TileType::Nothing); break;
+            }
+        }
+        tileTypes.push_back(row);
+    }
+}
+
+Floor::Floor(){
+    // Initialize the grid with empty chambers
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
+    ifstream emptyMap("emptyfloor.txt");
+    getEmptyMap(emptyMap);
+    GenerateStairs();
+    GenerateEntities();
+    GeneratePlayer();
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+Floor::Floor(std::istream &is) {
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
+    readFromStream(is);
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+Floor::Floor(std::istream &is, int seed) {
+    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
+    readFromStream(is);
+    // Set the random seed for the floor
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+void Floor::setPlayer(std::unique_ptr<Player> p) {
+    player = std::move(p);
+}
+
+
+
+bool Floor::isComplete() const {
+    return complete;
+}
 
 
 // enemy具体的attack和move的逻辑（比如merchant非hostile时不攻击，dragon不移动）由method override来实现，
@@ -31,6 +122,7 @@ vector<Direction> genDirections() {
     std::shuffle(directions.begin(), directions.end(), rng);
     return directions; // return a random direction
 }
+
 Enemy::randomMove() {
     std::vector<Direction> possibleMoves = genDirections();
     for (const Direction &dir : possibleMoves) {
@@ -39,11 +131,13 @@ Enemy::randomMove() {
         }
     }
 }
+
 Enemy::isInRange(Position pos) const {
     // Check if the position is within the range of the enemy
     return (pos.x >= pos.x - 1 && pos.x <= pos.x + 1 &&
             pos.y >= pos.y - 1 && pos.y <= pos.y + 1);
 }
+
 Enemy::update() {
     // Default implementation: random move if the player is not in range
     if (!isInRange(player.getPos())) {

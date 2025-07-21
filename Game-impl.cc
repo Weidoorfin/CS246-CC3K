@@ -28,18 +28,29 @@ Game::Game() {
     for (int i = 0; i < MAXFLOOR; ++i) {
         floors.push_back(std::make_unique<Floor>());
     }
-    player = std::make_unique<Player>();
 }
 
 Game::Game(std::istream &is) {
     for (int i = 0; i < MAXFLOOR; ++i) {
-        floors.push_back(std::make_unique<Floor>(is));
+        istream iss;
+        string line;
+        for (int i = 0; i < 25; i++) {
+            is >> line;
+            iss << line << '\n';
+        }
+        floors.push_back(std::make_unique<Floor>(iss));
     }
 }
 
-Game::Game(const std::string &filename, int seed) {
+Game::Game(std::istream &is, int seed) {
     for (int i = 0; i < MAXFLOOR; ++i) {
-        floors.push_back(std::make_unique<Floor>(is, seed));
+        istream iss;
+        string line;
+        for (int i = 0; i < 25; i++) {
+            is >> line;
+            iss << line << '\n';
+        }
+        floors.push_back(std::make_unique<Floor>(iss, seed));
     }
 }
 
@@ -123,6 +134,7 @@ bool Game::init() {
 }
 
 GameState Game::run() {
+    floors[currFloor]->setPlayer(std::move(player));
     while (player->isAlive()) {
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
@@ -143,12 +155,12 @@ GameState Game::run() {
         iss >> command;
         if (isDirection(command)) {
             auto dir = getDirection(command);
-            player->move(dir);
+            floors[currFloor]->playerMove(dir);
         } else if (command == "a") {
             iss >> command; // Get the target direction for attack
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                player->attack(dir); // attack(Enemy &enemy);
+                floors[currFloor]->playerAttack(dir);
             } else {
                 std::cout << "Invalid direction for attack." << std::endl;
             }
@@ -156,8 +168,7 @@ GameState Game::run() {
             iss >> command; // Get the target direction for use item
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                player->useItem(dir); // player->useItem(ItemType);
-                
+                floors[currFloor]->playerUseItem(dir);
             } else {
                 std::cout << "Invalid direction for use item." << std::endl;
             }
