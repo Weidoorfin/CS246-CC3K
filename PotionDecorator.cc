@@ -24,5 +24,5 @@ public:
     virtual void loseHP(int dec) override;
 
     virtual std::unique_ptr<Player> reset() override;
-    virtual std::unique_ptr<Player> usePotion(const Potion &potion) override;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
 };
