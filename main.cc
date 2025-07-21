@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
         } else {
             g = make_unique<Game>();
         }
-        g->setDisplay();
         if (!g->init()) {
             break; // If initialization fails, exit the loop
         }

@@ -11,12 +11,12 @@ import enums;
 const int MAXFLOOR = 5;
 
 export class Game {
-    int currFloor;
+    int currFloor = 0;
     vector<unique_ptr<Floor>> floors; // owns-a
     unique_ptr<Player> player;
     unique_ptr<TextDisplay> td;
   public:
-    Game() = default; // default constructor, creating the default game object
+    Game();
     Game(std::istream &is); // constructor with input stream, reading the floor from file
     Game(const std::string &filename, int seed);
     void init(); // initializing the game
