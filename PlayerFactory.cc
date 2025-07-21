@@ -5,5 +5,5 @@ import enums;
 
 export class PlayerFactory {
 public:
-    static std::unique_ptr<Player> createPlayer(PlayerRace race);
+    static std::unique_ptr<Player> createPlayer(Race race, Position pos);
 };

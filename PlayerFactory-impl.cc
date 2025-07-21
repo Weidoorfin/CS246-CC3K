@@ -1,16 +1,16 @@
-module playerfactory;
+module factory;
 
-static std::unique_ptr<Player> PlayerFactory::createPlayer(PlayerRace race) {
+static std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position pos) {
     switch(race) {
-        case PlayerRace::SHADE:
-            return std::make_unique<Shade>();
-        case PlayerRace::DROW:
-            return std::make_unique<Drow>();
-        case PlayerRace::VAMPIRE:
-            return std::make_unique<Vampire>();
-        case PlayerRace::TROLL:
-            return std::make_unique<Troll>();
-        case PlayerRace::GOBLIN:
-            return std::make_unique<Goblin>();
+        case Race::SHADE:
+            return std::make_unique<Shade>(pos);
+        case Race::DROW:
+            return std::make_unique<Drow>(pos);
+        case Race::VAMPIRE:
+            return std::make_unique<Vampire>(pos);
+        case Race::TROLL:
+            return std::make_unique<Troll>(pos);
+        case Race::GOBLIN:
+            return std::make_unique<Goblin>(pos);
     }
 }
