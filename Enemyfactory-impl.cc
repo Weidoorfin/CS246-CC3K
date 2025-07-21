@@ -2,19 +2,20 @@ module enemyfactory;
 
 import enemy;
 import concreteenemies;
+import position;
 import enums;
 
-Enemy EnemyFactory::createEnemy(EnemyType type) {
+Enemy EnemyFactory::createEnemy(EnemyType type, Position pos) {
     switch (type) {
         case EnemyType::DRAGON:
-            return Dragon();
+            return Dragon(Position pos);
         case EnemyType::DWARF:
-            return Dwarf();
+            return Dwarf(Position pos);
         case EnemyType::ELF:
-            return Elf();
+            return Elf(Position pos);
         case EnemyType::HALFLING:
-            return Halfling();
+            return Halfling(Position pos);
         case EnemyType::HUMAN:
-          return Human();
+          return Human(Position pos);
     }
 }

@@ -2,6 +2,7 @@ module enemy;
 
 import <vector>;
 import enums;
+import character;
 import entity;
 
 Enemy::Enemy(EnemyType type, int maxHP, int atk, int def, char symbol, int colour, Position pos)
