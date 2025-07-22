@@ -3,6 +3,7 @@ export module player;
 import enums;
 import playerfactory;
 import character;
+import PRNG;
 
 export class Player : public Character {
     int Gold;
@@ -19,6 +20,7 @@ export class Player : public Character {
     virtual void useItem(Item &item);
     virtual void attack(Character &target) override;
     virtual void onHit(Character &whoFrom) override; // Handle the hit logic
+    virtual double getPotionMultiplier() const;
 
 
     virtual std::unique_ptr<Player> reset() const = 0;

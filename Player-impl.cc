@@ -2,7 +2,9 @@ module player;
 
 import <cmath>;
 import enums;
-import entity;
+import playerfactory;
+import character;
+import PRNG;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
     : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
@@ -50,6 +52,13 @@ void Player::gainHP(int inc) {
 }
 
 void Player::attack(Character &target) {
+    if (target.getRace() == Race::HALFLING) {
+        PRNG rng;
+        int result = rng(1);
+        if (result == 0) {
+            return;
+        }
+    }
     target.onHit(*this);
     if( !target.isAlive()) {
         onKill();
@@ -66,4 +75,8 @@ void Player::useItem(Item &item) {
     if (newPlayer) {
         *this = *newPlayer;
     }
+}
+
+double Player::getPotionMultiplier() const {
+    return 1.0;
 }

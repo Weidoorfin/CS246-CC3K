@@ -25,6 +25,7 @@ public:
     virtual void useItem(Item &item);
     virtual void attack(Character &target) override;
     virtual void onHit(Character &whoFrom) override;
+    virtual double getPotionMultiplier() const override;
 
     virtual std::unique_ptr<Player> reset() override;
     virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;

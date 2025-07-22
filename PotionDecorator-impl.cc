@@ -20,6 +20,9 @@ void PotionDecorator::onHit(Character &whoFrom) { base->onHit(whoFrom); }
 
 void PotionDecorator::gainHP(int inc) { base->gainHP(inc); }
 void PotionDecorator::loseHP(int dec) { base->loseHP(dec); }
+double PotionDecorator::getPotionMultiplier() const {
+    return base->getPotionMultiplier();
+}
 
 std::unique_ptr<Player> PotionDecorator::reset() {
     return base->reset();
