@@ -22,6 +22,10 @@ std::unique_ptr<Player> Drow::reset() {
     return std::make_unique<Drow>(*this);
 }
 
+double Drow::getPotionMultiplier() const {
+    return 1.5;
+}
+
 Vampire::Vampire() : Player{Race::VAMPIRE, 50, 25, 25, position} {
     currentHP = maxHP;
 }
@@ -32,6 +36,13 @@ void Vampire::gainHP(int inc) {
 }
 
 void Vampire::attack(Character &target) {
+    if (target.getRace() == Race::HALFLING) {
+        PRNG rng;
+        int result = rng(1);
+        if (result == 0) {
+            return;
+        }
+    }
     target.onHit(*this);
     if (target.getRace() == EnemyType::DWARF) {
         loseHP(5); // Lose 5 HP if attacking a dwarf
@@ -52,9 +63,26 @@ Goblin::Goblin() : Player{Race::GOBLIN, 110, 15, 20, position} {
 }
 
 void Goblin::attack(Character &target) {
+    if (target.getRace() == Race::HALFLING) {
+        PRNG rng;
+        int result = rng(1);
+        if (result == 0) {
+            return;
+        }
+    }
     target.onHit(*this);
     if(!target.isAlive()) {
         gainGold(5); // Gain 5 gold if the target is killed
+    }
+}
+
+void Goblin::onHit(Character &whoFrom) {
+    int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
+    loseHP(damage);
+    if (whoFrom.getRace() == Race:ORC) {
+        loseHP(damage * 1.5);
+    } else {
+        loseHP(damage);
     }
 }
 

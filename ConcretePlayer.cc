@@ -16,6 +16,7 @@ public:
     Drow(Position pos = Position{0, 0});
     ~Drow() = default;
     std::unique_ptr<Player> reset() const override;
+    double getPotionMultiplier() const override;
 };
 
 export class Vampire : public Player {
@@ -32,6 +33,7 @@ public:
     Goblin(Position pos = Position{0, 0});
     ~Goblin() = default;
     void attack(Character &target) override;
+    void onHit(Character &whoFrom) override;
     std::unique_ptr<Player> reset() const override;
 };
 
