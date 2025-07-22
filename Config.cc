@@ -18,4 +18,5 @@ namespace potionConfig {
 
 namespace treasureConfig {
     export inline const int MaxTreasuresPerFloor = 10;
+    
 }

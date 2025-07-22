@@ -5,6 +5,7 @@ import <cmath>;
 import enums;
 import character;
 import PRNG;
+import randomengine;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
     : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
@@ -53,9 +54,8 @@ void Player::gainHP(int inc) {
 
 void Player::attack(Character &target) {
     if (target.getRace() == Race::HALFLING) {
-        PRNG rng;
-        int result = rng(1);
-        if (result == 0) {
+        RandomEngine rng;
+        if (rng.chance(50)) {
             return;
         }
     }

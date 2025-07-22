@@ -24,5 +24,7 @@ public:
     bool chance(int num, int denom) const; // produce true for num/denom of times
     std::vector<Direction> genDirections() const; // generate a shuffled vector of directions
     Race genEnemyRace() const; // generate a random enemy based on the predefined probability distribution
+    // takes in a 2D vector of entities and returns a random position within the bounds of the vector
+    Position genPosition(vector<vector<entity*>> tiles) const; 
 };
 
