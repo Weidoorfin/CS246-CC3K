@@ -11,12 +11,11 @@ import abstractos;
 
 export class Floor : public Subject {
     Position stairs; // Position of the stairs
-    int level = 0;
     bool complete = false;
 
-    vector<vector<Entity*>> grid; // record pointer, with movable entities
     vector<vector<Entity*>> terrian; // Types of tiles of terrain
-
+    vector<vector<Entity*>> grid; // record pointer, with movable entities
+    
     vector<std::unique_ptr<Enemy>> enemies; // List of enemies on the floor
     vector<std::unique_ptr<Potion>> potions; 
     vector<std::unique_ptr<Treasure>> treasures;
@@ -30,9 +29,8 @@ export class Floor : public Subject {
     void readFromStream(std::istream &is); // Read floor data from input stream
 
  public:
-    Floor(int level); // Constructor to create a new floor with a given level
-    Floor(); // Default constructor
-    Floor(std::istream &is); // Constructor to read from input stream
+    explicit Floor(); // Default constructor
+    explicit Floor(std::istream &is); // Constructor to read from input stream
     Floor(std::istream &is, int seed); // Constructor to read from input stream with seed
 
     // Accessories and mutators

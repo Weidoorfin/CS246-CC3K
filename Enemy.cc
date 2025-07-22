@@ -6,7 +6,6 @@ import position;
 
 export class Enemy: public Character {
   public:
-    EnemyType getRace() override;
     Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos);
     virtual ~Enemy() = default; // default destructor
 };

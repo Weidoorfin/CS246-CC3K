@@ -10,9 +10,6 @@ Enemy::Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Po
     entity = EntityType::ENEMY; // Set the entity type to ENEMY
 }
 
-EnemyType Enemy::getRace() {
-    return type;
-}
 
 
 

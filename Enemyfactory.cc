@@ -8,5 +8,5 @@ import enums;
 export class EnemyFactory {
   public:
     explicit EnemyFactory();
-    std::unique_ptr<Enemy> createEnemy(EnemyType type, Position pos);
+    std::unique_ptr<Enemy> createEnemy(Race race, Position pos);
 };

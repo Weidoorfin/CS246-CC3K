@@ -8,6 +8,12 @@ import floor;
 import player;
 import textdisplay;
 
+void nextFloor() {
+        currFloor++;
+        floors[currFloor]->setPlayer(std::move(player));
+        td->updateFloor(currFloor);
+}
+
 Direction Game::getDirection(string s) {
     if (s == "N") return Direction::N;
     else if (s == "NE") return Direction::NE;

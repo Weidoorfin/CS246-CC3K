@@ -5,17 +5,17 @@ import concreteenemies;
 import position;
 import enums;
 
-Enemy EnemyFactory::createEnemy(EnemyType type, Position pos) {
-    switch (type) {
-        case EnemyType::DRAGON:
+Enemy EnemyFactory::createEnemy(Race race, Position pos) {
+    switch (race) {
+        case Race::DRAGON:
             return std::make_unique<Dragon>(pos);
-        case EnemyType::DWARF:
+        case Race::DWARF:
             return std::make_unique<Dwarf>(pos);
-        case EnemyType::ELF:
+        case Race::ELF:
             return std::make_unique<Elf>(pos);
-        case EnemyType::HALFLING:
+        case Race::HALFLING:
             return std::make_unique<Halfling>(pos);
-        case EnemyType::HUMAN:
+        case Race::HUMAN:
           return std::make_unique<Human>(pos);
     }
 }
