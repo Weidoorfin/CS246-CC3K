@@ -11,3 +11,11 @@ namespace EnemyConfig {
     };
     export inline const int MaxEnemiesPerFloor = 20;
 }
+
+namespace potionConfig {
+    export inline const int MaxPotionsPerFloor = 10;
+}
+
+namespace treasureConfig {
+    export inline const int MaxTreasuresPerFloor = 10;
+}
