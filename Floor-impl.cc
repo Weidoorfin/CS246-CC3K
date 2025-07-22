@@ -381,8 +381,6 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
 }
 
 
-
-
 // enemy具体的attack和move的逻辑（比如merchant非hostile时不攻击，dragon不移动）由method override来实现，
 // floor只要满足条件就call attack和move。
 //////////////////////////////////////////////////////////////
