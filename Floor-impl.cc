@@ -4,6 +4,15 @@ import <fstream>;
 import <vector>;
 
 import enums;
+import chamber;
+import enemy;
+import item;
+import position;
+import abstractos;
+import entity;
+import textdisplay;
+import player;
+import enemyfactory;
 
 void Floor::getEmptyMap(std::istream &is) {
     // Implementation for reading an empty map from the input stream
@@ -13,16 +22,38 @@ void Floor::getEmptyMap(std::istream &is) {
         vector<TileType> row;
         for (char c : line) {
             switch (c) {
-                case '-': row.push_back(TileType::HorizontalWall); break;
-                case '|': row.push_back(TileType::VerticalWall); break;
-                case '.': row.push_back(TileType::Floor); break;
-                case '+': row.push_back(TileType::Door); break;
-                case '#': row.push_back(TileType::Corridor); break;
-                default: row.push_back(TileType::Nothing); break;
+                case '-': 
+                    row.push_back(TileType::HorizontalWall);
+                    grid.push_back(nullptr);
+                    break;
+                case '|': 
+                    row.push_back(TileType::VerticalWall);
+                    grid.push_back(nullptr);
+                    break;
+                case '.':  
+                    row.push_back(TileType::Floor);
+                    grid.push_back(nullptr);
+                    break;
+                case '+': 
+                    row.push_back(TileType::Door);
+                    grid.push_back(nullptr);
+                    break;
+                case '#': 
+                    row.push_back(TileType::Corridor);
+                    grid.push_back(nullptr);
+                    break;
+                default: 
+                    row.push_back(TileType::Nothing);
+                    grid.push_back(nullptr);
+                    break;
             }
         }
         tileTypes.push_back(row);
     }
+}
+
+void Floor::GeneratePlayer() {
+    // Implementation for generating the player on the floor
 }
 
 void Floor::GenerateStairs() {
@@ -33,54 +64,162 @@ void Floor::GenerateEntities() {
     // Implementation for generating entities (enemies, items) on the floor
 }
 
-void Floor::GeneratePlayer() {
-    // Implementation for generating the player on the floor
-}
-
 void Floor::readFromStream(std::istream &is) {
     string line;
+    int x = 0;
     while (getline(is, line)) {
         vector<TileType> row;
+        vector<Entity*> gridRow; // Store entities in the grid
+        int y = 0;
         for (char c : line) {
+            Position pos{x, y};
             switch (c) {
-                case '-': row.push_back(TileType::HorizontalWall); break;
-                case '|': row.push_back(TileType::VerticalWall); break;
-                case '.': row.push_back(TileType::Floor); break;
-                case '+': row.push_back(TileType::Door); break;
-                case '#': row.push_back(TileType::Corridor); break;
+                case '-': 
+                    row.push_back(TileType::HorizontalWall);
+                    gridRow.push_back(nullptr);
+                    break;
+                case '|': 
+                    row.push_back(TileType::VerticalWall);
+                    gridRow.push_back(nullptr);
+                    break;
+                case '.':  
+                    row.push_back(TileType::Floor);
+                    gridRow.push_back(nullptr);
+                    break;
+                case '+': 
+                    row.push_back(TileType::Door);
+                    gridRow.push_back(nullptr);
+                    break;
+                case '#': 
+                    row.push_back(TileType::Corridor);
+                    gridRow.push_back(nullptr);
+                    break;
                 case '/': 
                     row.push_back(TileType::Stair);
-                    stairs.push_back(Position{row.size(),TileType.size()});
+                    gridRow.push_back(nullptr);
+                    stairs.push_back(pos);
                     break;
                 // Handle generated entities
-                case 
-
-                default: row.push_back(TileType::Nothing); break;
-            }
-        }
+                case '@': 
+                    row.push_back(TileType::Player);
+                    gridRow.push_back(nullptr);
+                    break;
+                case 'H':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Human, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'W':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Dwarf, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'E':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Elf, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'O':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Orcs, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'M':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Merchant, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'D':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Dragon, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                case 'L':
+                    row.push_back(TileType::Enemy);
+                    enemies.push_back(createEnemy(EnemyType::Halfling, pos));
+                    gridRow.push_back(enemies.back().get());
+                    break;
+                // Handle items
+                case '0':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::RH, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '1':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::BA, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '2':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::BD, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '3':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::PH, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '4':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::WA, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '5':
+                    row.push_back(TileType::Potion);
+                    items.push_back(createItem(ItemType::WD, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '6':
+                    row.push_back(TileType::Gold);
+                    items.push_back(createItem(ItemType::Gold, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '7':
+                    row.push_back(TileType::Gold);
+                    items.push_back(createItem(ItemType::Treasure, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '8':
+                    row.push_back(TileType::Gold);
+                    items.push_back(createItem(ItemType::Treasure, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                case '9':
+                    row.push_back(TileType::Gold);
+                    items.push_back(createItem(ItemType::Treasure, pos));
+                    gridRow.push_back(items.back().get());
+                    break;
+                // Default case for unrecognized characters
+                default: 
+                    row.push_back(TileType::Nothing);
+                    gridRow.push_back(nullptr); 
+                    break;
+            } // switch (c)
+            y++;
+        } // for (char c : line)
+        grid.push_back(gridRow);
         tileTypes.push_back(row);
-    }
+        x++;
+    } // while (getline(is, line))
 }
 
 Floor::Floor(){
     // Initialize the grid with empty chambers
-    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
+    GeneratePlayer();
     GenerateStairs();
     GenerateEntities();
-    GeneratePlayer();
     notifyObservers(); // Notify observers that the floor has been initialized
 }
 
 Floor::Floor(std::istream &is) {
-    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     readFromStream(is);
     notifyObservers(); // Notify observers that the floor has been initialized
 }
 
 Floor::Floor(std::istream &is, int seed) {
-    grid.resize(25, vector<std::unique_ptr<Entity>>(79, nullptr));
     readFromStream(is);
     // Set the random seed for the floor
     notifyObservers(); // Notify observers that the floor has been initialized
