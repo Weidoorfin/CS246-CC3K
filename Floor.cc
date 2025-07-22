@@ -15,9 +15,9 @@ export class Floor : public Subject {
 
     vector<vector<std::unique_ptr<Entity>>> grid;
     vector<vector<TileType>> tileTypes; // Types of tiles in the grid
-    vector<unique_ptr<Enemy>> enemies; // List of enemies on the floor
-    vector<unique_ptr<Item>> items; // List of items on the floor
-    unique_ptr<Player> player; // Player on the floor
+    vector<std::unique_ptr<Enemy>> enemies; // List of enemies on the floor
+    vector<std::unique_ptr<Item>> items; // List of items on the floor
+    std::unique_ptr<Player> player; // Player on the floor
 
     getEmptyMap(std::istream &is); // Read an empty map from input stream
     void GenerateStairs(); // Generate stairs on the floor
