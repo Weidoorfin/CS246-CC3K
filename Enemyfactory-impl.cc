@@ -8,14 +8,14 @@ import enums;
 Enemy EnemyFactory::createEnemy(EnemyType type, Position pos) {
     switch (type) {
         case EnemyType::DRAGON:
-            return Dragon(Position pos);
+            return std::make_unique<Dragon>(pos);
         case EnemyType::DWARF:
-            return Dwarf(Position pos);
+            return std::make_unique<Dwarf>(pos);
         case EnemyType::ELF:
-            return Elf(Position pos);
+            return std::make_unique<Elf>(pos);
         case EnemyType::HALFLING:
-            return Halfling(Position pos);
+            return std::make_unique<Halfling>(pos);
         case EnemyType::HUMAN:
-          return Human(Position pos);
+          return std::make_unique<Human>(pos);
     }
 }

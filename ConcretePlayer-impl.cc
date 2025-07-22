@@ -1,6 +1,10 @@
 module concreteplayer;
 
+import <memory>;
+import position;
 import player;
+import enums;
+import character;
 
 Shade::Shade() : Player(Race::SHADE, 150, 25, 25, position) {
 }

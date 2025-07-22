@@ -1,7 +1,10 @@
 export module concreteplayer;
 
+import <memory>;
+import position;
 import player;
 import enums;
+import character;
 
 export class Shade: public Player {
 public:

@@ -7,6 +7,8 @@ import enums;
 import chamber;
 import enemy;
 import item;
+import potion;
+import treasure;
 import position;
 import abstractos;
 import entity;
@@ -68,134 +70,123 @@ void Floor::readFromStream(std::istream &is) {
     string line;
     int x = 0;
     while (getline(is, line)) {
-        vector<TileType> row;
-        vector<Entity*> gridRow; // Store entities in the grid
         int y = 0;
+        vector<Entity*> gridRow; // Store entities in the grid
+        vector<Entity*> terrainRow;
+        EnemyFactory ef;
+        PotionFactory pf;
+        TreasureFactory tf;
         for (char c : line) {
             Position pos{x, y};
             switch (c) {
-                case '-': 
-                    row.push_back(TileType::HorizontalWall);
-                    gridRow.push_back(nullptr);
+                case '-':
+                    tiles.push_back(std::make_unique<Tile>(TileType::HorizontalWall, pos));
+                    terrainRow.push_back(tiles.back().get());
                     break;
                 case '|': 
-                    row.push_back(TileType::VerticalWall);
-                    gridRow.push_back(nullptr);
+                    tiles.push_back(std::make_unique<Tile>(TileType::VerticalWall, pos));
+                    terrainRow.push_back(tiles.back().get());
                     break;
                 case '.':  
-                    row.push_back(TileType::Floor);
-                    gridRow.push_back(nullptr);
+                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    terrainRow.push_back(tiles.back().get());
                     break;
                 case '+': 
-                    row.push_back(TileType::Door);
-                    gridRow.push_back(nullptr);
+                    tiles.push_back(std::make_unique<Tile>(TileType::Door, pos));
+                    terrainRow.push_back(tiles.back().get());
                     break;
                 case '#': 
-                    row.push_back(TileType::Corridor);
-                    gridRow.push_back(nullptr);
+                    tiles.push_back(std::make_unique<Tile>(TileType::Corridor, pos));
+                    terrainRow.push_back(tiles.back().get());
                     break;
                 case '/': 
-                    row.push_back(TileType::Stair);
-                    gridRow.push_back(nullptr);
-                    stairs.push_back(pos);
+                    tiles.push_back(std::make_unique<Tile>(TileType::Stair, pos));
+                    terrainRow.push_back(tiles.back().get());
+                    stairs = pos;
                     break;
                 // Handle generated entities
+                case ' ':
+                    tiles.push_back(std::make_unique<Tile>(TileType::Nothing, pos));
+                    terrainRow.push_back(tiles.back().get()); 
+                    break;
                 case '@': 
-                    row.push_back(TileType::Player);
-                    gridRow.push_back(nullptr);
+                    // Create player entity
+                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    gridRow.push_back(player);
+                    
                     break;
                 case 'H':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Human, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Human, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'W':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Dwarf, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Dwarf, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'E':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Elf, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Elf, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'O':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Orcs, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Orcs, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'M':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Merchant, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Merchant, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'D':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Dragon, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Dragon, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'L':
-                    row.push_back(TileType::Enemy);
-                    enemies.push_back(createEnemy(EnemyType::Halfling, pos));
+                    enemies.push_back(ef.createEnemy(EnemyType::Halfling, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
-                // Handle items
                 case '0':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::RH, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::RH, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
                 case '1':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::BA, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::BA, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
                 case '2':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::BD, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::BD, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
                 case '3':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::PH, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::PH, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
                 case '4':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::WA, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::WA, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
                 case '5':
-                    row.push_back(TileType::Potion);
-                    items.push_back(createItem(ItemType::WD, pos));
-                    gridRow.push_back(items.back().get());
+                    potions.push_back(pf.createPotion(PotionType::WD, pos));
+                    gridRow.push_back(potions.back().get());
                     break;
-                case '6':
-                    row.push_back(TileType::Gold);
-                    items.push_back(createItem(ItemType::Gold, pos));
-                    gridRow.push_back(items.back().get());
+                case '6': // small
+                    treasures.push_back(tf.createTreasure(TreasureType::SMALL, pos));
+                    gridRow.push_back(treasures.back().get());
                     break;
-                case '7':
-                    row.push_back(TileType::Gold);
-                    items.push_back(createItem(ItemType::Treasure, pos));
-                    gridRow.push_back(items.back().get());
+                case '7': // medium
+                    treasures.push_back(tf.createTreasure(TreasureType::NORMAL, pos));
+                    gridRow.push_back(treasures.back().get());
                     break;
-                case '8':
-                    row.push_back(TileType::Gold);
-                    items.push_back(createItem(ItemType::Treasure, pos));
-                    gridRow.push_back(items.back().get());
+                case '8': // merchant
+                    treasures.push_back(tf.createTreasure(TreasureType::MERCHANT, pos));
+                    gridRow.push_back(treasures.back().get());
                     break;
-                case '9':
-                    row.push_back(TileType::Gold);
-                    items.push_back(createItem(ItemType::Treasure, pos));
-                    gridRow.push_back(items.back().get());
+                case '9': // dragon
+                    treasures.push_back(tf.createTreasure(TreasureType::DRAGON, pos));
+                    gridRow.push_back(treasures.back().get());
                     break;
-                // Default case for unrecognized characters
-                default: 
-                    row.push_back(TileType::Nothing);
-                    gridRow.push_back(nullptr); 
-                    break;
-            } // switch (c)
+                default:
+                    // Handle unrecognized characters
+                
+            }
             y++;
         } // for (char c : line)
         grid.push_back(gridRow);
@@ -229,11 +220,84 @@ void Floor::setPlayer(std::unique_ptr<Player> p) {
     player = std::move(p);
 }
 
-
+Position target(Position curr, Direction dir) {
+    switch (dir) {
+        case Direction::N:
+            return Position{curr.x, curr.y - 1};
+        case Direction::NE:
+            return Position{curr.x + 1, curr.y - 1};
+        case Direction::E:
+            return Position{curr.x + 1, curr.y};
+        case Direction::SE:
+            return Position{curr.x + 1, curr.y + 1};
+        case Direction::S:
+            return Position{curr.x, curr.y + 1};
+        case Direction::SW:
+            return Position{curr.x - 1, curr.y + 1};
+        case Direction::W:
+            return Position{curr.x - 1, curr.y};
+        case Direction::NW:
+            return Position{curr.x - 1, curr.y - 1};
+        default:
+            return curr; // No movement if direction is invalid
+    }
+}
 
 bool Floor::isComplete() const {
     return complete;
 }
+
+bool Floor::playerMove(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.x][next.y]->isSpace()) {
+        player->move(dir);
+        std::swap(grid[curr.x][curr.y], grid[next.x][next.y]);
+        notifyObservers(); // Notify observers of the player's move
+        return true;
+    }
+    return false;
+    // isFloor() for enemy
+}
+
+bool Floor::playerAttack(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.x][next.y]->getEntityType() == EntityType::ENEMY) {
+        auto* enemy = dynamic_cast<Enemy*>(grid[next.x][next.y]);
+        player->attack(grid[next.x][next.y]);
+        if (enemy->isDead()) {
+            handleEnemyDeath(enemy);
+            notifyObservers(); // Notify observers of the enemy's death
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Floor::playerUseItem(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.x][next.y]->getEntityType() == EntityType::ITEM) {
+        auto* item = dynamic_cast<Item*>(grid[next.x][next.y]);
+        player->useItem(item);
+        // Remove the item from the grid
+        grid[next.x][next.y] = nullptr;
+        notifyObservers(); // Notify observers of the item usage
+        return true;
+    }
+    return false;
+}
+
+void Floor::enemyTurn() {
+
+}
+
+void Floor::handleEnemyDeath(Enemy* enemy) {
+    
+}
+
+
 
 
 // enemy具体的attack和move的逻辑（比如merchant非hostile时不攻击，dragon不移动）由method override来实现，
