@@ -26,6 +26,7 @@ export class Orc : public Enemy {
   public:
     Orc(Position pos);
     ~Orc();
+    void attack(Character &target) override; // Override attack to handle special Orc behavior
 }
 
 export class Merchant : public Enemy {
