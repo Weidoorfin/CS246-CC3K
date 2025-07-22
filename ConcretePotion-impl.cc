@@ -2,12 +2,16 @@ module concretepotion;
 
 // Permanent effects: directly modify HP, return same player
 std::unique_ptr<Player> RH::applyEffect(std::unique_ptr<Player> player) const {
-    player->gainHP(10);
+    int healAmount = 10;
+    healAmount = healAmount * player->getPotionMultiplier();
+    player->gainHP(healAmount);
     return player;
 }
 
 std::unique_ptr<Player> PH::applyEffect(std::unique_ptr<Player> player) const {
-    player->loseHP(10);
+    int amount = 10;
+    amount = amount * player->getPotionMultiplier();
+    player->loseHP(amount);
     return player;
 }
 
