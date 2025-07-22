@@ -2,14 +2,17 @@ export module randomengine;
 
 import <cstdint>;
 import <vector>;
+import <map>;
 import <chrono>;
 import <random>;
 import <algorithm>;
 import <chrono>;
 import enums;
 
+
 export class RandomEngine {
     inline static uint32_t global_seed = 0;
+    // Frequency distribution of enemy based on their race
 public:
     RandomEngine();
 

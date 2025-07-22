@@ -2,10 +2,12 @@ module randomengine;
 
 import <cstdint>;
 import <vector>;
+import <map>;
 import <random>;
 import <algorithm>;
 import <chrono>;
 import PRNG;
+import config;
 
 
 RandomEngine::RandomEngine() {}
@@ -54,17 +56,19 @@ bool RandomEngine::chance(int num, int denom) const {
 }
 
 Race RandomEngine::genEnemyRace() const {
-    std::vector<Race> races{
-        Race::HUMAN, Race::DWARF, Race::ELF, Race::ORCS, 
-        Race::MERCHANT, Race::DRAGON, Race::HALFLING
-    };
-    std::vector<int> frequency{4, 3, 5, 2, 2, 2};
-    int total_freq = std::accumulate(frequency.begin(), frequency.end(), 0); // calculate total frequency
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
+    // calculate total frequency
+    int total_freq = 0;
+    for (const auto& [key, value] : EnemyConfig::enemyFrequency) {
+        total_freq += value;
+    }
     std::vector<Race> result;
     // build frequency array
-    for (int i : frequency) {
-        for (int j = 0; j < frequency[i]; ++j) {
-            result.push_back(races[i]);
+    for (const auto& [key, value] : EnemyConfig::enemyFrequency) {
+        for (int i = 0; i < value; ++i) {
+            result.push_back(key);
         }
     }
     // Shuffle the result to randomize the selection
