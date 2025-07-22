@@ -17,7 +17,9 @@ public:
     void setSeed(uint32_t seed);
     uint32_t getSeed() const;
 
-    std::vector<Direction> genDirections() const;
-    bool chance(int prob) const; // produce true for prob% chance
+    bool chance(int prob) const; // produce true for prob% of times
+    bool chance(int num, int denom) const; // produce true for num/denom of times
+    std::vector<Direction> genDirections() const; // generate a shuffled vector of directions
+    Race genEnemyRace() const; // generate a random enemy based on the predefined probability distribution
 };
 
