@@ -154,48 +154,75 @@ GameState Game::run() {
         }
         td->display();
         string cmd;
-        std::cout << "Enter command: ";
-        getline(std::cin, cmd);
-        istringstream iss{cmd};
-        string command;
-        iss >> command;
-        if (isDirection(command)) {
-            auto dir = getDirection(command);
-            if (!floors[currFloor]->playerMove(dir)) {
-                std::cout << "Invalid place to move!" << std::endl;
-            }
-        } else if (command == "a") {
-            iss >> command; // Get the target direction for attack
+        std::cout << "Enter command (input e to finish round): " << std::endl;
+        vector<bool> validCommands(3, true);
+        bool finish = false;
+        while (!finish) {
+            getline(std::cin, cmd);
+            istringstream iss{cmd};
+            string command;
+            iss >> command;
             if (isDirection(command)) {
-                auto dir = getDirection(command);
-                if (!floors[currFloor]->playerAttack(dir)) {
-                    std::cout << "No enemy to attack!" << std::endl;
+                if (!validCommands[0]) {
+                    std::cout << "You have performed this action already." << std::endl;
+                    continue;
                 }
-            } else {
-                std::cout << "Invalid direction for attack." << std::endl;
-            }
-        } else if (command == "u") {
-            iss >> command; // Get the target direction for use item
-            if (isDirection(command)) {
+                validCommands[0] = false; // Mark the command as used
                 auto dir = getDirection(command);
-                if (!floors[currFloor]->playerUseItem(dir)) {
-                    std::cout << "No item to use!" << std::endl;
+                if (!floors[currFloor]->playerMove(dir)) {
+                    std::cout << "Invalid place to move!" << std::endl;
                 }
+            } else if (command == "a") {
+                iss >> command; // Get the target direction for attack
+                if (!validCommands[1]) {
+                    std::cout << "You have performed this action already." << std::endl;
+                    continue;
+                }
+                validCommands[1] = false; // Mark the command as used
+                if (isDirection(command)) {
+                    auto dir = getDirection(command);
+                    if (!floors[currFloor]->playerAttack(dir)) {
+                        std::cout << "No enemy to attack!" << std::endl;
+                    }
+                } else {
+                    std::cout << "Invalid direction for attack." << std::endl;
+                }
+            } else if (command == "u") {
+                if (!validCommands[2]) {
+                    std::cout << "You have performed this action already." << std::endl;
+                    continue;
+                }
+                validCommands[2] = false; // Mark the command as used
+                iss >> command; // Get the target direction for use item
+                if (isDirection(command)) {
+                    auto dir = getDirection(command);
+                    if (!floors[currFloor]->playerUseItem(dir)) {
+                        std::cout << "No item to use!" << std::endl;
+                    }
+                } else {
+                    std::cout << "Invalid direction for use item." << std::endl;
+                }
+            } else if (command == "q") {
+                return GameState::Quit; // Quit the game
+            } else if (command == "f") {
+                enemy->moveToggle();
+            } else if (command == "r") {
+                return GameState::Restart; // Restart the game
+            } else if (command == "e") {
+                break;
             } else {
-                std::cout << "Invalid direction for use item." << std::endl;
+                std::cout << "Invalid command. Please try again." << std::endl;
             }
-        } else if (command == "q") {
-            return GameState::Quit; // Quit the game
-        } else if (command == "f") {
-            enemy->moveToggle();
-        } else if (command == "r") {
-            return GameState::Restart; // Restart the game
-        } else {
-            std::cout << "Invalid command. Please try again." << std::endl;
+            finish = true;
+            for (auto p : validCommands) {
+                if (p) {
+                    finish = false;
+                    break;
+                }
+            }
         }
         // Auto Enemy move
-
-        player->onTurn();
+        floors[currFloor]->enemyTurn(); // Handle enemy actions
     } // while (player->isAlive())
     endGame(false);
     return GameState::Finish; // Player has died, end the game
