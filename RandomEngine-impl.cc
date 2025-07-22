@@ -30,8 +30,7 @@ vector<Direction> RandomEngine::genDirections() {
         Direction::N, Direction::NE, Direction::E, Direction::SE,
         Direction::S, Direction::SW, Direction::W, Direction::NW
     };
-    std::default_random_engine rng{global_seed};
-    std::shuffle(directions.begin(), directions.end(), rng);
+    std::shuffle(directions.begin(), directions.end(), std::default_random_engine rng{global_seed});
     return directions; // return a random direction
 }
 
@@ -42,4 +41,33 @@ bool RandomEngine::chance(int prob) const {
         return false; // Invalid probability, return false
     }
     return rng(100) < prob; // return true with prob% chance
+}
+
+bool RandomEngine::chance(int num, int denom) const {
+    if (denom <= 0 || num < 0 || num > denom) {
+        return false; // Invalid fraction, return false
+    }
+    std:vector<int> chances(denom, 0); // vector fill constructor
+    std::fill(chances.begin(), chances.begin() + num, 1); // Fill with 1s for success
+    std::shuffle(chances.begin(), chances.end(), std::default_random_engine{global_seed});
+    return chances[0];
+}
+
+Race RandomEngine::genEnemyRace() const {
+    std::vector<Race> races{
+        Race::HUMAN, Race::DWARF, Race::ELF, Race::ORCS, 
+        Race::MERCHANT, Race::DRAGON, Race::HALFLING
+    };
+    std::vector<int> frequency{4, 3, 5, 2, 2, 2};
+    int total_freq = std::accumulate(frequency.begin(), frequency.end(), 0); // calculate total frequency
+    std::vector<Race> result;
+    // build frequency array
+    for (int i : frequency) {
+        for (int j = 0; j < frequency[i]; ++j) {
+            result.push_back(races[i]);
+        }
+    }
+    // Shuffle the result to randomize the selection
+    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    return result[0]; // return a random
 }
