@@ -1,5 +1,9 @@
 module potiondecorator;
-    
+
+import <memory>;
+import player;
+import character;
+import item;
 
 PotionDecorator::PotionDecorator(std::unique_ptr<Player> wrapped) : 
     Player{wrapped->getRace()}, base{std::move(wrapped)} {}

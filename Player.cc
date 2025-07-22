@@ -1,9 +1,8 @@
 export module player;
 
+import <memory>;
 import enums;
-import playerfactory;
 import character;
-import PRNG;
 
 export class Player : public Character {
     int Gold;

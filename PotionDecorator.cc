@@ -1,7 +1,9 @@
 export module potiondecorator;
 
-import player;
 import <memory>;
+import player;
+import character;
+import item;
 
 export class PotionDecorator : public Player {
 protected:

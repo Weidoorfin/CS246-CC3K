@@ -1,11 +1,12 @@
 module treasure;
 
+import <memory>;
 import item;
-import entity;
 import player;
-import enums;
+import position;
 
-Treasure::Treasure(int value) : value{value} {
+Treasure::Treasure(int value, Position pos)
+    : Item{'G', 0, pos}, value{value} {
     entity = EntityType::TREASURE; // Set the entity type to TREASURE
 }
 

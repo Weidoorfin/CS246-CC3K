@@ -1,6 +1,10 @@
 export module concretedecorator;
 
+import <memory>;
+import player;
+import potion;
 import potiondecorator;
+import character;
 
 export class BAEff : public PotionDecorator {
 public:

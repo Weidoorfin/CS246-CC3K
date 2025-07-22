@@ -8,6 +8,12 @@ import floor;
 import player;
 import textdisplay;
 
+void nextFloor() {
+        currFloor++;
+        floors[currFloor]->setPlayer(std::move(player));
+        td->updateFloor(currFloor);
+}
+
 Direction Game::getDirection(string s) {
     if (s == "N") return Direction::N;
     else if (s == "NE") return Direction::NE;
@@ -155,12 +161,16 @@ GameState Game::run() {
         iss >> command;
         if (isDirection(command)) {
             auto dir = getDirection(command);
-            floors[currFloor]->playerMove(dir);
+            if (!floors[currFloor]->playerMove(dir)) {
+                std::cout << "Invalid place to move!" << std::endl;
+            }
         } else if (command == "a") {
             iss >> command; // Get the target direction for attack
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                floors[currFloor]->playerAttack(dir);
+                if (!floors[currFloor]->playerAttack(dir)) {
+                    std::cout << "No enemy to attack!" << std::endl;
+                }
             } else {
                 std::cout << "Invalid direction for attack." << std::endl;
             }
@@ -168,7 +178,9 @@ GameState Game::run() {
             iss >> command; // Get the target direction for use item
             if (isDirection(command)) {
                 auto dir = getDirection(command);
-                floors[currFloor]->playerUseItem(dir);
+                if (!floors[currFloor]->playerUseItem(dir)) {
+                    std::cout << "No item to use!" << std::endl;
+                }
             } else {
                 std::cout << "Invalid direction for use item." << std::endl;
             }

@@ -1,6 +1,11 @@
 module concreteplayer;
 
+import <memory>;
+import position;
 import player;
+import enums;
+import character;
+import randomengine;
 
 Shade::Shade() : Player(Race::SHADE, 150, 25, 25, position) {
 }
@@ -37,9 +42,9 @@ void Vampire::gainHP(int inc) {
 
 void Vampire::attack(Character &target) {
     if (target.getRace() == Race::HALFLING) {
-        PRNG rng;
-        int result = rng(1);
-        if (result == 0) {
+        RandomEngine rng;
+        // Halflings have a 50% chance to dodge the attack
+        if (rng.chance(50)) {
             return;
         }
     }

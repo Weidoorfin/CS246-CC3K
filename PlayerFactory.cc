@@ -1,7 +1,9 @@
 export module playerfactory;
 
+import <memory>;
 import player;
 import enums;
+import position;
 
 export class PlayerFactory {
 public:

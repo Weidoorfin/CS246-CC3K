@@ -4,8 +4,6 @@ export module PRNG;
 import <cstdint>;
 import <cassert>;
 
-export uint32_t global_seed = 123456789; // Default seed value
-
 export class PRNG {
     uint32_t seed_;
 public:
@@ -36,4 +34,3 @@ public:
         return operator()(u - l) + l;
     }
 };
-

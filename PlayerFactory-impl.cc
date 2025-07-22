@@ -1,4 +1,9 @@
-module factory;
+module playerfactory;
+
+import <memory>;
+import player;
+import enums;
+import position;
 
 static std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position pos) {
     switch(race) {

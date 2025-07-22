@@ -1,12 +1,15 @@
 export module treasure;
 
+import <memory>;
 import item;
+import player;
+import position;
 
 export class Treasure : public Item {
 protected:
     int value; // Amount of gold this treasure is worth
 public:
-    explicit Treasure(int value);
+    explicit Treasure(int value, Position pos);
     int getValue() const;
     std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
     virtual ~Treasure() = default;

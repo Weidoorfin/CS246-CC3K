@@ -1,8 +1,8 @@
 module player;
 
+import <memory>;
 import <cmath>;
 import enums;
-import playerfactory;
 import character;
 import PRNG;
 

@@ -1,9 +1,12 @@
 module potion;
 
+import <memory>;
+import item;
 import enums;
-import entity;
+import position;
+import player;
 
 Potion::Potion(Position pos)
-    : Item{'P', 0, pos} {
+    : Item{'P', 0, pos}, type{type} {
     entity = EntityType::POTION; // Set the entity type to POTION
 }

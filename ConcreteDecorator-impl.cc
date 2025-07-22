@@ -1,5 +1,11 @@
 module concretedecorator;
 
+import <memory>;
+import player;
+import potion;
+import potiondecorator;
+import character;
+
 BAEff::BAEff(std::unique_ptr<Player> wrapped) : PotionDecorator(std::move(wrapped)) {}
 
 int BAEff::getAtk() const {
