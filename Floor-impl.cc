@@ -25,6 +25,148 @@ import treasurefactory;
 import potionfactory;
 
 
+Floor::Floor(){
+    // Initialize the grid with empty chambers
+    ifstream emptyMap("emptyfloor.txt");
+    getEmptyMap(emptyMap);
+    identifyChambers();
+    GeneratePlayerpos();
+    GenerateStairs();
+    GenerateEntities();
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+Floor::Floor(std::istream &is) {
+    readFromStream(is);
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+Floor::Floor(std::istream &is, int seed) {
+    readFromStream(is);
+    // Set the random seed for the floor
+    notifyObservers(); // Notify observers that the floor has been initialized
+}
+
+void Floor::setPlayer(std::unique_ptr<Player> p) {
+    player = std::move(p);
+    player->setPosition(playerpos);
+}
+
+bool Floor::isComplete() const {
+    return complete;
+}
+
+bool Floor::playerMove(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.y][next.x]->isSpace()) {
+        if (grid[next.y][next.x]->getEntityType() == EntityType::STAIR) {
+            complete = true; // Player has reached the stairs
+        } else if (grid[next.y][next.x]->getEntityType() == EntityType::TREASURE) {
+            auto treasure = dynamic_cast<Treasure*>(grid[next.y][next.x]);
+            player->useItem(treasure);
+            grid[next.y][next.x] = nullptr;
+        }
+        player->move(dir);
+        std::swap(grid[curr.y][curr.x], grid[next.y][next.x]);
+        notifyObservers(); // Notify observers of the player's move
+        return true;
+    }
+    return false;
+    // isFloor() for enemy
+}
+
+bool Floor::playerAttack(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
+        auto enemy = dynamic_cast<Enemy*>(grid[next.y][next.x]);
+        player->attack(grid[next.y][next.x]);
+        if (enemy->isDead()) {
+            handleEnemyDeath(enemy);
+            notifyObservers(); // Notify observers of the enemy's death
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Floor::playerUseItem(Direction dir) {
+    Position curr = player->getPos();
+    Position next = target(curr, dir);
+    if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
+        auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
+        player->useItem(potion);
+        // Remove the item from the grid
+        grid[next.y][next.x] = nullptr;
+        notifyObservers(); // Notify observers of the item usage
+        return true;
+    }
+    return false;
+}
+
+// Perform enemy actions for the turn
+void Floor::enemyTurn() {
+    for (auto enemy : enemies) {
+        enemy->moveToggle();
+    }
+    for (int y = 0; y < grid[0].size(); ++y) {
+        for (int x = 0; x < grid.size(); ++x) {
+            Entity* entity = grid[x][y];
+            if (entity && entity->getEntityType() == EntityType::ENEMY) {
+                Enemy* enemy = dynamic_cast<Enemy*>(entity);
+                if (enemy->getMoveToggle()) {
+                    for (int dx = -1; dx <= 1 && !attacked; ++dx) {
+                        for (int dy = -1; dy <= 1 && !attacked; ++dy) {
+                            if (dx == 0 && dy == 0) continue;
+                            int nx = x + dx, ny = y + dy;
+                            if(adjacent(enemy->getPos(), player->getPos()) && 
+                               grid[ny][nx] && 
+                               grid[ny][nx]->getEntityType() == EntityType::PLAYER) {
+                                enemy->attack(*player);
+                                enemy->moveToggle();
+                                notifyObservers(); // Notify observers of the attack
+                            }
+                        }
+                    }
+                    RandomEngine rng;
+                    vector<Direction> directions = rng.genDirections();
+
+                    for (auto &dir : directions) {
+                        Position next = target(enemy->getPos(), dir);
+                        if (grid[next.y][next.x]->isSpace()) {
+                            enemy->move(dir);
+                            std::swap(grid[enemy->getPos().y][enemy->getPos().x], grid[next.y][next.x]);
+                            notifyObservers();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+void Floor::handleEnemyDeath(Enemy* enemy) {
+    Position pos = enemy->getPos();
+    grid[pos.y][pos.x] = nullptr;
+
+    if (auto merchant = dynamic_cast<Merchant*>(enemy)) {
+        treasures.push_back(tf.createTreasure(TreasureType::SMALL, pos));
+        grid[pos.y][pos.x] = treasures.back().get();
+    } else if (auto human = dynamic_cast<Human*>(enemy)) {
+        treasures.push_back(tf.createTreasure(TreasureType::MERCHANT, pos));
+        grid[pos.y][pos.x] = treasures.back().get();
+    }
+    auto it = std::find_if(enemies.begin(), enemies.end(),
+        [enemy](const std::unique_ptr<Enemy>& e) { return e.get() == enemy; });
+    if (it != enemies.end()) enemies.erase(it);
+
+    notifyObservers();
+}
+
 void Floor::getEmptyMap(std::istream &is) {
     // Implementation for reading an empty map from the input stream
     // This will populate the grid and tileTypes with initial values
@@ -111,7 +253,7 @@ void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vect
     }
 }
 
-void Floor::GeneratePlayer() {
+void Floor::GeneratePlayerpos() {
     // Implementation for generating the player on the floor
     int r = randomEngine.genIndex(0, chambers.size() - 1);
     Position playerPos = chambers[r]->getRandomTile();
@@ -336,33 +478,6 @@ void Floor::readFromStream(std::istream &is) {
     } // while (getline(is, line))
 }
 
-Floor::Floor(){
-    // Initialize the grid with empty chambers
-    ifstream emptyMap("emptyfloor.txt");
-    getEmptyMap(emptyMap);
-    identifyChambers();
-    GeneratePlayerpos();
-    GenerateStairs();
-    GenerateEntities();
-    notifyObservers(); // Notify observers that the floor has been initialized
-}
-
-Floor::Floor(std::istream &is) {
-    readFromStream(is);
-    notifyObservers(); // Notify observers that the floor has been initialized
-}
-
-Floor::Floor(std::istream &is, int seed) {
-    readFromStream(is);
-    // Set the random seed for the floor
-    notifyObservers(); // Notify observers that the floor has been initialized
-}
-
-void Floor::setPlayer(std::unique_ptr<Player> p) {
-    player = std::move(p);
-    player->setPosition(playerpos);
-}
-
 Position target(Position curr, Direction dir) {
     switch (dir) {
         case Direction::N:
@@ -386,123 +501,6 @@ Position target(Position curr, Direction dir) {
     }
 }
 
-bool Floor::isComplete() const {
-    return complete;
-}
-
 bool isAdjacent(Position a, Position b) {
     return (abs(a.x - b.x) <= 1 && abs(a.y - b.y) <= 1);
 }
-
-bool Floor::playerMove(Direction dir) {
-    Position curr = player->getPos();
-    Position next = target(curr, dir);
-    if (grid[next.y][next.x]->isSpace()) {
-        if (grid[next.y][next.x]->getEntityType() == EntityType::STAIR) {
-            complete = true; // Player has reached the stairs
-        } else if (grid[next.y][next.x]->getEntityType() == EntityType::TREASURE) {
-            auto treasure = dynamic_cast<Treasure*>(grid[next.y][next.x]);
-            player->useItem(treasure);
-            grid[next.y][next.x] = nullptr;
-        }
-        player->move(dir);
-        std::swap(grid[curr.y][curr.x], grid[next.y][next.x]);
-        notifyObservers(); // Notify observers of the player's move
-        return true;
-    }
-    return false;
-    // isFloor() for enemy
-}
-
-bool Floor::playerAttack(Direction dir) {
-    Position curr = player->getPos();
-    Position next = target(curr, dir);
-    if (grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
-        auto enemy = dynamic_cast<Enemy*>(grid[next.y][next.x]);
-        player->attack(grid[next.y][next.x]);
-        if (enemy->isDead()) {
-            handleEnemyDeath(enemy);
-            notifyObservers(); // Notify observers of the enemy's death
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Floor::playerUseItem(Direction dir) {
-    Position curr = player->getPos();
-    Position next = target(curr, dir);
-    if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
-        auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
-        player->useItem(potion);
-        // Remove the item from the grid
-        grid[next.y][next.x] = nullptr;
-        notifyObservers(); // Notify observers of the item usage
-        return true;
-    }
-    return false;
-}
-
-// Perform enemy actions for the turn
-void Floor::enemyTurn() {
-    for (auto enemy : enemies) {
-        enemy->moveToggle();
-    }
-    for (int y = 0; y < grid[0].size(); ++y) {
-        for (int x = 0; x < grid.size(); ++x) {
-            Entity* entity = grid[x][y];
-            if (entity && entity->getEntityType() == EntityType::ENEMY) {
-                Enemy* enemy = dynamic_cast<Enemy*>(entity);
-                if (enemy->getMoveToggle()) {
-                    for (int dx = -1; dx <= 1 && !attacked; ++dx) {
-                        for (int dy = -1; dy <= 1 && !attacked; ++dy) {
-                            if (dx == 0 && dy == 0) continue;
-                            int nx = x + dx, ny = y + dy;
-                            if(adjacent(enemy->getPos(), player->getPos()) && 
-                               grid[ny][nx] && 
-                               grid[ny][nx]->getEntityType() == EntityType::PLAYER) {
-                                enemy->attack(*player);
-                                enemy->moveToggle();
-                                notifyObservers(); // Notify observers of the attack
-                            }
-                        }
-                    }
-                    RandomEngine rng;
-                    vector<Direction> directions = rng.genDirections();
-
-                    for (auto &dir : directions) {
-                        Position next = target(enemy->getPos(), dir);
-                        if (grid[next.y][next.x]->isSpace()) {
-                            enemy->move(dir);
-                            std::swap(grid[enemy->getPos().y][enemy->getPos().x], grid[next.y][next.x]);
-                            notifyObservers();
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-
-void Floor::handleEnemyDeath(Enemy* enemy) {
-    Position pos = enemy->getPos();
-    grid[pos.y][pos.x] = nullptr;
-
-    if (auto merchant = dynamic_cast<Merchant*>(enemy)) {
-        treasures.push_back(tf.createTreasure(TreasureType::SMALL, pos));
-        grid[pos.y][pos.x] = treasures.back().get();
-    } else if (auto human = dynamic_cast<Human*>(enemy)) {
-        treasures.push_back(tf.createTreasure(TreasureType::MERCHANT, pos));
-        grid[pos.y][pos.x] = treasures.back().get();
-    }
-    auto it = std::find_if(enemies.begin(), enemies.end(),
-        [enemy](const std::unique_ptr<Enemy>& e) { return e.get() == enemy; });
-    if (it != enemies.end()) enemies.erase(it);
-
-    notifyObservers();
-}
-
-
