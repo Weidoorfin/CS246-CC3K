@@ -25,5 +25,7 @@ public:
     vector<int> genIndices(int l, int u) const; // generate a shuffled vector of indices in the range [l, u)
     std::vector<Direction> genDirections() const; // generate a shuffled vector of directions
     Race genEnemyRace() const; // generate a random enemy based on the predefined probability distribution
+    PotionType genPotionType() const; // generate a random potion type based on the predefined probability distribution
+    TreasureType genTreasureType() const; // generate a random treasure type based on the
 };
 

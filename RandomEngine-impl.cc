@@ -95,3 +95,45 @@ Race RandomEngine::genEnemyRace() const {
     std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
     return result[0]; // return a random
 }
+
+PotionType RandomEngine::genPotionType() const {
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
+    // calculate total frequency
+    int total_freq = 0;
+    for (const auto& [key, value] : PotionConfig::potionFrequency) {
+        total_freq += value;
+    }
+    std::vector<PotionType> result;
+    // build frequency array
+    for (const auto& [key, value] : PotionConfig::potionFrequency) {
+        for (int i = 0; i < value; ++i) {
+            result.push_back(key);
+        }
+    }
+    // Shuffle the result to randomize the selection
+    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    return result[0]; // return a random potion type
+}
+
+TreasureType RandomEngine::genTreasureType() const {
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
+    // calculate total frequency
+    int total_freq = 0;
+    for (const auto& [key, value] : TreasureConfig::treasureFrequency) {
+        total_freq += value;
+    }
+    std::vector<TreasureType> result;
+    // build frequency array
+    for (const auto& [key, value] : TreasureConfig::treasureFrequency) {
+        for (int i = 0; i < value; ++i) {
+            result.push_back(key);
+        }
+    }
+    // Shuffle the result to randomize the selection
+    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    return result[0]; // return a random treasure type
+}

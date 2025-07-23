@@ -255,17 +255,19 @@ void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vect
 
 void Floor::GeneratePlayerpos() {
     // Implementation for generating the player on the floor
-    int r = randomEngine.genIndex(0, chambers.size() - 1);
+    RandomEngine re;
+    int r = re.genIndices(0, chambers.size() - 1)[0];
     Position playerPos = chambers[r]->getRandomTile();
     chambers[r]->setWithPlayer(); // Mark the chamber as occupied by player
     player->setPosition(playerPos);
 }
 
 void Floor::GenerateStairs() {
-    int r = randomEngine.genIndex(0, chambers.size() - 1);
-    if (chambers[r]->isWithPlayer()) {
-        // If the chamber already has a player, find another chamber
-        r = randomEngine.genIndex(0, chambers.size() - 1);
+    RandomEngine re;
+    vector<int> indices = re.genIndices(0, chambers.size() - 1);
+    int r = 0;
+    while (r < indices.size() && !chambers[indices[r]]->isWithPlayer()) {
+        r++;
     }
     stairs = chambers[r]->getRandomTile();
     tiles.push_back(std::make_unique<Tile>(TileType::Stair, stairs));
@@ -280,33 +282,39 @@ void Floor::GenerateEntities() {
     EnemyFactory ef;
     PotionFactory pf;
     TreasureFactory tf;
-    for (auto& chamber : chambers) {
-        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
-            Position enemyPos = chamber->getRandomTile();
-            auto enemy = ef.createEnemy(randomEngine.genEnemyType(), enemyPos);
-            enemies.push_back(std::move(enemy));
-            grid[enemyPos.y][enemyPos.x] = enemies.back().get(); // Place enemy in grid
-            chamber->addTile(enemyPos); // Add to chamber
+    RandomEngine re;
+    for (int i = 0; i < 20; i++) {
+        int r = re.genIndices(0, chambers.size() - 1)[0];
+        Position pos = chambers[r]->getRandomTile();
+        enemies.push_back(ef.createEnemy(re.genEnemyRace(), pos));
+        grid[pos.y][pos.x] = enemies.back().get();
+    } // generate enemies
+
+    // Generate potions
+    for (int i = 0; i < 10; i++) {
+        int r = re.genIndices(0, chambers.size() - 1)[0];
+        Position pos = chambers[r]->getRandomTile();
+        potions.push_back(pf.createPotion(re.genPotionType(), pos));
+        grid[pos.y][pos.x] = potions.back().get();
+    } // generate potions
+
+    // Generate treasures
+    for (int i = 0; i < 10; i++) {
+        int r = re.genIndices(0, chambers.size() - 1)[0];
+        Position pos = chambers[r]->getRandomTile();
+        treasures.push_back(tf.createTreasure(re.genTreasureType(), pos));
+        grid[pos.y][pos.x] = treasures.back().get();
+        if (treasures.back()->getTreasureType() == TreasureType::DRAGON) {
+            for (auto &dir : re.genDirections()) {
+                Position next = target(pos, dir);
+                if (grid[next.y][next.x]->isSpace()) {
+                    enemies.push_back(ef.createEnemy(EnemyType::Dragon, next));
+                    grid[next.y][next.x] = enemies.back().get();
+                    break;
+                }
+            }
         }
-    }
-    for (auto& chamber : chambers) {
-        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
-            Position potionPos = chamber->getRandomTile();
-            auto potion = pf.createPotion(randomEngine.genPotionType(), potionPos);
-            potions.push_back(std::move(potion));
-            grid[potionPos.y][potionPos.x] = potions.back().get(); // Place potion in grid
-            chamber->addTile(potionPos); // Add to chamber
-        }
-    }
-    for (auto& chamber : chambers) {
-        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
-            Position treasurePos = chamber->getRandomTile();
-            auto treasure = tf.createTreasure(randomEngine.genTreasureType(), treasurePos);
-            treasures.push_back(std::move(treasure));
-            grid[treasurePos.y][treasurePos.x] = treasures.back().get(); // Place treasure in grid
-            chamber->addTile(treasurePos); // Add to chamber
-        }
-    }
+    } // generate treasures
 }
 
 void Floor::readFromStream(std::istream &is) {
