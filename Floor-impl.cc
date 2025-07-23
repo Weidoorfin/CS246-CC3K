@@ -81,8 +81,42 @@ void Floor::getEmptyMap(std::istream &is) {
     }
 }
 
+void Floor::identifyChambers() {
+    int height = tileTypes.size();
+    int width = tileTypes[0].size();
+    std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            if (!visited[y][x] && tileTypes[y][x] == TileType::Floor) {
+                auto chamber = std::make_unique<Chamber>();
+                dfsFillChamber(x, y, chamber.get(), visited);
+                chambers.push_back(std::move(chamber));
+            }
+        }
+    }
+}
+
+void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vector<bool>>& visited) {
+
+    if (!visited[y][x] || tileTypes[y][x] != TileType::Floor) return;
+
+    visited[y][x] = true;
+    chamber->addTile(Position{x, y});
+
+    int dx[] = {1, -1, 0, 0};
+    int dy[] = {0, 0, 1, -1};
+    for (int d = 0; d < 4; ++d) {
+        dfsFillChamber(x + dx[d], y + dy[d], chamber, visited);
+    }
+}
+
 void Floor::GeneratePlayer() {
     // Implementation for generating the player on the floor
+    int r = randomEngine.genIndex(0, chambers.size() - 1);
+    Position playerPos = chambers[r]->getRandomTile();
+    chambers[r]->setWithPlayer(); // Mark the chamber as occupied by player
+    player->setPosition(playerPos);
 }
 
 void Floor::GenerateStairs() {
@@ -266,6 +300,7 @@ Floor::Floor(){
     // Initialize the grid with empty chambers
     ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
+    identifyChambers();
     GeneratePlayer();
     GenerateStairs();
     GenerateEntities();
@@ -372,9 +407,8 @@ void Floor::enemyTurn() {
     for (auto enemy : enemies) {
         enemy->moveToggle();
     }
-    int x = 0, y = 0;
-    for (y = 0; y < grid[x].size(); ++y) {
-        for (x = 0; x < grid.size(); ++x) {
+    for (int y = 0; y < grid[0].size(); ++y) {
+        for (int x = 0; x < grid.size(); ++x) {
             Entity* entity = grid[x][y];
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
@@ -394,7 +428,7 @@ void Floor::enemyTurn() {
                     }
                     RandomEngine rng;
                     vector<Direction> directions = rng.genDirections();
-                    
+
                     for (auto &dir : directions) {
                         Position next = target(enemy->getPos(), dir);
                         if (grid[next.y][next.x]->isSpace()) {

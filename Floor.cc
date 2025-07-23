@@ -20,6 +20,7 @@ export class Floor : public Subject {
     vector<std::unique_ptr<Potion>> potions; 
     vector<std::unique_ptr<Treasure>> treasures;
     vector<std::unique_ptr<Tile>> tiles;
+    vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
     Player *player; // Player on the floor ? // share_pointer?
 
     getEmptyMap(std::istream &is); // Read an empty map from input stream

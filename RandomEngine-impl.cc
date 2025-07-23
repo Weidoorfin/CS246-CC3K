@@ -6,6 +6,7 @@ import <map>;
 import <random>;
 import <algorithm>;
 import <chrono>;
+import <utility>;
 import PRNG;
 import config;
 
@@ -37,6 +38,9 @@ vector<Direction> RandomEngine::genDirections() {
 }
 
 bool RandomEngine::chance(int prob) const {
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
     PRNG rng{global_seed};
     // Check if the probability is within valid range
     if (prob < 0 || prob > 100) {
@@ -46,13 +50,29 @@ bool RandomEngine::chance(int prob) const {
 }
 
 bool RandomEngine::chance(int num, int denom) const {
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
     if (denom <= 0 || num < 0 || num > denom) {
         return false; // Invalid fraction, return false
     }
-    std:vector<int> chances(denom, 0); // vector fill constructor
+    std::vector<int> chances(denom, 0); // vector fill constructor
     std::fill(chances.begin(), chances.begin() + num, 1); // Fill with 1s for success
-    std::shuffle(chances.begin(), chances.end(), std::default_random_engine{global_seed});
+    
     return chances[0];
+}
+
+// requires l <= u
+vector<int> RandomEngine::genIndices(int l, int u) const {
+    if (global_seed == 0) {
+        setRandomSeed(); // Ensure a seed is set if not already
+    }
+    vector<int> indices(l - u + 1);
+    for (int i = l; i <= u; ++i) {
+        indices[i - l] = i;
+    }
+    std::shuffle(indices.begin(), indices.end(), std::default_random_engine{global_seed});
+    return indices; // return a shuffled vector of indices in the range [l, u)
 }
 
 Race RandomEngine::genEnemyRace() const {
