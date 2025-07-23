@@ -120,11 +120,51 @@ void Floor::GeneratePlayer() {
 }
 
 void Floor::GenerateStairs() {
-    // Implementation for generating stairs on the floor
+    int r = randomEngine.genIndex(0, chambers.size() - 1);
+    if (chambers[r]->isWithPlayer()) {
+        // If the chamber already has a player, find another chamber
+        r = randomEngine.genIndex(0, chambers.size() - 1);
+    }
+    stairs = chambers[r]->getRandomTile();
+    tiles.push_back(std::make_unique<Tile>(TileType::Stair, stairs));
+    terrain[stairs.y][stairs.x] = tiles.back().get(); // Set the stair tile in terrain
+    grid[stairs.y][stairs.x] = nullptr; // Stairs are not occupied by any entity
+    chambers[r]->addTile(stairs); // Add stairs
 }
 
+// not concrete, just a placeholder
 void Floor::GenerateEntities() {
     // Implementation for generating entities (enemies, items) on the floor
+    EnemyFactory ef;
+    PotionFactory pf;
+    TreasureFactory tf;
+    for (auto& chamber : chambers) {
+        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
+            Position enemyPos = chamber->getRandomTile();
+            auto enemy = ef.createEnemy(randomEngine.genEnemyType(), enemyPos);
+            enemies.push_back(std::move(enemy));
+            grid[enemyPos.y][enemyPos.x] = enemies.back().get(); // Place enemy in grid
+            chamber->addTile(enemyPos); // Add to chamber
+        }
+    }
+    for (auto& chamber : chambers) {
+        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
+            Position potionPos = chamber->getRandomTile();
+            auto potion = pf.createPotion(randomEngine.genPotionType(), potionPos);
+            potions.push_back(std::move(potion));
+            grid[potionPos.y][potionPos.x] = potions.back().get(); // Place potion in grid
+            chamber->addTile(potionPos); // Add to chamber
+        }
+    }
+    for (auto& chamber : chambers) {
+        for (int i = 0; i < randomEngine.genIndex(0, 4); ++i) {
+            Position treasurePos = chamber->getRandomTile();
+            auto treasure = tf.createTreasure(randomEngine.genTreasureType(), treasurePos);
+            treasures.push_back(std::move(treasure));
+            grid[treasurePos.y][treasurePos.x] = treasures.back().get(); // Place treasure in grid
+            chamber->addTile(treasurePos); // Add to chamber
+        }
+    }
 }
 
 void Floor::readFromStream(std::istream &is) {
@@ -301,7 +341,7 @@ Floor::Floor(){
     ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
     identifyChambers();
-    GeneratePlayer();
+    GeneratePlayerpos();
     GenerateStairs();
     GenerateEntities();
     notifyObservers(); // Notify observers that the floor has been initialized
@@ -320,6 +360,7 @@ Floor::Floor(std::istream &is, int seed) {
 
 void Floor::setPlayer(std::unique_ptr<Player> p) {
     player = std::move(p);
+    player->setPosition(playerpos);
 }
 
 Position target(Position curr, Direction dir) {

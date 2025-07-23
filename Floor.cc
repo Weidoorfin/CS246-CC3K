@@ -21,12 +21,13 @@ export class Floor : public Subject {
     vector<std::unique_ptr<Treasure>> treasures;
     vector<std::unique_ptr<Tile>> tiles;
     vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
+    Position playerpos; // Position of the player
     Player *player; // Player on the floor ? // share_pointer?
 
     getEmptyMap(std::istream &is); // Read an empty map from input stream
     void GenerateStairs(); // Generate stairs on the floor
     void GenerateEntities(); // Generate entities (enemies, items) on the floor
-    void GeneratePlayer(); // Generate the player on the floor
+    void GeneratePlayerpos(); // Generate the player position on the floor
     void readFromStream(std::istream &is); // Read floor data from input stream
 
  public:
