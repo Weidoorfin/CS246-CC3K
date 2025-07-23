@@ -6,18 +6,16 @@ import <vector>;
 import chamber;
 import player;
 
-class TextDisplay {
-  std::vector<std::shared_ptr<Chamber>> chambers;
-  std::shared_ptr<Player> player;
-public:
-  void attach(std::shared_ptr<Chamber> chamber);
-  void update();
-};
-void TextDisplay::attach(std::shared_ptr<Chamber> chamber) {
-    chambers.push_back(chamber);
+
+void TextDisplay::attach(const Floor* f) {
+    floor = f;
 }
 
-void TextDisplay::intro() {
+void TextDisplay::setLastAction(const std::string& action) {
+    lastAction = action;
+}
+
+void TextDisplay::intro() const {
     using namespace std;
     cout << "Welcome to CC3K! Prepare for your adventure." << endl;
     cout << "Start the game by choosing your race:" << endl;
@@ -31,3 +29,29 @@ void TextDisplay::intro() {
     cout << "Race description will be shown after your choice." << endl;
     return;
 }
+
+void TextDisplay::showGameUI() const {
+    using namespace std;
+    const auto& grid = floor->getGrid();
+    const auto& terrain = floor->getTerrain();
+    int height = grid.size();
+    int width = grid[0].size();
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            if (grid[y][x] == nullptr) {
+                cout << terrain[y][x]->getSymbol();
+            } else {
+                cout << grid[y][x]->getSymbol();
+            }
+        }
+        cout << endl;
+    }
+    cout << "Race: " << floor->getPlayer()->getRace();
+    cout << "Gold: " << floor->getPlayer()->getGold() << endl;
+    cout << "HP: " << floor->getPlayer()->getCurrentHP() << endl;
+    cout << "Atk: " << floor->getPlayer()->getAtk() << endl;
+    cout << "Def: " << floor->getPlayer()->getDef() << endl;
+    cout << "Action: " << lastAction << endl;
+}
+

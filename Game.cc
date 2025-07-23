@@ -7,6 +7,7 @@ import <memory>;
 import floor;
 import player;
 import enums;
+import textdisplay;
 
 const int MAXFLOOR = 5;
 

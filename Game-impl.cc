@@ -6,12 +6,13 @@ import <memory>;
 import enums;
 import floor;
 import player;
+import playerfactory;
 import textdisplay;
 
 void nextFloor() {
         currFloor++;
         floors[currFloor]->setPlayer(std::move(player));
-        td->updateFloor(currFloor);
+        td->setLastAction("Player character has moved to the next floor.");
 }
 
 Direction Game::getDirection(string s) {
@@ -78,7 +79,7 @@ bool Game::init() {
                 cout << "Please confirm your choice by input y" << endl;
                 cin >> confirmChoice;
                 if (confirmChoice == 'y') {
-                    player = std::make_shared<Player>(PlayerRace::Shade);
+                    player = createPlayer(Race::SHADE, Position{0, 0});
                 }
                 break;
             case "Drow":
@@ -89,7 +90,7 @@ bool Game::init() {
                 cout << "Please confirm your choice by input y" << endl;
                 cin >> confirmChoice;
                 if (confirmChoice == 'y') {
-                    player = std::make_shared<Player>(PlayerRace::Drow);
+                    player = createPlayer(Race::DROW, Position{0, 0});
                 }
                 break;
             case "Vampire":
@@ -100,7 +101,7 @@ bool Game::init() {
                 cout << "Please confirm your choice by input y" << endl;
                 cin >> confirmChoice;
                 if (confirmChoice == 'y') {
-                    player = std::make_shared<Player>(PlayerRace::Vampire);
+                    player = createPlayer(Race::VAMPIRE, Position{0, 0});
                 }
                 break;
             case "Troll":
@@ -111,7 +112,7 @@ bool Game::init() {
                 cout << "Please confirm your choice by input y" << endl;
                 cin >> confirmChoice;
                 if (confirmChoice == 'y') {
-                    player = std::make_shared<Player>(PlayerRace::Troll);
+                    player = createPlayer(Race::TROLL, Position{0, 0});
                 }
                 break;
             case "Goblin":
@@ -122,7 +123,7 @@ bool Game::init() {
                 cout << "Please confirm your choice by input y" << endl;
                 cin >> confirmChoice;
                 if (confirmChoice == 'y') {
-                    player = std::make_shared<Player>(PlayerRace::Goblin);
+                    player = createPlayer(Race::GOBLIN, Position{0, 0});
                 }
                 break;
             case "q":
@@ -135,6 +136,8 @@ bool Game::init() {
     }
     // Initialize the display grid or any other setup needed
     // TODO: read in first floor from emptyfloor.txt
+    td->attach(floors[0].get());
+    td->setLastAction("Player character has spawned.");
     player = std::make_unique<Player>(Race);
     return true; // Initialization successful
 }
@@ -152,7 +155,7 @@ GameState Game::run() {
                 return GameState::Finish; // Player has completed all floors
             }
         }
-        td->display();
+        td->showGameUI();
         string cmd;
         std::cout << "Enter command (input e to finish round): " << std::endl;
         vector<bool> validCommands(3, true);
@@ -167,44 +170,53 @@ GameState Game::run() {
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
-                validCommands[0] = false; // Mark the command as used
                 auto dir = getDirection(command);
                 if (!floors[currFloor]->playerMove(dir)) {
                     std::cout << "Invalid place to move!" << std::endl;
+                    continue;
                 }
+                validCommands[0] = false; // Mark the command as used
+                td->setLastAction("Player character has moved to " + command + ".");
             } else if (command == "a") {
                 iss >> command; // Get the target direction for attack
                 if (!validCommands[1]) {
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
-                validCommands[1] = false; // Mark the command as used
                 if (isDirection(command)) {
                     auto dir = getDirection(command);
                     if (!floors[currFloor]->playerAttack(dir)) {
                         std::cout << "No enemy to attack!" << std::endl;
+                        continue;
                     }
                 } else {
                     std::cout << "Invalid direction for attack." << std::endl;
+                    continue;
                 }
+                validCommands[1] = false; // Mark the command as used
+                td->setLastAction("Player character has attacked in direction " + command + ".");
             } else if (command == "u") {
                 if (!validCommands[2]) {
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
-                validCommands[2] = false; // Mark the command as used
                 iss >> command; // Get the target direction for use item
                 if (isDirection(command)) {
                     auto dir = getDirection(command);
                     if (!floors[currFloor]->playerUseItem(dir)) {
                         std::cout << "No item to use!" << std::endl;
+                        continue;
                     }
                 } else {
                     std::cout << "Invalid direction for use item." << std::endl;
+                    continue;
                 }
+                validCommands[2] = false; // Mark the command as used
+                td->setLastAction("Player character has used an item in direction " + command + ".");
             } else if (command == "q") {
                 return GameState::Quit; // Quit the game
             } else if (command == "f") {
+                td->setLastAction("Enemy movement has been toggled.");
                 enemy->moveToggle();
             } else if (command == "r") {
                 return GameState::Restart; // Restart the game
@@ -220,6 +232,7 @@ GameState Game::run() {
                     break;
                 }
             }
+            td->showGameUI();
         }
         // Auto Enemy move
         floors[currFloor]->enemyTurn(); // Handle enemy actions

@@ -17,7 +17,6 @@ import treasure;
 import position;
 import abstractos;
 import entity;
-import textdisplay;
 import player;
 import enemyfactory;
 import randomengine;
@@ -54,6 +53,14 @@ void Floor::setPlayer(std::unique_ptr<Player> p) {
 
 bool Floor::isComplete() const {
     return complete;
+}
+
+const std::vector<std::vector<Entity*>>& Floor::getGrid() const {
+    return grid;
+}
+
+const std::vector<std::vector<Tile*>>& Floor::getTerrain() const {
+    return terrain;
 }
 
 bool Floor::playerMove(Direction dir) {
@@ -308,7 +315,7 @@ void Floor::GenerateEntities() {
             for (auto &dir : re.genDirections()) {
                 Position next = target(pos, dir);
                 if (grid[next.y][next.x]->isSpace()) {
-                    enemies.push_back(ef.createEnemy(EnemyType::Dragon, next));
+                    enemies.push_back(ef.createEnemy(Race::DRAGON, next));
                     grid[next.y][next.x] = enemies.back().get();
                     break;
                 }
@@ -376,43 +383,43 @@ void Floor::readFromStream(std::istream &is) {
                 case 'H':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Human, pos));
+                    enemies.push_back(ef.createEnemy(Race::Human, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'W':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Dwarf, pos));
+                    enemies.push_back(ef.createEnemy(Race::DWARF, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'E':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Elf, pos));
+                    enemies.push_back(ef.createEnemy(Race::ELF, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'O':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Orcs, pos));
+                    enemies.push_back(ef.createEnemy(Race::ORCS, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'M':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Merchant, pos));
+                    enemies.push_back(ef.createEnemy(Race::MERCHANT, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'D':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Dragon, pos));
+                    enemies.push_back(ef.createEnemy(Race::DRAGON, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'L':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(EnemyType::Halfling, pos));
+                    enemies.push_back(ef.createEnemy(Race::HALFLING, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case '0':
