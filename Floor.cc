@@ -9,7 +9,7 @@ import tile;
 import position;
 import abstractos;
 
-export class Floor : public Subject {
+export class Floor {
     Position stairs; // Position of the stairs
     bool complete = false;
 
@@ -32,6 +32,8 @@ export class Floor : public Subject {
     // Accessories and mutators
     void setPlayer(std::unique_ptr<Player> p); // Set the player on the floor
     bool isComplete() const; // Check if the floor is complete
+    const std::vector<std::vector<Entity*>>& getGrid() const; // Get the grid of entities
+    const std::vector<std::vector<Tile*>>& getTerrain() const; // Get the terrain of the floor
 
     // Player actions
     bool playerMove(Direction dir); // Move the player in a direction
