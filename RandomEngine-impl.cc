@@ -25,7 +25,7 @@ uint32_t RandomEngine::getSeed() const {
     return global_seed;
 }
 
-vector<Direction> RandomEngine::genDirections() {
+std::vector<Direction> RandomEngine::genDirections() {
     if (global_seed == 0) {
         setRandomSeed(); // Ensure a seed is set if not already
     }
@@ -63,11 +63,11 @@ bool RandomEngine::chance(int num, int denom) const {
 }
 
 // requires l <= u
-vector<int> RandomEngine::genIndices(int l, int u) const {
+std::vector<int> RandomEngine::genIndices(int l, int u) const {
     if (global_seed == 0) {
         setRandomSeed(); // Ensure a seed is set if not already
     }
-    vector<int> indices(l - u + 1);
+    std::vector<int> indices(l - u + 1);
     for (int i = l; i <= u; ++i) {
         indices[i - l] = i;
     }

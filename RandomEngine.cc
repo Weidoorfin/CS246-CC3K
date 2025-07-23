@@ -21,7 +21,7 @@ public:
 
     bool chance(int prob) const; // produce true for prob% of times
     bool chance(int num, int denom) const; // produce true for num/denom of times
-    vector<int> genIndices(int l, int u) const; // generate a shuffled vector of indices in the range [l, u)
+    std::vector<int> genIndices(int l, int u) const; // generate a shuffled vector of indices in the range [l, u)
     std::vector<Direction> genDirections() const; // generate a shuffled vector of directions
     Race genEnemyRace() const; // generate a random enemy based on the predefined probability distribution
     PotionType genPotionType() const; // generate a random potion type based on the predefined probability distribution

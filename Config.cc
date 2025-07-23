@@ -1,8 +1,8 @@
 export module config;
 
 import <vector>;
+import <map>;
 import <utility>;
-import <pair>;
 import position;
 import enums;
 
@@ -12,7 +12,7 @@ namespace EnemyConfig {
         {Race::DWARF,    3},
         {Race::HALFLING, 5},
         {Race::ELF,      2},
-        {Race::ORC,      2},
+        {Race::ORCS,      2},
         {Race::MERCHANT, 2}
     };
     export inline const int MaxEnemiesPerFloor = 20;

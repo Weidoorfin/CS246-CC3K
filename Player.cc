@@ -3,6 +3,7 @@ export module player;
 import <memory>;
 import enums;
 import character;
+import item;
 
 export class Player : public Character {
     int Gold;

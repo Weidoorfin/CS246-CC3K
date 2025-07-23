@@ -1,3 +1,6 @@
+cstdint
+cassert
+memory
 iostream
 fstream
 sstream
@@ -5,8 +8,6 @@ string
 utility
 vector
 map
-memory
-cstdint
 chrono
 random
 algorithm

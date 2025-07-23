@@ -1,7 +1,8 @@
 export module character;
 
-import entity;
 import enums;
+import position;
+import entity;
 
 export class Character: public Entity {
     int maxHP, atk, def;
