@@ -1,5 +1,11 @@
 export module config;
 
+import <vector>;
+import <utility>;
+import <pair>;
+import position;
+import enums;
+
 namespace EnemyConfig {
     export inline const std::map<Race, int> enemyFrequency = {
         {Race::HUMAN,    4},
