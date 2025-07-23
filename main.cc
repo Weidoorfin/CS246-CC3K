@@ -2,7 +2,9 @@
 // This file is part of CC3K, a C++ roguelike game.
 
 import <iostream>;
+import <fstream>;
 import <memory>;
+
 import game;
 
 using namespace std;

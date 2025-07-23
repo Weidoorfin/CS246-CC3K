@@ -4,7 +4,7 @@ import position;
 import enums;
 import abstractos;
 
-export class Entity : public Subject {
+export class Entity {
     char symbol;
     int colour;
     EntityType entity; // Type of entity 
