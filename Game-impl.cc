@@ -6,6 +6,7 @@ import <memory>;
 import enums;
 import floor;
 import player;
+import concreteenemies;
 import playerfactory;
 import textdisplay;
 
@@ -64,6 +65,7 @@ Game::Game(std::istream &is, int seed) {
 bool Game::init() {
     td = std::make_unique<TextDisplay>(); 
     td->intro();
+    Merchant::hostile = false; // Reset merchant hostility
     while (!player) {
         using namespace std;
         cout << "Please choose your race:" << endl;
