@@ -243,7 +243,7 @@ GameState Game::run() {
     return GameState::Finish; // Player has died, end the game
 }
 
-bool Game::endGame(bool win) const {
+void Game::endGame(bool win) const {
     using namespace std;
     if (win) {
         cout << "Congratulations! You have completed all floors!" << endl;
@@ -251,5 +251,4 @@ bool Game::endGame(bool win) const {
     } else {
         cout << "Game Over! You have died." << endl;
     }
-    return win;
 }
