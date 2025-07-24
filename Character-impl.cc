@@ -7,6 +7,9 @@ import enums;
 
 Character::Character(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos)
     : Entity{symbol, colour, pos}, race{race}, maxHP{maxHP}, atk{atk}, def{def}, currentHP{maxHP} {}
+
+Character::~Character() {}
+
 int Character::getAtk() const { return atk; }
 int Character::getDef() const { return def; }
 int Character::getMaxHP() const { return maxHP; }

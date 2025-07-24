@@ -7,6 +7,7 @@ import <memory>;
 
 import game;
 import randomengine;
+import enums;
 
 using namespace std;
 
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]) {
         if (!g->init()) {
             break; // If initialization fails, exit the loop
         }
-        if (g->run() == Gamestate::Finish) {
+        if (g->run() == GameState::Finish) {
             // If the game is over, ask if the player wants to play again
             char choice;
             cout << "Do you want to play again? (y/n): ";

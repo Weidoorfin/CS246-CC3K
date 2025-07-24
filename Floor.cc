@@ -47,7 +47,7 @@ export class Floor {
     explicit Floor(std::istream &is); // Constructor to read from input stream
 
     // Accessories and mutators
-    void setPlayer(std::unique_ptr<Player> p); // Set the player on the floor
+    void setPlayer(Player* p); // Set the player on the floor
     bool isComplete() const; // Check if the floor is complete
     const std::vector<std::vector<Entity*>>& getGrid() const; // Get the grid of entities
     const std::vector<std::vector<Entity*>>& getTerrain() const; // Get the terrain of the floor
@@ -59,6 +59,8 @@ export class Floor {
     std::pair<bool, Entity*> playerUseItem(Direction dir); // Use an item, return success and item
     void enemyTurn(); // Perform enemy actions for the turn
     void handleEnemyDeath(Enemy* enemy); // Handle the death of an enemy
+    void toggleAllEnemyMovement(); // Toggle movement for all enemies on the floor
+    void resetAllEnemyMoveToggle(); // Reset all enemies' move toggle for new turn
 
   private:
     void getEmptyMap(std::istream &is); // Read an empty map from input stream

@@ -41,8 +41,8 @@ Floor::Floor(std::istream &is) {
      // Notify observers that the floor has been initialized
 }
 
-void Floor::setPlayer(std::unique_ptr<Player> p) {
-    player = p.get();
+void Floor::setPlayer(Player* p) {
+    player = p;
     player->setPos(playerpos);
 }
 
@@ -115,31 +115,29 @@ std::pair<bool, Entity*> Floor::playerUseItem(Direction dir) {
 
 // Perform enemy actions for the turn
 void Floor::enemyTurn() {
-    for (auto &enemy : enemies) {  // Use reference to avoid copying
-        enemy->toggleMove();  // Fix the method name
+    if (Enemy::isGlobalMovementDisabled()) {
+        return;
     }
+    
     for (int y = 0; y < grid[0].size(); ++y) {
         for (int x = 0; x < grid.size(); ++x) {
             Entity* entity = grid[x][y];
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
-                bool attacked = false;
+                
                 if (enemy->getmoveToggle()) {
-                    for (int dx = -1; dx <= 1 && !attacked; ++dx) {
-                        for (int dy = -1; dy <= 1 && !attacked; ++dy) {
-                            if (dx == 0 && dy == 0) continue;
-                            int nx = x + dx, ny = y + dy;
-                            if(isAdjacent(enemy->getPos(), player->getPos()) && 
-                               grid[ny][nx] && 
-                               grid[ny][nx]->getEntityType() == EntityType::PLAYER) {
-                                enemy->attack(*player);
-                                enemy->toggleMove();
-                                attacked = true;
-                                 // Notify observers of the attack
-                            }
-                        }
-                    }
-                    if (attacked) continue;
+                    continue;
+                }
+                
+                bool attacked = false;
+                
+                if (isAdjacent(enemy->getPos(), player->getPos())) {
+                    enemy->attack(*player);
+                    enemy->toggleMove();
+                    attacked = true;
+                }
+                
+                if (!attacked) {
                     RandomEngine rng;
                     std::vector<Direction> directions = rng.genDirections();
 
@@ -148,7 +146,7 @@ void Floor::enemyTurn() {
                         if (grid[next.y][next.x]->isSpace()) {
                             enemy->move(dir);
                             std::swap(grid[enemy->getPos().y][enemy->getPos().x], grid[next.y][next.x]);
-                            
+                            enemy->toggleMove();
                             break;
                         }
                     }
@@ -523,4 +521,43 @@ Position target(Position curr, Direction dir) {
 
 bool isAdjacent(Position a, Position b) {
     return (abs(a.x - b.x) <= 1 && abs(a.y - b.y) <= 1);
+}
+
+void Floor::toggleAllEnemyMovement() {
+    Enemy::toggleGlobalMovement();
+}
+
+void Floor::resetAllEnemyMoveToggle() {
+    for (auto& enemy : enemies) {
+        if (enemy) {
+            enemy->resetMoveToggle();
+        }
+    }
+}
+
+Position Floor::target(Position curr, Direction dir) {
+    switch(dir) {
+        case Direction::N:
+            return Position{curr.x, curr.y - 1};
+        case Direction::NE:
+            return Position{curr.x + 1, curr.y - 1};
+        case Direction::E:
+            return Position{curr.x + 1, curr.y};
+        case Direction::SE:
+            return Position{curr.x + 1, curr.y + 1};
+        case Direction::S:
+            return Position{curr.x, curr.y + 1};
+        case Direction::SW:
+            return Position{curr.x - 1, curr.y + 1};
+        case Direction::W:
+            return Position{curr.x - 1, curr.y};
+        case Direction::NW:
+            return Position{curr.x - 1, curr.y - 1};
+        default:
+            return curr;
+    }
+}
+
+bool Floor::isAdjacent(Position a, Position b) {
+    return (abs(a.x - b.x) <= 1 && abs(a.y - b.y) <= 1 && !(a.x == b.x && a.y == b.y));
 }
