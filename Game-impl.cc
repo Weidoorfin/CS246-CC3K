@@ -134,7 +134,7 @@ bool Game::init() {
 }
 
 GameState Game::run() {
-    floors[currFloor]->setPlayer(std::move(player));
+    floors[currFloor]->setPlayer(player.get());
     while (player->isAlive()) {
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.

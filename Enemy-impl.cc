@@ -11,7 +11,7 @@ Enemy::Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Po
 }
 
 void Enemy::toggleMove() {
-    moveToggle = true;
+    moveToggle = !moveToggle;
 }
 
 bool Enemy::getmoveToggle() const {

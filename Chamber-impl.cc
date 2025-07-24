@@ -26,6 +26,7 @@ Position Chamber::getRandomTile() {
             return validArea[idx].pos; // Return the position of the unoccupied tile
         }
     }
+    return Position{-1, -1}; // Return an invalid position if no unoccupied tile is found
 }
 
 bool Chamber::isValidTile(Status s) {

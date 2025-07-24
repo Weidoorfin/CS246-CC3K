@@ -18,5 +18,6 @@ export class Entity {
     Position getPos() const;
     bool isSpace() const;
     bool isFloor() const;
+    void setPos(Position p);
     virtual ~Entity() = 0;
 };

@@ -22,3 +22,6 @@ bool Entity::isFloor() const {
     return (symbol == '.');
 }
 
+void Entity::setPos(Position p) {
+    pos = p;
+}

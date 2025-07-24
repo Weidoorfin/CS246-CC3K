@@ -39,7 +39,7 @@ export class Floor {
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
     Position playerpos; // Position of the player
-    Player *player; // Player on the floor ? // share_pointer?
+    Player *player; // Player on the floor ?
 
  public:
     Floor(); // Default constructor
@@ -49,7 +49,7 @@ export class Floor {
     void setPlayer(std::unique_ptr<Player> p); // Set the player on the floor
     bool isComplete() const; // Check if the floor is complete
     const std::vector<std::vector<Entity*>>& getGrid() const; // Get the grid of entities
-    const std::vector<std::vector<Tile*>>& getTerrain() const; // Get the terrain of the floor
+    const std::vector<std::vector<Entity*>>& getTerrain() const; // Get the terrain of the floor
 
     // Player actions
     bool playerMove(Direction dir); // Move the player in a direction

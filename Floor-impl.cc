@@ -42,8 +42,8 @@ Floor::Floor(std::istream &is) {
 }
 
 void Floor::setPlayer(std::unique_ptr<Player> p) {
-    player = std::move(p);
-    player->setPosition(playerpos);
+    player = p.get();
+    player->setPos(playerpos);
 }
 
 bool Floor::isComplete() const {
@@ -54,28 +54,39 @@ const std::vector<std::vector<Entity*>>& Floor::getGrid() const {
     return grid;
 }
 
-const std::vector<std::vector<Tile*>>& Floor::getTerrain() const {
+const std::vector<std::vector<Entity*>>& Floor::getTerrain() const {
     return terrain;
 }
 
 bool Floor::playerMove(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);
-    if (grid[next.y][next.x]->isSpace()) {
-        if (grid[next.y][next.x]->getEntityType() == EntityType::STAIR) {
-            complete = true; // Player has reached the stairs
-        } else if (grid[next.y][next.x]->getEntityType() == EntityType::TREASURE) {
-            auto treasure = dynamic_cast<Treasure*>(grid[next.y][next.x]);
-            player = treasure->applyEffect(std::make_unique<Player>(*player));
-            grid[next.y][next.x] = nullptr;
-        }
-        player->move(dir);
-        std::swap(grid[curr.y][curr.x], grid[next.y][next.x]);
-         // Notify observers of the player's move
-        return true;
+
+    Entity* nextEntity = grid[next.y][next.x];
+    if (nextEntity && !nextEntity->isSpace()) return false;
+
+
+    if (terrain[next.y][next.x]->getSymbol() == "/") {
+        complete = true;
     }
-    return false;
-    // isFloor() for enemy
+
+    if (nextEntity && nextEntity->getEntityType() == EntityType::TREASURE) {
+        auto treasure = dynamic_cast<Treasure*>(nextEntity);
+        treasure->applyEffect(player);
+        grid[next.y][next.x] = nullptr;
+    }
+
+    if (nextEntity && nextEntity->getEntityType() == EntityType::POTION) {
+        auto potion = dynamic_cast<Potion*>(nextEntity);
+        potion->applyEffect(player);
+        grid[next.y][next.x] = nullptr;
+    }
+
+    player->move(dir);
+    grid[next.y][next.x] = player;
+    grid[curr.y][curr.x] = nullptr;
+
+    return true;
 }
 
 bool Floor::playerAttack(Direction dir) {
@@ -83,10 +94,9 @@ bool Floor::playerAttack(Direction dir) {
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
         auto enemy = dynamic_cast<Enemy*>(grid[next.y][next.x]);
-        player->attack(grid[next.y][next.x]);
-        if (enemy->isDead()) {
+        player->attack(enemy);
+        if (!enemy->isAlive()) {
             handleEnemyDeath(enemy);
-             // Notify observers of the enemy's death
             return true;
         }
     }
@@ -118,16 +128,16 @@ void Floor::enemyTurn() {
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
                 bool attacked = false;
-                if (enemy->getMoveToggle()) {
+                if (enemy->getmoveToggle()) {
                     for (int dx = -1; dx <= 1 && !attacked; ++dx) {
                         for (int dy = -1; dy <= 1 && !attacked; ++dy) {
                             if (dx == 0 && dy == 0) continue;
                             int nx = x + dx, ny = y + dy;
-                            if(adjacent(enemy->getPos(), player->getPos()) && 
+                            if(isAdjacent(enemy->getPos(), player->getPos()) && 
                                grid[ny][nx] && 
                                grid[ny][nx]->getEntityType() == EntityType::PLAYER) {
                                 enemy->attack(*player);
-                                enemy->moveToggle();
+                                enemy->toggleMove();
                                 attacked = true;
                                  // Notify observers of the attack
                             }
