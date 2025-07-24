@@ -72,17 +72,13 @@ bool Floor::playerMove(Direction dir) {
 
     if (nextEntity && nextEntity->getEntityType() == EntityType::TREASURE) {
         auto treasure = dynamic_cast<Treasure*>(nextEntity);
-        auto playerPtr = std::unique_ptr<Player>(player);
-        auto newPlayer = treasure->applyEffect(std::move(playerPtr));
-        player = newPlayer.release();
+        treasure->applyEffect(player);
         grid[next.y][next.x] = nullptr;
     }
 
     if (nextEntity && nextEntity->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(nextEntity);
-        auto playerPtr = std::unique_ptr<Player>(player);
-        auto newPlayer = potion->applyEffect(std::move(playerPtr));
-        player = newPlayer.release();
+        potion->applyEffect(player);
         grid[next.y][next.x] = nullptr;
     }
 
@@ -112,12 +108,7 @@ bool Floor::playerUseItem(Direction dir) {
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
-        // This is a design issue - mixing raw and smart pointers
-        // For now, we'll work around it by creating a temporary unique_ptr
-        auto tempPlayer = std::make_unique<Player>(*player);
-        auto newPlayer = potion->applyEffect(std::move(tempPlayer));
-        // Note: This creates a memory management issue, but matches the existing design
-        *player = *newPlayer; // Copy the modified player back
+        player = potion->applyEffect(std::make_unique<Player>(*player));
         // Remove the item from the grid
         grid[next.y][next.x] = nullptr;
          // Notify observers of the item usage
@@ -137,7 +128,7 @@ void Floor::enemyTurn() {
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
                 bool attacked = false;
-                if (enemy->getMoveToggle()) {  // Fix the method name
+                if (enemy->getmoveToggle()) {
                     for (int dx = -1; dx <= 1 && !attacked; ++dx) {
                         for (int dy = -1; dy <= 1 && !attacked; ++dy) {
                             if (dx == 0 && dy == 0) continue;
@@ -199,7 +190,6 @@ void Floor::getEmptyMap(std::istream &is) {
     while (getline(is, line)) {
         std::vector<Entity*> terrainRow;
         std::vector<Entity*> gridRow;
-        std::vector<TileType> row;
         int x = 0;
         for (char c : line) {
             Position pos{x, y};
@@ -208,52 +198,44 @@ void Floor::getEmptyMap(std::istream &is) {
                     tiles.push_back(std::make_unique<Tile>(TileType::HorizontalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::HorizontalWall);
                     break;
                 case '|': 
                     tiles.push_back(std::make_unique<Tile>(TileType::VerticalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::VerticalWall);
                     break;
                 case '.':  
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::Floor);
                     break;
                 case '+': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Door, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::Door);
                     break;
                 case '#': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Corridor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::Corridor);
                     break;
                 case '/': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Stair, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     stairs = pos;
-                    row.push_back(TileType::Stair);
                     break;
                 // Handle generated entities
                 case ' ':
                     tiles.push_back(std::make_unique<Tile>(TileType::Nothing, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
-                    row.push_back(TileType::Nothing);
                     break;
             }
             x++;
         } // for (char c : line)
         terrain.push_back(terrainRow);
         grid.push_back(gridRow);
-        tileTypes.push_back(row);
         y++;
     }
 }
