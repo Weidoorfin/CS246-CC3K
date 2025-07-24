@@ -3,6 +3,7 @@ module concreteenemies;
 import character;
 import enemy;
 import enums;
+import position;
 
 // Human implementation //////////////////////////////
 Human::Human(Position pos)
@@ -67,8 +68,9 @@ Dragon::Dragon(Position pos)
 
 Dragon::~Dragon() {}
 
-void Dragon::move(Direction dir) {
+bool Dragon::move(Direction dir) {
     // non-operational move for Dragon
+    return true;
 }
 
 // Halfling implementation //////////////////////////////

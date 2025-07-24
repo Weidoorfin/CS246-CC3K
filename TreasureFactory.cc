@@ -1,4 +1,4 @@
-export treasurefactory;
+export module treasurefactory;
 
 import <memory>;
 import treasure;

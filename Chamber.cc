@@ -11,7 +11,7 @@ export class Chamber {
       Position pos;
       bool occupied;
     };
-    vector<Status> validArea;
+    std::vector<Status> validArea;
   public:
     Chamber() = default;
     bool isWithPlayer() const;
