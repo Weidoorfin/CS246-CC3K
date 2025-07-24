@@ -6,6 +6,8 @@ import concreteenemies;
 import position;
 import enums;
 
+EnemyFactory::EnemyFactory() {}
+
 std::unique_ptr<Enemy> EnemyFactory::createEnemy(Race race, Position pos) {
     switch (race) {
         case Race::DRAGON:
