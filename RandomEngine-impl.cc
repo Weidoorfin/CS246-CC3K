@@ -50,7 +50,10 @@ bool RandomEngine::chance(int num, int denom) {
 
 // requires l <= u
 std::vector<int> RandomEngine::genIndices(int l, int u) {
-    std::vector<int> indices(l - u + 1);
+    if (l > u) {
+        std::swap(l, u);
+    }
+    std::vector<int> indices(u - l + 1);
     for (int i = l; i <= u; ++i) {
         indices[i - l] = i;
     }

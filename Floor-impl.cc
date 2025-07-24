@@ -27,7 +27,7 @@ import tile;
 
 Floor::Floor(){
     // Initialize the grid with empty chambers
-    std::ifstream emptyMap("emptyfloor.txt");
+    std::ifstream emptyMap{"emptyfloor.txt"};
     getEmptyMap(emptyMap);
     identifyChambers();
     GeneratePlayerpos();
@@ -242,7 +242,7 @@ void Floor::identifyChambers() {
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            if (!visited[y][x] && terrain[y][x]->getSymbol() != '.') {
+            if (!visited[y][x] && terrain[y][x]->getSymbol() == '.') {
                 auto chamber = std::make_unique<Chamber>();
                 dfsFillChamber(x, y, chamber.get(), visited);
                 chambers.push_back(std::move(chamber));
@@ -253,7 +253,7 @@ void Floor::identifyChambers() {
 
 void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vector<bool>>& visited) {
 
-    if (!visited[y][x] || terrain[y][x]->getSymbol() != '.') return;
+    if (visited[y][x] || terrain[y][x]->getSymbol() != '.') return;
 
     visited[y][x] = true;
     chamber->addTile(Position{x, y});
