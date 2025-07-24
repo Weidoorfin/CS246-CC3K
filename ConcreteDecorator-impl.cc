@@ -9,7 +9,8 @@ import character;
 BAEff::BAEff(std::unique_ptr<Player> wrapped) : PotionDecorator(std::move(wrapped)) {}
 
 int BAEff::getAtk() const {
-    return base->getAtk() + 5 * base->getPotionMultiplier();
+    double val = base->getAtk() + 5.0 * base->getPotionMultiplier();
+    return static_cast<int>(std::round(val));
 }
 
 std::unique_ptr<Player> BAEff::applyEffect(std::unique_ptr<Player> player) const {
@@ -19,7 +20,8 @@ std::unique_ptr<Player> BAEff::applyEffect(std::unique_ptr<Player> player) const
 BDEff::BDEff(std::unique_ptr<Player> wrapped) : PotionDecorator(std::move(wrapped)) {}
 
 int BDEff::getDef() const {
-    return base->getDef() + 5 * base->getPotionMultiplier();
+    double val = base->getDef() + 5.0 * base->getPotionMultiplier();
+    return static_cast<int>(std::round(val));
 }
 
 std::unique_ptr<Player> BDEff::applyEffect(std::unique_ptr<Player> player) const {
@@ -29,8 +31,9 @@ std::unique_ptr<Player> BDEff::applyEffect(std::unique_ptr<Player> player) const
 WAEff::WAEff(std::unique_ptr<Player> wrapped) : PotionDecorator(std::move(wrapped)) {}
 
 int WAEff::getAtk() const {
-    int modified = base->getAtk() - 5 * base->getPotionMultiplier();
-    return modified > 0 ? modified : 0;
+    double val = base->getAtk() - 5.0 * base->getPotionMultiplier();
+    val = val > 0 ? val : 0;
+    return static_cast<int>(std::round(val));
 }
 
 std::unique_ptr<Player> WAEff::applyEffect(std::unique_ptr<Player> player) const {
@@ -40,8 +43,9 @@ std::unique_ptr<Player> WAEff::applyEffect(std::unique_ptr<Player> player) const
 WDEff::WDEff(std::unique_ptr<Player> wrapped) : PotionDecorator(std::move(wrapped)) {}
 
 int WDEff::getDef() const {
-    int modified = base->getDef() - 5 * base->getPotionMultiplier();
-    return modified > 0 ? modified : 0;
+    double val = base->getDef() - 5.0 * base->getPotionMultiplier();
+    val = val > 0 ? val : 0;
+    return static_cast<int>(std::round(val));
 }
 
 std::unique_ptr<Player> WDEff::applyEffect(std::unique_ptr<Player> player) const {

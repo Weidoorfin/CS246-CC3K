@@ -71,7 +71,7 @@ bool Floor::playerMove(Direction dir) {
             complete = true; // Player has reached the stairs
         } else if (grid[next.y][next.x]->getEntityType() == EntityType::TREASURE) {
             auto treasure = dynamic_cast<Treasure*>(grid[next.y][next.x]);
-            player->useItem(treasure);
+            player = treasure.applyEffect(std::make_unique<Player>(*player));
             grid[next.y][next.x] = nullptr;
         }
         player->move(dir);
@@ -103,7 +103,7 @@ bool Floor::playerUseItem(Direction dir) {
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
-        player->useItem(potion);
+        player = potion->applyEffect(std::make_unique<Player>(*player));
         // Remove the item from the grid
         grid[next.y][next.x] = nullptr;
          // Notify observers of the item usage

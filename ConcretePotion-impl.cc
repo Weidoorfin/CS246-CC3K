@@ -9,9 +9,9 @@ import player;
 RH::RH(Position pos) : Potion(PotionType::RH, pos) {}
 
 std::unique_ptr<Player> RH::applyEffect(std::unique_ptr<Player> player) const {
-    int healAmount = 10;
+    double healAmount = 10.0;
     healAmount = healAmount * player->getPotionMultiplier();
-    player->gainHP(healAmount);
+    player->gainHP(static_cast<int>(std::round(healAmount)));
     return player;
 }
 
@@ -19,9 +19,9 @@ std::unique_ptr<Player> RH::applyEffect(std::unique_ptr<Player> player) const {
 PH::PH(Position pos) : Potion(PotionType::PH, pos) {}
 
 std::unique_ptr<Player> PH::applyEffect(std::unique_ptr<Player> player) const {
-    int amount = 10;
+    double amount = 10.0;
     amount = amount * player->getPotionMultiplier();
-    player->loseHP(amount);
+    player->loseHP(static_cast<int>(std::round(amount)));
     return player;
 }
 

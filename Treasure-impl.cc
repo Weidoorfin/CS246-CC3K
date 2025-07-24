@@ -14,7 +14,7 @@ int Treasure::getValue() const {
     return value;
 }
 
-std::unique_ptr<Player> Treasure::applyEffect(std::unique_ptr<Player> player) {
+std::unique_ptr<Player> Treasure::applyEffect(std::unique_ptr<Player> player) const {
     player->gainGold(value);
     return player;
 }

@@ -4,6 +4,7 @@ import <memory>;
 import player;
 import character;
 import item;
+import enums;
 
 export class PotionDecorator : public Player {
 protected:
@@ -12,14 +13,13 @@ protected:
 public:
     PotionDecorator(std::unique_ptr<Player> wrapped);
     virtual ~PotionDecorator() = default;
-    virtual PlayerRace getRace() const override;
+    virtual Race getRace() const override;
     virtual int getAtk() const override;
     virtual int getDef() const override;
     virtual int getGold() const override;
     virtual double getScore() const override;
     virtual int getMaxHP() const override;
-    virtual int getHP() const override;
-    virtual int gainGold(int amount) override;
+    virtual void gainGold(int amount) override;
     virtual void onTurn() override;
 
     virtual void gainHP(int inc) override;
@@ -29,6 +29,6 @@ public:
     virtual void onHit(Character &whoFrom) override;
     virtual double getPotionMultiplier() const override;
 
-    virtual std::unique_ptr<Player> reset() override;
-    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
+    virtual std::unique_ptr<Player> reset() const override;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const override;
 };

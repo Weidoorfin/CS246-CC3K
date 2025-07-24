@@ -10,6 +10,6 @@ export class Item : public Entity {
 public:
     Item(char symbol, int colour, Position pos);
     virtual ~Item() = default;
-    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) = 0;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const = 0;
 
 };

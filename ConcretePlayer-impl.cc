@@ -1,6 +1,7 @@
 module concreteplayer;
 
 import <memory>;
+import <cmath>;
 import position;
 import player;
 import enums;
@@ -11,7 +12,7 @@ Shade::Shade() : Player(Race::SHADE, 150, 25, 25, position) {
 }
 
 double Shade::getScore() const {
-    return totGold * 1.5; 
+    return std::round(totGold * 1.5); 
 }
 
 std::unique_ptr<Player> Shade::reset() {
@@ -69,9 +70,8 @@ Goblin::Goblin() : Player{Race::GOBLIN, 110, 15, 20, position} {
 
 void Goblin::attack(Character &target) {
     if (target.getRace() == Race::HALFLING) {
-        PRNG rng;
-        int result = rng(1);
-        if (result == 0) {
+        RandomEngine rng;
+        if (rng.chance(50)) {
             return;
         }
     }
@@ -85,7 +85,7 @@ void Goblin::onHit(Character &whoFrom) {
     int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
     loseHP(damage);
     if (whoFrom.getRace() == Race:ORC) {
-        loseHP(damage * 1.5);
+        loseHP(static_cast<int>(std::round(damage * 1.5)));
     } else {
         loseHP(damage);
     }

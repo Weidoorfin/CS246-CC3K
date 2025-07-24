@@ -5,6 +5,7 @@ import <cmath>;
 import enums;
 import character;
 import PRNG;
+import position;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
     : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
@@ -70,12 +71,6 @@ void Player::onHit(Character &whoFrom) {
     loseHP(damage);
 }
 
-void Player::useItem(Item &item) {
-    auto newPlayer = item.applyEffect(std::make_unique<Player>(*this));
-    if (newPlayer) {
-        *this = *newPlayer;
-    }
-}
 
 double Player::getPotionMultiplier() const {
     return 1.0;
