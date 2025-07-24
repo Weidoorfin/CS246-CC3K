@@ -1,9 +1,11 @@
 module treasure;
 
 import <memory>;
+import enums;
+import position;
 import item;
 import player;
-import position;
+
 
 Treasure::Treasure(int value, Position pos)
     : Item{'G', 0, pos}, value{value} {
@@ -14,16 +16,16 @@ int Treasure::getValue() const {
     return value;
 }
 
-std::unique_ptr<Player> Treasure::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> Treasure::applyEffect(std::unique_ptr<Player> player) {
     player->gainGold(value);
     return player;
 }
 
 
-SmallPile::SmallPile() : Treasure(1) {}
+SmallPile::SmallPile(Position pos) : Treasure(1, pos) {}
 
-NormalPile::NormalPile() : Treasure(2) {}
+NormalPile::NormalPile(Position pos) : Treasure(2, pos) {}
 
-MerchantHoard::MerchantHoard() : Treasure(4) {}
+MerchantHoard::MerchantHoard(Position pos) : Treasure(4, pos) {}
 
-DragonHoard::DragonHoard() : Treasure(6) {}
+DragonHoard::DragonHoard(Position pos) : Treasure(6, pos) {}

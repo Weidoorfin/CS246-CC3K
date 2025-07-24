@@ -11,26 +11,26 @@ protected:
 public:
     explicit Treasure(int value, Position pos);
     int getValue() const;
-    std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const override;
+    std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
     virtual ~Treasure() = default;
 };
 
 export class SmallPile : public Treasure {
 public:
-    SmallPile();
+    explicit SmallPile(Position pos);
 };
 
 export class NormalPile : public Treasure {
 public:
-    NormalPile();
+    explicit NormalPile(Position pos);
 };
 
 export class MerchantHoard : public Treasure {
 public:
-    MerchantHoard();
+    explicit MerchantHoard(Position pos);
 };
 
 export class DragonHoard : public Treasure {
 public:
-    DragonHoard();
+    explicit DragonHoard(Position pos);
 };

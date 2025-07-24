@@ -3,10 +3,10 @@ module abstractos;
 import <vector>;
 import <algorithm>;
 
-Subject::attach(Observer *o) {
+void Subject::attach(Observer *o) {
     observers.push_back(o);
 }
-Subject::detach(Observer *o) {
+void Subject::detach(Observer *o) {
     observers.erase(std::remove(observers.begin(), observers.end(), o), observers.end());
 }
 void Subject::notifyObservers() {

@@ -18,7 +18,7 @@ namespace EnemyConfig {
     export inline const int MaxEnemiesPerFloor = 20;
 }
 
-namespace potionConfig {
+namespace PotionConfig {
     export inline const std::map<PotionType, int> potionFrequency = {
         {PotionType::BA,   1},
         {PotionType::BD,   1},
@@ -30,7 +30,7 @@ namespace potionConfig {
     export inline const int MaxPotionsPerFloor = 10;
 }
 
-namespace treasureConfig {
+namespace TreasureConfig {
     export inline const std::map<TreasureType, int> treasureFrequency = {
         {TreasureType::SMALL,    2},
         {TreasureType::NORMAL,   5},

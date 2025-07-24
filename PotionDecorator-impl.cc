@@ -3,22 +3,20 @@ module potiondecorator;
 import <memory>;
 import player;
 import character;
-import item;
 import enums;
 
 PotionDecorator::PotionDecorator(std::unique_ptr<Player> wrapped) : 
-    Player{wrapped->getRace()}, base{std::move(wrapped)} {}
+    Player{*base}, base{std::move(wrapped)} {}
 
 Race PotionDecorator::getRace() const { return base->getRace(); }
 int PotionDecorator::getAtk() const { return base->getAtk(); }
 int PotionDecorator::getDef() const { return base->getDef(); }
 int PotionDecorator::getGold() const { return base->getGold(); }
-int PotionDecorator::gainGold(int amount) { return base->gainGold(inc); }
+void PotionDecorator::gainGold(int amount) { return base->gainGold(amount); }
 int PotionDecorator::getMaxHP() const { return base->getMaxHP(); }
 
 double PotionDecorator::getScore() const { return base->getScore(); }
 void PotionDecorator::onTurn() { base->onTurn(); }
-void PotionDecorator::useItem(Item &item) { base->useItem(item); }
 void PotionDecorator::attack(Character &target) { base->attack(target); }
 void PotionDecorator::onHit(Character &whoFrom) { base->onHit(whoFrom); }
 
@@ -32,6 +30,6 @@ std::unique_ptr<Player> PotionDecorator::reset() const {
     return base->reset();
 }
 
-std::unique_ptr<Player> PotionDecorator::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> PotionDecorator::applyEffect(std::unique_ptr<Player> player) {
     return std::make_unique<PotionDecorator>(std::move(player));
 }

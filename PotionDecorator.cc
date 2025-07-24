@@ -3,7 +3,6 @@ export module potiondecorator;
 import <memory>;
 import player;
 import character;
-import item;
 import enums;
 
 export class PotionDecorator : public Player {
@@ -24,11 +23,10 @@ public:
 
     virtual void gainHP(int inc) override;
     virtual void loseHP(int dec) override;
-    virtual void useItem(Item &item);
     virtual void attack(Character &target) override;
     virtual void onHit(Character &whoFrom) override;
     virtual double getPotionMultiplier() const override;
 
     virtual std::unique_ptr<Player> reset() const override;
-    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const override;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
 };

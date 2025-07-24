@@ -7,10 +7,9 @@ import abstractos;
 export class Entity {
     char symbol;
     int colour;
-    EntityType entity; // Type of entity 
   protected:
-    // characters need to change their position
     Position pos;
+    EntityType entity;
   public:
     Entity(char symbol, int colour, Position pos);
     EntityType getEntityType();

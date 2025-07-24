@@ -2,10 +2,11 @@ module playerfactory;
 
 import <memory>;
 import player;
+import concreteplayer;
 import enums;
 import position;
 
-static std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position pos) {
+std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position pos) {
     switch(race) {
         case Race::SHADE:
             return std::make_unique<Shade>(pos);
@@ -17,5 +18,7 @@ static std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position p
             return std::make_unique<Troll>(pos);
         case Race::GOBLIN:
             return std::make_unique<Goblin>(pos);
+        default:
+            throw std::invalid_argument("Unsupported Player");
     }
 }

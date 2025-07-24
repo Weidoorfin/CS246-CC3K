@@ -43,7 +43,7 @@ export class Dragon : public Enemy {
   public:
     Dragon(Position pos);
     ~Dragon();
-    bool move(Direction dir) override; // Override move to do nothing
+    void move(Direction dir) override; // Override move to do nothing
 };
 
 export class Halfling : public Enemy {

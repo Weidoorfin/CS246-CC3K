@@ -1,9 +1,10 @@
 export module enemyfactory;
 
+import <memory>;
+import enums;
+import position;
 import enemy;
 import concreteenemies;
-import position;
-import enums;
 
 export class EnemyFactory {
   public:

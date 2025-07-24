@@ -5,8 +5,8 @@ import position;
 import entity;
 
 export class Character: public Entity {
-    int maxHP, atk, def;
     Race race;
+    int maxHP, atk, def;
   protected:
     int currentHP;
   public:
@@ -17,7 +17,7 @@ export class Character: public Entity {
     virtual int getMaxHP() const;
     virtual Race getRace() const;
     bool isAlive() const;
-    virtual bool move(Direction dir); // will return false if the move is invalid, and will not move the character
+    virtual void move(Direction dir);
     virtual void attack(Character &target); // Handle the attack logic
     virtual void onHit(Character &whoFrom); // Handle the hit logic
 };

@@ -3,6 +3,7 @@ export module game;
 // import syslibs here
 import <vector>;
 import <memory>;
+import <string>;
 // import module here
 import floor;
 import player;
@@ -13,17 +14,16 @@ const int MAXFLOOR = 5;
 
 export class Game {
     int currFloor = 0;
-    vector<unique_ptr<Floor>> floors; // owns-a
-    unique_ptr<Player> player;
-    unique_ptr<TextDisplay> td;
+    std::vector<std::unique_ptr<Floor>> floors; // owns-a
+    std::unique_ptr<Player> player;
+    std::unique_ptr<TextDisplay> td;
 
     void nextFloor();
-    Direction getDirection(string s);
-    bool isDirection(string s);
+    Direction getDirection(std::string s);
+    bool isDirection(std::string s);
   public:
     Game();
-    Game(std::istream &is); // constructor with input stream, reading the floor from file
-    Game(std::istream &is, int seed);
+    explicit Game(std::istream &is); // constructor with input stream, reading the floor from file
     bool init(); // initializing the game
     GameState run();
     void endGame() const; // end the game, return true if win, false if lose

@@ -6,7 +6,7 @@ import enums;
 import position;
 import player;
 
-Potion::Potion(Position pos)
+Potion::Potion(PotionType type, Position pos)
     : Item{'P', 0, pos}, type{type} {
     entity = EntityType::POTION; // Set the entity type to POTION
 }

@@ -1,6 +1,7 @@
 module concretedecorator;
 
 import <memory>;
+import <cmath>;
 import player;
 import potion;
 import potiondecorator;
@@ -13,7 +14,7 @@ int BAEff::getAtk() const {
     return static_cast<int>(std::round(val));
 }
 
-std::unique_ptr<Player> BAEff::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> BAEff::applyEffect(std::unique_ptr<Player> player) {
     return std::make_unique<BAEff>(std::move(player));
 }
 
@@ -24,7 +25,7 @@ int BDEff::getDef() const {
     return static_cast<int>(std::round(val));
 }
 
-std::unique_ptr<Player> BDEff::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> BDEff::applyEffect(std::unique_ptr<Player> player) {
     return std::make_unique<BDEff>(std::move(player));
 }
 
@@ -36,7 +37,7 @@ int WAEff::getAtk() const {
     return static_cast<int>(std::round(val));
 }
 
-std::unique_ptr<Player> WAEff::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> WAEff::applyEffect(std::unique_ptr<Player> player) {
     return std::make_unique<WAEff>(std::move(player));
 }
 
@@ -48,6 +49,6 @@ int WDEff::getDef() const {
     return static_cast<int>(std::round(val));
 }
 
-std::unique_ptr<Player> WDEff::applyEffect(std::unique_ptr<Player> player) const {
+std::unique_ptr<Player> WDEff::applyEffect(std::unique_ptr<Player> player) {
     return std::make_unique<WDEff>(std::move(player));
 }

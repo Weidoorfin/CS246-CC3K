@@ -6,6 +6,7 @@ import <fstream>;
 import <memory>;
 
 import game;
+import randomengine;
 
 using namespace std;
 
@@ -15,7 +16,9 @@ int main(int argc, char* argv[]) {
         unique_ptr<Game> g;
         if (argc == 3) {
             ifstream inFile{argv[1]};
-            g = make_unique<Game>(inFile, stoi(argv[2]));
+            RandomEngine rng;
+            rng.setSeed(stoi(argv[2]));
+            g = make_unique<Game>(inFile);
         } else if (argc == 2) {
             ifstream inFile{argv[1]};
             g = make_unique<Game>(inFile);

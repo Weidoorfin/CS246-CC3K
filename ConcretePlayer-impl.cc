@@ -8,23 +8,23 @@ import enums;
 import character;
 import randomengine;
 
-Shade::Shade() : Player(Race::SHADE, 150, 25, 25, position) {
+Shade::Shade(Position pos) : Player(Race::SHADE, 150, 25, 25, pos) {
 }
 
 double Shade::getScore() const {
     return std::round(totGold * 1.5); 
 }
 
-std::unique_ptr<Player> Shade::reset() {
+std::unique_ptr<Player> Shade::reset() const {
     return std::make_unique<Shade>(*this);
 }
 
-Drow::Drow() : Player{Race::DROW, 150, 25, 15, position} {
-    currentHP = maxHP;
+Drow::Drow(Position pos) : Player{Race::DROW, 150, 25, 15, pos} {
+    currentHP = getMaxHP();
 }
 
 
-std::unique_ptr<Player> Drow::reset() {
+std::unique_ptr<Player> Drow::reset() const {
     return std::make_unique<Drow>(*this);
 }
 
@@ -32,8 +32,8 @@ double Drow::getPotionMultiplier() const {
     return 1.5;
 }
 
-Vampire::Vampire() : Player{Race::VAMPIRE, 50, 25, 25, position} {
-    currentHP = maxHP;
+Vampire::Vampire(Position pos) : Player{Race::VAMPIRE, 50, 25, 25, pos} {
+    currentHP = getMaxHP();
 }
 
 
@@ -50,7 +50,7 @@ void Vampire::attack(Character &target) {
         }
     }
     target.onHit(*this);
-    if (target.getRace() == EnemyType::DWARF) {
+    if (target.getRace() == Race::DWARF) {
         loseHP(5); // Lose 5 HP if attacking a dwarf
     } else {
         gainHP(5); // Otherwise, gain 5 HP
@@ -58,14 +58,14 @@ void Vampire::attack(Character &target) {
 }
 
 
-std::unique_ptr<Player> Vampire::reset() {
+std::unique_ptr<Player> Vampire::reset() const{
     return std::make_unique<Vampire>(*this);
 }
 
 
 
-Goblin::Goblin() : Player{Race::GOBLIN, 110, 15, 20, position} {
-    currentHP = maxHP;
+Goblin::Goblin(Position pos) : Player{Race::GOBLIN, 110, 15, 20, pos} {
+    currentHP = getMaxHP();
 }
 
 void Goblin::attack(Character &target) {
@@ -84,26 +84,26 @@ void Goblin::attack(Character &target) {
 void Goblin::onHit(Character &whoFrom) {
     int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
     loseHP(damage);
-    if (whoFrom.getRace() == Race:ORC) {
+    if (whoFrom.getRace() == Race::ORCS) {
         loseHP(static_cast<int>(std::round(damage * 1.5)));
     } else {
         loseHP(damage);
     }
 }
 
-std::unique_ptr<Player> Goblin::reset() {
+std::unique_ptr<Player> Goblin::reset() const {
     return std::make_unique<Goblin>(*this);
 }
 
-Troll::Troll() : Player{Race::TROLL, 120, 25, 15, position} {
-    currentHP = maxHP;
+Troll::Troll(Position pos) : Player{Race::TROLL, 120, 25, 15, pos} {
+    currentHP = getMaxHP();
 }
 
 void Troll::onTurn() {
-    currentHP = (currentHP + 5 <= maxHP)? currentHP + 5 : maxHP;
+    currentHP = (currentHP + 5 <= getMaxHP())? currentHP + 5 : getMaxHP();
 }
 
-std::unique_ptr<Player> Troll::reset() {
+std::unique_ptr<Player> Troll::reset() const {
     return std::make_unique<Troll>(*this);
 }
 

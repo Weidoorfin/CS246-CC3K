@@ -1,5 +1,6 @@
 export module chamber;
 
+
 import <vector>;
 import <utility>;
 import position;
@@ -18,4 +19,5 @@ export class Chamber {
     void setWithPlayer();
     void addTile(Position pos);
     Position getRandomTile(); // produces a position of a random unoccupied tile in chamber
+    bool isValidTile(Status s);
 };

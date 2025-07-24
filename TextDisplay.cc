@@ -1,10 +1,11 @@
-export module TextDisplay;
+export module textdisplay;
 
 import <iostream>;
 import <vector>;
 
 import abstractos;
 import enums;
+import floor;
 
 export class TextDisplay {
     const Floor* floor;
@@ -14,4 +15,4 @@ export class TextDisplay {
     void setLastAction(const std::string& action);
     void intro() const;
     void showGameUI() const;
-}
+};

@@ -5,15 +5,17 @@ import treasure;
 import position;
 import enums;
 
-std::unique_ptr<Treasure> TreasureFactory::createTreasure(TreasureType type) {
+std::unique_ptr<Treasure> TreasureFactory::createTreasure(TreasureType type, Position pos) {
     switch (type) {
         case TreasureType::SMALL:
-            return std::make_unique<SmallTreasure>();
+            return std::make_unique<SmallPile>(pos);
         case TreasureType::NORMAL:
-            return std::make_unique<NormalTreasure>();
+            return std::make_unique<NormalPile>(pos);
         case TreasureType::MERCHANT:
-            return std::make_unique<MerchantTreasure>();
+            return std::make_unique<MerchantHoard>(pos);
         case TreasureType::DRAGON:
-            return std::make_unique<DragonTreasure>();
+            return std::make_unique<DragonHoard>(pos);
+        default:
+            throw;
     }
 }

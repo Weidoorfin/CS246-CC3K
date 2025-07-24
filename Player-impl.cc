@@ -8,13 +8,10 @@ import PRNG;
 import position;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
-    : Character(maxHP, atk, def, '@', 0, pos), Race{race}, Gold{0}, totGold{0} {
+    : Character{race, maxHP, atk, def, '@', 0, pos}, Gold{0}, totGold{0} {
     entity = EntityType::PLAYER;
 }
 
-PlayerRace Player::getRace() const {
-    return Race;
-}
 
 int Player::getGold() const {
     return Gold;
@@ -29,12 +26,9 @@ double Player::getScore() const {
     return totGold;
 }
 
-// Default onKill does nothing, subclasses override if needed
-void Player::onKill(Character &enemy) {}
 
 void Player::onTurn() {}
 
-void Player::onKill() {}
 
 void Player::loseHP(int dec) {
     if (currentHP - dec >= 0) {
@@ -45,10 +39,10 @@ void Player::loseHP(int dec) {
 }
 
 void Player::gainHP(int inc) {
-    if (currentHP + inc <= maxHP) {
+    if (currentHP + inc <= getMaxHP()) {
         currentHP += inc;
     } else {
-        currentHP = maxHP;
+        currentHP = getMaxHP();
     }
 }
 
@@ -61,9 +55,6 @@ void Player::attack(Character &target) {
         }
     }
     target.onHit(*this);
-    if( !target.isAlive()) {
-        onKill();
-    }
 }
 
 void Player::onHit(Character &whoFrom) {
@@ -74,4 +65,8 @@ void Player::onHit(Character &whoFrom) {
 
 double Player::getPotionMultiplier() const {
     return 1.0;
+}
+
+std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) {
+    return player;
 }

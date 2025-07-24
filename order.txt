@@ -17,16 +17,16 @@ PotionFactory.cc
 Treasure.cc
 TreasureFactory.cc
 PotionDecorator.cc
+ConcreteDecorator.cc
 Enemy.cc
 ConcreteEnemies.cc
+Enemyfactory.cc
 Chamber.cc
 Floor.cc
 TextDisplay.cc
 Game.cc
 
 AbstractOS-impl.cc
-Config-impl.cc
-PRNG-impl.cc
 RandomEngine-impl.cc
 Entity-impl.cc
 Tile-impl.cc
@@ -41,8 +41,10 @@ PotionFactory-impl.cc
 Treasure-impl.cc
 TreasureFactory-impl.cc
 PotionDecorator-impl.cc
+ConcreteDecorator-impl.cc
 Enemy-impl.cc
 ConcreteEnemies-impl.cc
+Enemyfactory-impl.cc
 Chamber-impl.cc
 Floor-impl.cc
 TextDisplay-impl.cc

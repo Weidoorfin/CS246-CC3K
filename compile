@@ -37,3 +37,4 @@ done
 echo $cxx *.o $name
 $cxx *.o $name
 
+rm -rf ./gcm.cache
