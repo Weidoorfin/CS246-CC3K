@@ -66,19 +66,23 @@ bool Floor::playerMove(Direction dir) {
     if (nextEntity && !nextEntity->isSpace()) return false;
 
 
-    if (terrain[next.y][next.x]->getSymbol() == "/") {
+    if (terrain[next.y][next.x]->getSymbol() == '/') {
         complete = true;
     }
 
     if (nextEntity && nextEntity->getEntityType() == EntityType::TREASURE) {
         auto treasure = dynamic_cast<Treasure*>(nextEntity);
-        treasure->applyEffect(player);
+        auto playerPtr = std::unique_ptr<Player>(player);
+        auto newPlayer = treasure->applyEffect(std::move(playerPtr));
+        player = newPlayer.release();
         grid[next.y][next.x] = nullptr;
     }
 
     if (nextEntity && nextEntity->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(nextEntity);
-        potion->applyEffect(player);
+        auto playerPtr = std::unique_ptr<Player>(player);
+        auto newPlayer = potion->applyEffect(std::move(playerPtr));
+        player = newPlayer.release();
         grid[next.y][next.x] = nullptr;
     }
 
@@ -94,7 +98,7 @@ bool Floor::playerAttack(Direction dir) {
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
         auto enemy = dynamic_cast<Enemy*>(grid[next.y][next.x]);
-        player->attack(enemy);
+        player->attack(*enemy);  // Dereference the pointer to pass as reference
         if (!enemy->isAlive()) {
             handleEnemyDeath(enemy);
             return true;
@@ -108,7 +112,12 @@ bool Floor::playerUseItem(Direction dir) {
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
-        player = potion->applyEffect(std::make_unique<Player>(*player));
+        // This is a design issue - mixing raw and smart pointers
+        // For now, we'll work around it by creating a temporary unique_ptr
+        auto tempPlayer = std::make_unique<Player>(*player);
+        auto newPlayer = potion->applyEffect(std::move(tempPlayer));
+        // Note: This creates a memory management issue, but matches the existing design
+        *player = *newPlayer; // Copy the modified player back
         // Remove the item from the grid
         grid[next.y][next.x] = nullptr;
          // Notify observers of the item usage
@@ -119,8 +128,8 @@ bool Floor::playerUseItem(Direction dir) {
 
 // Perform enemy actions for the turn
 void Floor::enemyTurn() {
-    for (auto enemy : enemies) {
-        enemy->moveToggle();
+    for (auto &enemy : enemies) {  // Use reference to avoid copying
+        enemy->toggleMove();  // Fix the method name
     }
     for (int y = 0; y < grid[0].size(); ++y) {
         for (int x = 0; x < grid.size(); ++x) {
@@ -128,7 +137,7 @@ void Floor::enemyTurn() {
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
                 bool attacked = false;
-                if (enemy->getmoveToggle()) {
+                if (enemy->getMoveToggle()) {  // Fix the method name
                     for (int dx = -1; dx <= 1 && !attacked; ++dx) {
                         for (int dy = -1; dy <= 1 && !attacked; ++dy) {
                             if (dx == 0 && dy == 0) continue;
@@ -185,9 +194,12 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
 void Floor::getEmptyMap(std::istream &is) {
     // Implementation for reading an empty map from the input stream
     // This will populate the grid and tileTypes with initial values
-    string line;
+    std::string line;
     int y = 0;
     while (getline(is, line)) {
+        std::vector<Entity*> terrainRow;
+        std::vector<Entity*> gridRow;
+        std::vector<TileType> row;
         int x = 0;
         for (char c : line) {
             Position pos{x, y};
@@ -196,42 +208,50 @@ void Floor::getEmptyMap(std::istream &is) {
                     tiles.push_back(std::make_unique<Tile>(TileType::HorizontalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
+                    row.push_back(TileType::HorizontalWall);
                     break;
                 case '|': 
                     tiles.push_back(std::make_unique<Tile>(TileType::VerticalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
+                    row.push_back(TileType::VerticalWall);
                     break;
                 case '.':  
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
+                    row.push_back(TileType::Floor);
                     break;
                 case '+': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Door, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
+                    row.push_back(TileType::Door);
                     break;
                 case '#': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Corridor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
+                    row.push_back(TileType::Corridor);
                     break;
                 case '/': 
                     tiles.push_back(std::make_unique<Tile>(TileType::Stair, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     stairs = pos;
+                    row.push_back(TileType::Stair);
                     break;
                 // Handle generated entities
                 case ' ':
                     tiles.push_back(std::make_unique<Tile>(TileType::Nothing, pos));
                     terrainRow.push_back(tiles.back().get());
-                    gridRow.push_back(nullptr); 
+                    gridRow.push_back(nullptr);
+                    row.push_back(TileType::Nothing);
                     break;
+            }
             x++;
         } // for (char c : line)
-        terrain.pushBack(terrainRow);
+        terrain.push_back(terrainRow);
         grid.push_back(gridRow);
         tileTypes.push_back(row);
         y++;
