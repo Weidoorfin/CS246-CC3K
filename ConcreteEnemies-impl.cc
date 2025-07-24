@@ -34,11 +34,11 @@ void Elf::attack(Character &target) {
 
 // Orc implementation //////////////////////////////
 Orc::Orc(Position pos)
-    : Enemy{Race::ORC, 180, 30, 25, 'O', 0, pos} {}
+    : Enemy{Race::ORCS, 180, 30, 25, 'O', 0, pos} {}
 
 Orc::~Orc() {}
 
-Orc::attack(Character &target) {
+void Orc::attack(Character &target) {
     // Special attack logic for Orc
     if (target.getRace() == Race::GOBLIN) {
         // If the target is a Goblin, Orc deals additional damage
@@ -68,9 +68,8 @@ Dragon::Dragon(Position pos)
 
 Dragon::~Dragon() {}
 
-bool Dragon::move(Direction dir) {
+void Dragon::move(Direction dir) {
     // non-operational move for Dragon
-    return true;
 }
 
 // Halfling implementation //////////////////////////////

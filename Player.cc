@@ -1,12 +1,14 @@
 export module player;
 
 import <memory>;
+import <cmath>;
 import enums;
 import character;
 import position;
 
 export class Player : public Character {
     int Gold;
+  protected:
     int totGold; // amount gold obtained in total
   public:
     Player(Race race, int maxHP, int atk, int def, Position pos);
@@ -14,7 +16,7 @@ export class Player : public Character {
     virtual int getGold() const;
     virtual double getScore() const;
     virtual void gainGold(int amount);
-    virtual void onTurn() = 0;
+    virtual void onTurn();
     virtual void loseHP(int dec);
     virtual void gainHP(int inc);
     virtual void attack(Character &target) override;
@@ -23,7 +25,7 @@ export class Player : public Character {
 
 
     virtual std::unique_ptr<Player> reset() const = 0;
-    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const = 0;
+    virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player);
 };
 
 

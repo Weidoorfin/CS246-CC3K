@@ -19,7 +19,7 @@ void Chamber::addTile(Position pos) {
 Position Chamber::getRandomTile() {
     int size = validArea.size();
     RandomEngine re;
-    vector<int> indices = re.genIndices(0, size - 1);
+    std::vector<int> indices = re.genIndices(0, size - 1);
     for (int idx : indices) {
         if (!validArea[idx].occupied) {
             validArea[idx].occupied = true; // Mark the tile as occupied

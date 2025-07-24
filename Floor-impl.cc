@@ -22,11 +22,12 @@ import enemyfactory;
 import randomengine;
 import treasurefactory;
 import potionfactory;
+import tile;
 
 
 Floor::Floor(){
     // Initialize the grid with empty chambers
-    ifstream emptyMap("emptyfloor.txt");
+    std::ifstream emptyMap("emptyfloor.txt");
     getEmptyMap(emptyMap);
     identifyChambers();
     GeneratePlayerpos();
@@ -37,12 +38,6 @@ Floor::Floor(){
 
 Floor::Floor(std::istream &is) {
     readFromStream(is);
-     // Notify observers that the floor has been initialized
-}
-
-Floor::Floor(std::istream &is, int seed) {
-    readFromStream(is);
-    // Set the random seed for the floor
      // Notify observers that the floor has been initialized
 }
 
@@ -71,7 +66,7 @@ bool Floor::playerMove(Direction dir) {
             complete = true; // Player has reached the stairs
         } else if (grid[next.y][next.x]->getEntityType() == EntityType::TREASURE) {
             auto treasure = dynamic_cast<Treasure*>(grid[next.y][next.x]);
-            player = treasure.applyEffect(std::make_unique<Player>(*player));
+            player = treasure->applyEffect(std::make_unique<Player>(*player));
             grid[next.y][next.x] = nullptr;
         }
         player->move(dir);
@@ -140,7 +135,7 @@ void Floor::enemyTurn() {
                     }
                     if (attacked) continue;
                     RandomEngine rng;
-                    vector<Direction> directions = rng.genDirections();
+                    std::vector<Direction> directions = rng.genDirections();
 
                     for (auto &dir : directions) {
                         Position next = target(enemy->getPos(), dir);
@@ -274,7 +269,7 @@ void Floor::GeneratePlayerpos() {
 
 void Floor::GenerateStairs() {
     RandomEngine re;
-    vector<int> indices = re.genIndices(0, chambers.size() - 1);
+    std::vector<int> indices = re.genIndices(0, chambers.size() - 1);
     int r = 0;
     while (r < indices.size() && !chambers[indices[r]]->isWithPlayer()) {
         r++;
@@ -332,8 +327,8 @@ void Floor::readFromStream(std::istream &is) {
     int y = 0;
     while (getline(is, line)) {
         int x = 0;
-        vector<Entity*> terrainRow;
-        vector<Entity*> gridRow; // Store entities in the grid
+        std::vector<Entity*> terrainRow;
+        std::vector<Entity*> gridRow; // Store entities in the grid
         EnemyFactory ef;
         PotionFactory pf;
         TreasureFactory tf;

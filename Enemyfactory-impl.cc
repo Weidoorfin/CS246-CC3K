@@ -1,11 +1,12 @@
 module enemyfactory;
 
+import <memory>;
 import enemy;
 import concreteenemies;
 import position;
 import enums;
 
-Enemy EnemyFactory::createEnemy(Race race, Position pos) {
+std::unique_ptr<Enemy> EnemyFactory::createEnemy(Race race, Position pos) {
     switch (race) {
         case Race::DRAGON:
             return std::make_unique<Dragon>(pos);
@@ -17,5 +18,7 @@ Enemy EnemyFactory::createEnemy(Race race, Position pos) {
             return std::make_unique<Halfling>(pos);
         case Race::HUMAN:
           return std::make_unique<Human>(pos);
+        default:
+            throw std::invalid_argument("Unknown race");
     }
 }

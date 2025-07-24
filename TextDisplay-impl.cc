@@ -5,6 +5,7 @@ import <memory>;
 import <vector>;
 import chamber;
 import player;
+import floor;
 
 
 void TextDisplay::attach(const Floor* f) {

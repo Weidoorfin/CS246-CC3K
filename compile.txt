@@ -1,0 +1,1253 @@
+Floor.cc:33:35: warning: ignoring attributes applied to ‘std::auto_ptr< <template-parameter-1-1> >’ after definition [-Wattributes]
+   33 |     std::vector<std::vector<Entity*>> terrain; // Types of tiles of terrain
+      |                                   ^
+Floor.cc:33:35: note: during load of pendings for ‘std::allocator’
+TextDisplay.cc:11:11: warning: ignoring attributes applied to ‘std::auto_ptr< <template-parameter-1-1> >’ after definition [-Wattributes]
+   11 |     const Floor* floor;
+      |           ^~~~~
+TextDisplay.cc:11:11: note: during load of binding ‘::Floor@floor’
+Player-impl.cc:962434:6: error: no declaration matches ‘Race@enums Player@player::getRace() const’
+Player-impl.cc:962434:6: note: no functions named ‘Race@enums Player@player::getRace() const’
+In module player, imported at Player-impl.cc:1:
+Player.cc:9:14: note: ‘class Player@player’ defined here
+    9 | export class Player : public Character {
+      |              ^~~~~~
+ConcretePlayer-impl.cc: In member function ‘virtual double Shade@concreteplayer::getScore() const’:
+ConcretePlayer-impl.cc:962390:23: error: ‘int Player@player::totGold’ is private within this context
+In module player, imported at ConcretePlayer-impl.cc:962381:
+Player.cc:11:9: note: declared private here
+   11 |     int totGold; // amount gold obtained in total
+      |         ^~~~~~~
+ConcretePlayer-impl.cc: At global scope:
+ConcretePlayer-impl.cc:962393:25: error: no declaration matches ‘std::unique_ptr<Player@player> Shade@concreteplayer::reset()’
+In module concreteplayer, imported at ConcretePlayer-impl.cc:1:
+ConcretePlayer.cc:14:29: note: candidate is: ‘virtual std::unique_ptr<Player@player> Shade@concreteplayer::reset() const’
+   14 |     std::unique_ptr<Player> reset() const override;
+      |                             ^~~~~
+ConcretePlayer.cc:9:14: note: ‘class Shade@concreteplayer’ defined here
+    9 | export class Shade: public Player {
+      |              ^~~~~
+ConcretePlayer-impl.cc: In constructor ‘Drow@concreteplayer::Drow(Position@position)’:
+ConcretePlayer-impl.cc:962398:17: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc: At global scope:
+ConcretePlayer-impl.cc:962402:25: error: no declaration matches ‘std::unique_ptr<Player@player> Drow@concreteplayer::reset()’
+In module concreteplayer, imported at ConcretePlayer-impl.cc:1:
+ConcretePlayer.cc:21:29: note: candidate is: ‘virtual std::unique_ptr<Player@player> Drow@concreteplayer::reset() const’
+   21 |     std::unique_ptr<Player> reset() const override;
+      |                             ^~~~~
+ConcretePlayer.cc:17:14: note: ‘class Drow@concreteplayer’ defined here
+   17 | export class Drow: public Player {
+      |              ^~~~
+ConcretePlayer-impl.cc: In constructor ‘Vampire@concreteplayer::Vampire(Position@position)’:
+ConcretePlayer-impl.cc:962411:17: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc: In member function ‘virtual void Vampire@concreteplayer::attack(Character@character&)’:
+ConcretePlayer-impl.cc:962428:29: error: ‘EnemyType’ has not been declared
+ConcretePlayer-impl.cc: At global scope:
+ConcretePlayer-impl.cc:962436:25: error: no declaration matches ‘std::unique_ptr<Player@player> Vampire@concreteplayer::reset()’
+In module concreteplayer, imported at ConcretePlayer-impl.cc:1:
+ConcretePlayer.cc:31:29: note: candidate is: ‘virtual std::unique_ptr<Player@player> Vampire@concreteplayer::reset() const’
+   31 |     std::unique_ptr<Player> reset() const override;
+      |                             ^~~~~
+ConcretePlayer.cc:25:14: note: ‘class Vampire@concreteplayer’ defined here
+   25 | export class Vampire : public Player {
+      |              ^~~~~~~
+ConcretePlayer-impl.cc: In constructor ‘Goblin@concreteplayer::Goblin(Position@position)’:
+ConcretePlayer-impl.cc:962443:17: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc: In member function ‘virtual void Goblin@concreteplayer::onHit(Character@character&)’:
+ConcretePlayer-impl.cc:962462:34: error: found ‘:’ in nested-name-specifier, expected ‘::’
+ConcretePlayer-impl.cc:962462:35: error: ‘ORC’ is not a member of ‘Race@enums’; did you mean ‘ORCS’?
+ConcretePlayer-impl.cc: At global scope:
+ConcretePlayer-impl.cc:962469:25: error: no declaration matches ‘std::unique_ptr<Player@player> Goblin@concreteplayer::reset()’
+In module concreteplayer, imported at ConcretePlayer-impl.cc:1:
+ConcretePlayer.cc:40:29: note: candidate is: ‘virtual std::unique_ptr<Player@player> Goblin@concreteplayer::reset() const’
+   40 |     std::unique_ptr<Player> reset() const override;
+      |                             ^~~~~
+ConcretePlayer.cc:34:14: note: ‘class Goblin@concreteplayer’ defined here
+   34 | export class Goblin : public Player {
+      |              ^~~~~~
+ConcretePlayer-impl.cc: In constructor ‘Troll@concreteplayer::Troll(Position@position)’:
+ConcretePlayer-impl.cc:962474:17: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc: In member function ‘virtual void Troll@concreteplayer::onTurn()’:
+ConcretePlayer-impl.cc:962478:35: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc:962478:59: error: ‘int Character@character::maxHP’ is private within this context
+In module character, imported at ConcretePlayer-impl.cc:962383:
+Character.cc:9:9: note: declared private here
+    9 |     int maxHP, atk, def;
+      |         ^~~~~
+ConcretePlayer-impl.cc: At global scope:
+ConcretePlayer-impl.cc:962481:25: error: no declaration matches ‘std::unique_ptr<Player@player> Troll@concreteplayer::reset()’
+In module concreteplayer, imported at ConcretePlayer-impl.cc:1:
+ConcretePlayer.cc:49:29: note: candidate is: ‘virtual std::unique_ptr<Player@player> Troll@concreteplayer::reset() const’
+   49 |     std::unique_ptr<Player> reset() const override;
+      |                             ^~~~~
+ConcretePlayer.cc:44:14: note: ‘class Troll@concreteplayer’ defined here
+   44 | export class Troll : public Player {
+      |              ^~~~~
+PlayerFactory-impl.cc:8:83: error: cannot declare member function ‘static std::unique_ptr<Player@player> PlayerFactory@playerfactory::createPlayer(Race@enums, Position@position)’ to have static linkage [-fpermissive]
+    8 | static std::unique_ptr<Player> PlayerFactory::createPlayer(Race race, Position pos) {
+      |                                                                                   ^
+PlayerFactory-impl.cc: In static member function ‘static std::unique_ptr<Player@player> PlayerFactory@playerfactory::createPlayer(Race@enums, Position@position)’:
+PlayerFactory-impl.cc:11:37: error: ‘Shade’ was not declared in this scope
+   11 |             return std::make_unique<Shade>(pos);
+      |                                     ^~~~~
+PlayerFactory-impl.cc:11:43: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   11 |             return std::make_unique<Shade>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+In file included from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at PlayerFactory-impl.cc:3:
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:11:43: error: template argument 1 is invalid
+   11 |             return std::make_unique<Shade>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:11:43: error: template argument 1 is invalid
+   11 |             return std::make_unique<Shade>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:11:43: error: template argument 1 is invalid
+   11 |             return std::make_unique<Shade>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PlayerFactory-impl.cc:13:37: error: ‘Drow’ was not declared in this scope
+   13 |             return std::make_unique<Drow>(pos);
+      |                                     ^~~~
+PlayerFactory-impl.cc:13:42: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   13 |             return std::make_unique<Drow>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:13:42: error: template argument 1 is invalid
+   13 |             return std::make_unique<Drow>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:13:42: error: template argument 1 is invalid
+   13 |             return std::make_unique<Drow>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:13:42: error: template argument 1 is invalid
+   13 |             return std::make_unique<Drow>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PlayerFactory-impl.cc:15:37: error: ‘Vampire’ was not declared in this scope
+   15 |             return std::make_unique<Vampire>(pos);
+      |                                     ^~~~~~~
+PlayerFactory-impl.cc:15:45: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   15 |             return std::make_unique<Vampire>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:15:45: error: template argument 1 is invalid
+   15 |             return std::make_unique<Vampire>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:15:45: error: template argument 1 is invalid
+   15 |             return std::make_unique<Vampire>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:15:45: error: template argument 1 is invalid
+   15 |             return std::make_unique<Vampire>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PlayerFactory-impl.cc:17:37: error: ‘Troll’ was not declared in this scope
+   17 |             return std::make_unique<Troll>(pos);
+      |                                     ^~~~~
+PlayerFactory-impl.cc:17:43: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   17 |             return std::make_unique<Troll>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:17:43: error: template argument 1 is invalid
+   17 |             return std::make_unique<Troll>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:17:43: error: template argument 1 is invalid
+   17 |             return std::make_unique<Troll>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:17:43: error: template argument 1 is invalid
+   17 |             return std::make_unique<Troll>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PlayerFactory-impl.cc:19:37: error: ‘Goblin’ was not declared in this scope
+   19 |             return std::make_unique<Goblin>(pos);
+      |                                     ^~~~~~
+PlayerFactory-impl.cc:19:44: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   19 |             return std::make_unique<Goblin>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:19:44: error: template argument 1 is invalid
+   19 |             return std::make_unique<Goblin>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:19:44: error: template argument 1 is invalid
+   19 |             return std::make_unique<Goblin>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PlayerFactory-impl.cc:19:44: error: template argument 1 is invalid
+   19 |             return std::make_unique<Goblin>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘HUMAN’ not handled in switch [-Wswitch]
+    9 |     switch(race) {
+      |           ^
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘DWARF’ not handled in switch [-Wswitch]
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘ELF’ not handled in switch [-Wswitch]
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘ORCS’ not handled in switch [-Wswitch]
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘MERCHANT’ not handled in switch [-Wswitch]
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘DRAGON’ not handled in switch [-Wswitch]
+PlayerFactory-impl.cc:9:11: warning: enumeration value ‘HALFLING’ not handled in switch [-Wswitch]
+ConcretePotion-impl.cc: In member function ‘virtual std::unique_ptr<Player@player> BA@concretepotion::applyEffect(std::unique_ptr<Player@player>) const’:
+ConcretePotion-impl.cc:962388:29: error: ‘BAEff’ was not declared in this scope
+ConcretePotion-impl.cc:962388:35: error: no matching function for call to ‘make_unique<<expression error> >(std::remove_reference<std::unique_ptr<Player@player>&>::type)’
+In file included from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at ConcretePotion-impl.cc:3:
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962388:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962388:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962388:35: error: template argument 1 is invalid
+ConcretePotion-impl.cc: In member function ‘virtual std::unique_ptr<Player@player> BD@concretepotion::applyEffect(std::unique_ptr<Player@player>) const’:
+ConcretePotion-impl.cc:962394:29: error: ‘BDEff’ was not declared in this scope
+ConcretePotion-impl.cc:962394:35: error: no matching function for call to ‘make_unique<<expression error> >(std::remove_reference<std::unique_ptr<Player@player>&>::type)’
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962394:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962394:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962394:35: error: template argument 1 is invalid
+ConcretePotion-impl.cc: In member function ‘virtual std::unique_ptr<Player@player> WA@concretepotion::applyEffect(std::unique_ptr<Player@player>) const’:
+ConcretePotion-impl.cc:962400:29: error: ‘WAEff’ was not declared in this scope
+ConcretePotion-impl.cc:962400:35: error: no matching function for call to ‘make_unique<<expression error> >(std::remove_reference<std::unique_ptr<Player@player>&>::type)’
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962400:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962400:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962400:35: error: template argument 1 is invalid
+ConcretePotion-impl.cc: In member function ‘virtual std::unique_ptr<Player@player> WD@concretepotion::applyEffect(std::unique_ptr<Player@player>) const’:
+ConcretePotion-impl.cc:962406:29: error: ‘WDEff’ was not declared in this scope
+ConcretePotion-impl.cc:962406:35: error: no matching function for call to ‘make_unique<<expression error> >(std::remove_reference<std::unique_ptr<Player@player>&>::type)’
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962406:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962406:35: error: template argument 1 is invalid
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+ConcretePotion-impl.cc:962406:35: error: template argument 1 is invalid
+PotionFactory-impl.cc:9:89: error: cannot declare member function ‘static std::unique_ptr<Potion@potion> PotionFactory@potionfactory::createPotion(PotionType@enums, Position@position)’ to have static linkage [-fpermissive]
+    9 | static std::unique_ptr<Potion> PotionFactory::createPotion(PotionType type, Position pos) {
+      |                                                                                         ^
+PotionFactory-impl.cc: In static member function ‘static std::unique_ptr<Potion@potion> PotionFactory@potionfactory::createPotion(PotionType@enums, Position@position)’:
+PotionFactory-impl.cc:12:37: error: ‘RedPotion’ was not declared in this scope; did you mean ‘Potion’?
+   12 |             return std::make_unique<RedPotion>(pos);
+      |                                     ^~~~~~~~~
+      |                                     Potion
+PotionFactory-impl.cc:12:47: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   12 |             return std::make_unique<RedPotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+In file included from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at PotionFactory-impl.cc:3:
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:12:47: error: template argument 1 is invalid
+   12 |             return std::make_unique<RedPotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:12:47: error: template argument 1 is invalid
+   12 |             return std::make_unique<RedPotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:12:47: error: template argument 1 is invalid
+   12 |             return std::make_unique<RedPotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PotionFactory-impl.cc:14:37: error: ‘BluePotion’ was not declared in this scope; did you mean ‘Potion’?
+   14 |             return std::make_unique<BluePotion>(pos);
+      |                                     ^~~~~~~~~~
+      |                                     Potion
+PotionFactory-impl.cc:14:48: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   14 |             return std::make_unique<BluePotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:14:48: error: template argument 1 is invalid
+   14 |             return std::make_unique<BluePotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:14:48: error: template argument 1 is invalid
+   14 |             return std::make_unique<BluePotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:14:48: error: template argument 1 is invalid
+   14 |             return std::make_unique<BluePotion>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PotionFactory-impl.cc:16:37: error: ‘PotionOfHealing’ was not declared in this scope
+   16 |             return std::make_unique<PotionOfHealing>(pos);
+      |                                     ^~~~~~~~~~~~~~~
+PotionFactory-impl.cc:16:53: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   16 |             return std::make_unique<PotionOfHealing>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:16:53: error: template argument 1 is invalid
+   16 |             return std::make_unique<PotionOfHealing>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:16:53: error: template argument 1 is invalid
+   16 |             return std::make_unique<PotionOfHealing>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:16:53: error: template argument 1 is invalid
+   16 |             return std::make_unique<PotionOfHealing>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PotionFactory-impl.cc:18:37: error: ‘PotionOfWealth’ was not declared in this scope
+   18 |             return std::make_unique<PotionOfWealth>(pos);
+      |                                     ^~~~~~~~~~~~~~
+PotionFactory-impl.cc:18:52: error: no matching function for call to ‘make_unique<<expression error> >(Position@position&)’
+   18 |             return std::make_unique<PotionOfWealth>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__invalid_make_unique_t<_Tp> std::make_unique(_Args&& ...)’ (deleted)
+ 1100 |     make_unique(_Args&&...) = delete;
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1100:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:18:52: error: template argument 1 is invalid
+   18 |             return std::make_unique<PotionOfWealth>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note: candidate: ‘template<class _Tp> std::__detail::__unique_ptr_array_t<_Tp> std::make_unique(size_t)’
+ 1090 |     make_unique(size_t __num)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1090:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:18:52: error: template argument 1 is invalid
+   18 |             return std::make_unique<PotionOfWealth>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note: candidate: ‘template<class _Tp, class ... _Args> std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...)’
+ 1075 |     make_unique(_Args&&... __args)
+      |     ^~~~~~~~~~~
+/usr/include/c++/14/bits/unique_ptr.h:1075:5: note:   template argument deduction/substitution failed:
+PotionFactory-impl.cc:18:52: error: template argument 1 is invalid
+   18 |             return std::make_unique<PotionOfWealth>(pos);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~
+PotionFactory-impl.cc:10:11: warning: enumeration value ‘BD’ not handled in switch [-Wswitch]
+   10 |     switch(type) {
+      |           ^
+PotionFactory-impl.cc:10:11: warning: enumeration value ‘WD’ not handled in switch [-Wswitch]
+Treasure-impl.cc: In constructor ‘Treasure@treasure::Treasure(int, Position@position)’:
+Treasure-impl.cc:10:14: error: ‘EntityType’ has not been declared
+   10 |     entity = EntityType::TREASURE; // Set the entity type to TREASURE
+      |              ^~~~~~~~~~
+Treasure-impl.cc: In constructor ‘SmallPile@treasure::SmallPile()’:
+Treasure-impl.cc:23:36: error: no matching function for call to ‘Treasure@treasure::Treasure(int)’
+   23 | SmallPile::SmallPile() : Treasure(1) {}
+      |                                    ^
+Treasure-impl.cc:8:1: note: candidate: ‘Treasure@treasure::Treasure(int, Position@position)’
+    8 | Treasure::Treasure(int value, Position pos)
+      | ^~~~~~~~
+Treasure-impl.cc:8:1: note:   candidate expects 2 arguments, 1 provided
+In module treasure, imported at Treasure-impl.cc:1:
+Treasure.cc:8:14: note: candidate: ‘constexpr Treasure@treasure::Treasure(const Treasure@treasure&)’
+    8 | export class Treasure : public Item {
+      |              ^~~~~~~~
+Treasure.cc:8:14: note:   no known conversion for argument 1 from ‘int’ to ‘const Treasure@treasure&’
+Treasure-impl.cc: In constructor ‘NormalPile@treasure::NormalPile()’:
+Treasure-impl.cc:25:38: error: no matching function for call to ‘Treasure@treasure::Treasure(int)’
+   25 | NormalPile::NormalPile() : Treasure(2) {}
+      |                                      ^
+Treasure-impl.cc:8:1: note: candidate: ‘Treasure@treasure::Treasure(int, Position@position)’
+    8 | Treasure::Treasure(int value, Position pos)
+      | ^~~~~~~~
+Treasure-impl.cc:8:1: note:   candidate expects 2 arguments, 1 provided
+In module treasure, imported at Treasure-impl.cc:1:
+Treasure.cc:8:14: note: candidate: ‘constexpr Treasure@treasure::Treasure(const Treasure@treasure&)’
+    8 | export class Treasure : public Item {
+      |              ^~~~~~~~
+Treasure.cc:8:14: note:   no known conversion for argument 1 from ‘int’ to ‘const Treasure@treasure&’
+Treasure-impl.cc: In constructor ‘MerchantHoard@treasure::MerchantHoard()’:
+Treasure-impl.cc:27:44: error: no matching function for call to ‘Treasure@treasure::Treasure(int)’
+   27 | MerchantHoard::MerchantHoard() : Treasure(4) {}
+      |                                            ^
+Treasure-impl.cc:8:1: note: candidate: ‘Treasure@treasure::Treasure(int, Position@position)’
+    8 | Treasure::Treasure(int value, Position pos)
+      | ^~~~~~~~
+Treasure-impl.cc:8:1: note:   candidate expects 2 arguments, 1 provided
+In module treasure, imported at Treasure-impl.cc:1:
+Treasure.cc:8:14: note: candidate: ‘constexpr Treasure@treasure::Treasure(const Treasure@treasure&)’
+    8 | export class Treasure : public Item {
+      |              ^~~~~~~~
+Treasure.cc:8:14: note:   no known conversion for argument 1 from ‘int’ to ‘const Treasure@treasure&’
+Treasure-impl.cc: In constructor ‘DragonHoard@treasure::DragonHoard()’:
+Treasure-impl.cc:29:40: error: no matching function for call to ‘Treasure@treasure::Treasure(int)’
+   29 | DragonHoard::DragonHoard() : Treasure(6) {}
+      |                                        ^
+Treasure-impl.cc:8:1: note: candidate: ‘Treasure@treasure::Treasure(int, Position@position)’
+    8 | Treasure::Treasure(int value, Position pos)
+      | ^~~~~~~~
+Treasure-impl.cc:8:1: note:   candidate expects 2 arguments, 1 provided
+In module treasure, imported at Treasure-impl.cc:1:
+Treasure.cc:8:14: note: candidate: ‘constexpr Treasure@treasure::Treasure(const Treasure@treasure&)’
+    8 | export class Treasure : public Item {
+      |              ^~~~~~~~
+Treasure.cc:8:14: note:   no known conversion for argument 1 from ‘int’ to ‘const Treasure@treasure&’
+TreasureFactory-impl.cc:8:27: error: no declaration matches ‘std::unique_ptr<Treasure@treasure> TreasureFactory@treasurefactory::createTreasure(TreasureType@enums)’
+    8 | std::unique_ptr<Treasure> TreasureFactory::createTreasure(TreasureType type) {
+      |                           ^~~~~~~~~~~~~~~
+In module treasurefactory, imported at TreasureFactory-impl.cc:1:
+TreasureFactory.cc:10:38: note: candidate is: ‘static std::unique_ptr<Treasure@treasure> TreasureFactory@treasurefactory::createTreasure(TreasureType@enums, Position@position)’
+   10 |     static std::unique_ptr<Treasure> createTreasure(TreasureType type, Position pos);
+      |                                      ^~~~~~~~~~~~~~
+TreasureFactory.cc:8:14: note: ‘class TreasureFactory@treasurefactory’ defined here
+    8 | export class TreasureFactory {
+      |              ^~~~~~~~~~~~~~~
+PotionDecorator-impl.cc: In constructor ‘PotionDecorator@potiondecorator::PotionDecorator(std::unique_ptr<Player@player>)’:
+PotionDecorator-impl.cc:10:56: error: no matching function for call to ‘Player@player::Player(<brace-enclosed initializer list>)’
+   10 |     Player{wrapped->getRace()}, base{std::move(wrapped)} {}
+      |                                                        ^
+In module player, imported at PotionDecorator-impl.cc:4:
+Player.cc:13:5: note: candidate: ‘Player@player::Player(Race@enums, int, int, int, Position@position)’
+   13 |     Player(Race race, int maxHP, int atk, int def, Position pos);
+      |     ^~~~~~
+Player.cc:13:5: note:   candidate expects 5 arguments, 1 provided
+Player.cc:9:14: note: candidate: ‘constexpr Player@player::Player(const Player@player&)’
+    9 | export class Player : public Character {
+      |              ^~~~~~
+Player.cc:9:14: note:   no known conversion for argument 1 from ‘Race@enums’ to ‘const Player@player&’
+PotionDecorator-impl.cc: At global scope:
+PotionDecorator-impl.cc:16:5: error: no declaration matches ‘int PotionDecorator@potiondecorator::gainGold(int)’
+   16 | int PotionDecorator::gainGold(int amount) { return base->gainGold(inc); }
+      |     ^~~~~~~~~~~~~~~
+In module potiondecorator, imported at PotionDecorator-impl.cc:1:
+PotionDecorator.cc:22:18: note: candidate is: ‘virtual void PotionDecorator@potiondecorator::gainGold(int)’
+   22 |     virtual void gainGold(int amount) override;
+      |                  ^~~~~~~~
+PotionDecorator.cc:9:14: note: ‘class PotionDecorator@potiondecorator’ defined here
+    9 | export class PotionDecorator : public Player {
+      |              ^~~~~~~~~~~~~~~
+PotionDecorator-impl.cc: In member function ‘virtual void PotionDecorator@potiondecorator::useItem(Item@item&)’:
+PotionDecorator-impl.cc:21:51: error: ‘class Player@player’ has no member named ‘useItem’
+   21 | void PotionDecorator::useItem(Item &item) { base->useItem(item); }
+      |                                                   ^~~~~~~
+Enemy-impl.cc: In constructor ‘Enemy@enemy::Enemy(Race@enums, int, int, int, char, int, Position@position)’:
+Enemy-impl.cc:9:62: error: class ‘Enemy@enemy’ does not have any field named ‘type’
+    9 |     : Character{race, maxHP, atk, def, symbol, colour, pos}, type{type} {
+      |                                                              ^~~~
+Enemy-impl.cc:9:67: error: ‘type’ was not declared in this scope
+    9 |     : Character{race, maxHP, atk, def, symbol, colour, pos}, type{type} {
+      |                                                                   ^~~~
+ConcreteEnemies-impl.cc: In constructor ‘Orc@concreteenemies::Orc(Position@position)’:
+ConcreteEnemies-impl.cc:37:19: error: ‘ORC’ is not a member of ‘Race@enums’; did you mean ‘ORCS’?
+   37 |     : Enemy{Race::ORC, 180, 30, 25, 'O', 0, pos} {}
+      |                   ^~~
+      |                   ORCS
+ConcreteEnemies-impl.cc:37:48: error: no matching function for call to ‘Enemy@enemy::Enemy(<brace-enclosed initializer list>)’
+   37 |     : Enemy{Race::ORC, 180, 30, 25, 'O', 0, pos} {}
+      |                                                ^
+In module enemy, imported at ConcreteEnemies-impl.cc:4:
+Enemy.cc:10:5: note: candidate: ‘Enemy@enemy::Enemy(Race@enums, int, int, int, char, int, Position@position)’
+   10 |     Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos);
+      |     ^~~~~
+Enemy.cc:10:5: note:   conversion of argument 1 would be ill-formed:
+Enemy.cc:7:14: note: candidate: ‘constexpr Enemy@enemy::Enemy(const Enemy@enemy&)’
+    7 | export class Enemy: public Character {
+      |              ^~~~~
+Enemy.cc:7:14: note:   candidate expects 1 argument, 7 provided
+ConcreteEnemies-impl.cc: At global scope:
+ConcreteEnemies-impl.cc:41:1: error: ISO C++ forbids declaration of ‘attack’ with no type [-fpermissive]
+   41 | Orc::attack(Character &target) {
+      | ^~~
+ConcreteEnemies-impl.cc:41:1: error: no declaration matches ‘int Orc@concreteenemies::attack(Character@character&)’
+In module concreteenemies, imported at ConcreteEnemies-impl.cc:1:
+ConcreteEnemies.cc:30:10: note: candidate is: ‘virtual void Orc@concreteenemies::attack(Character@character&)’
+   30 |     void attack(Character &target) override; // Override attack to handle special Orc behavior
+      |          ^~~~~~
+ConcreteEnemies.cc:26:14: note: ‘class Orc@concreteenemies’ defined here
+   26 | export class Orc : public Enemy {
+      |              ^~~
+ConcreteEnemies-impl.cc: In member function ‘virtual void Dragon@concreteenemies::move(Direction@enums)’:
+ConcreteEnemies-impl.cc:73:12: error: return-statement with a value, in function returning ‘void’ [-fpermissive]
+   73 |     return true;
+      |            ^~~~
+Enemyfactory-impl.cc:8:7: error: no declaration matches ‘Enemy@enemy EnemyFactory@enemyfactory::createEnemy(Race@enums, Position@position)’
+    8 | Enemy EnemyFactory::createEnemy(Race race, Position pos) {
+      |       ^~~~~~~~~~~~
+In module enemyfactory, imported at Enemyfactory-impl.cc:1:
+Enemyfactory.cc:12:28: note: candidate is: ‘std::unique_ptr<Enemy@enemy> EnemyFactory@enemyfactory::createEnemy(Race@enums, Position@position)’
+   12 |     std::unique_ptr<Enemy> createEnemy(Race race, Position pos);
+      |                            ^~~~~~~~~~~
+Enemyfactory.cc:9:14: note: ‘class EnemyFactory@enemyfactory’ defined here
+    9 | export class EnemyFactory {
+      |              ^~~~~~~~~~~~
+Chamber-impl.cc: In member function ‘Position@position Chamber@chamber::getRandomTile()’:
+Chamber-impl.cc:22:5: error: ‘vector’ was not declared in this scope; did you mean ‘std::vector’?
+   22 |     vector<int> indices = re.genIndices(0, size - 1);
+      |     ^~~~~~
+      |     std::vector
+In file included from /usr/include/c++/14/vector:66,
+of module /usr/include/c++/14/vector, imported at Chamber.cc:3,
+of module chamber, imported at Chamber-impl.cc:1:
+/usr/include/c++/14/bits/stl_vector.h:428:11: note: ‘std::vector’ declared here
+  428 |     class vector : protected _Vector_base<_Tp, _Alloc>
+      |           ^~~~~~
+Chamber-impl.cc:22:12: error: expected primary-expression before ‘int’
+   22 |     vector<int> indices = re.genIndices(0, size - 1);
+      |            ^~~
+Chamber-impl.cc:23:20: error: ‘indices’ was not declared in this scope
+   23 |     for (int idx : indices) {
+      |                    ^~~~~~~
+Chamber-impl.cc:20:9: warning: unused variable ‘size’ [-Wunused-variable]
+   20 |     int size = validArea.size();
+      |         ^~~~
+Chamber-impl.cc: At global scope:
+Chamber-impl.cc:31:6: error: no declaration matches ‘bool Chamber@chamber::isValidTile(Status)’
+   31 | bool Chamber::isValidTile(Status s) {
+      |      ^~~~~~~
+Chamber-impl.cc:31:6: note: no functions named ‘bool Chamber@chamber::isValidTile(Status)’
+In module chamber, imported at Chamber-impl.cc:1:
+Chamber.cc:8:14: note: ‘class Chamber@chamber’ defined here
+    8 | export class Chamber {
+      |              ^~~~~~~
+Chamber-impl.cc:31:27: error: ‘struct Chamber@chamber::Status’ is private within this context
+   31 | bool Chamber::isValidTile(Status s) {
+      |                           ^~~~~~
+In module chamber, imported at Chamber-impl.cc:1:
+Chamber.cc:10:12: note: declared private here
+   10 |     struct Status {
+      |            ^~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39,
+        included from /usr/include/c++/14/chrono:3360,
+of module /usr/include/c++/14/chrono, imported at RandomEngine.cc:6,
+of module randomengine, imported at Chamber-impl.cc:3:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_WidthPrecVisitor; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:3602:35:   required from ‘std::size_t std::__format::__int_from_arg(const std::basic_format_arg<_Context>&) [with _Context = std::basic_format_context<_Sink_iter<wchar_t>, wchar_t>; std::size_t = long unsigned int]’
+ 3602 |     { return std::visit_format_arg(_WidthPrecVisitor(), __arg); }
+      |              ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:625:39:   required from ‘std::size_t std::__format::_Spec<_CharT>::_M_get_precision(_Context&) const [with _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+  625 |             __prec = __format::__int_from_arg(__ctx.arg(_M_prec));
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:1510:39:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::__format::__formatter_fp<_CharT>::format(_Fp, std::basic_format_context<_Out, _CharT>&) const [with _Fp = float; _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 1510 |             __prec = _M_spec._M_get_precision(__fc);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/usr/include/c++/14/format:2168:22:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::formatter<_Tp, _CharT>::format(_Tp, std::basic_format_context<_Out, _CharT>&) const [with _Out = std::__format::_Sink_iter<wchar_t>; _Tp = float; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 2168 |         { return _M_f.format(__u, __fc); }
+      |                  ~~~~~~~~~~~^~~~~~~~~~~
+/usr/include/c++/14/format:4052:41:   required from ‘std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)> [with auto:36 = float]’
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |                                      ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3520:44:   required from ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3520 |               return std::forward<_Visitor>(__vis)(_M_val._M_flt);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:28:   required from ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_WidthPrecVisitor; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+Chamber-impl.cc: In member function ‘Position@position Chamber@chamber::getRandomTile()’:
+Chamber-impl.cc:29:1: warning: control reaches end of non-void function [-Wreturn-type]
+   29 | }
+      | ^
+Floor-impl.cc:134383397:1: warning: ignoring attributes applied to ‘std::auto_ptr< <template-parameter-1-1> >’ after definition [-Wattributes]
+Floor-impl.cc:134383397:1: note: during load of binding ‘::Floor@floor’
+Floor-impl.cc: In constructor ‘Floor@floor::Floor()’:
+Floor-impl.cc:134383399:5: error: ‘ifstream’ was not declared in this scope; did you mean ‘std::ifstream’?
+In file included from /usr/include/c++/14/ios:40,
+                 from /usr/include/c++/14/ostream:40,
+                 from /usr/include/c++/14/iostream:41,
+of module /usr/include/c++/14/iostream, imported at Floor-impl.cc:3:
+/usr/include/c++/14/iosfwd:164:41: note: ‘std::ifstream’ declared here
+  164 |   typedef basic_ifstream<char>          ifstream;
+      |                                         ^~~~~~~~
+Floor-impl.cc:134383400:17: error: ‘emptyMap’ was not declared in this scope; did you mean ‘getEmptyMap’?
+Floor-impl.cc: In member function ‘void Floor@floor::setPlayer(std::unique_ptr<Player@player>)’:
+Floor-impl.cc:134383414:23: error: cannot convert ‘std::remove_reference<std::unique_ptr<Player@player>&>::type’ {aka ‘std::unique_ptr<Player@player>’} to ‘Player@player*’ in assignment
+Floor-impl.cc:134383415:13: error: ‘class Player@player’ has no member named ‘setPosition’
+Floor-impl.cc: In member function ‘const std::vector<std::vector<Tile@tile*> >& Floor@floor::getTerrain() const’:
+Floor-impl.cc:134383427:12: error: invalid initialization of reference of type ‘const std::vector<std::vector<Tile@tile*> >&’ from expression of type ‘const std::vector<std::vector<Entity@entity*> >’
+Floor-impl.cc: In member function ‘bool Floor@floor::playerMove(Direction@enums)’:
+Floor-impl.cc:134383434:66: error: ‘STAIR’ is not a member of ‘EntityType@enums’
+Floor-impl.cc:134383438:31: error: request for member ‘applyEffect’ in ‘treasure’, which is of pointer type ‘Treasure@treasure*’ (maybe you meant to use ‘->’ ?)
+Floor-impl.cc: In member function ‘bool Floor@floor::playerAttack(Direction@enums)’:
+Floor-impl.cc:134383455:23: error: cannot convert ‘__gnu_cxx::__alloc_traits<std::allocator<Entity@entity*>, Entity@entity*>::value_type’ {aka ‘Entity@entity*’} to ‘Character@character&’
+In module player, imported at Floor-impl.cc:134383389:
+Player.cc:21:36: note:   initializing argument 1 of ‘virtual void Player@player::attack(Character@character&)’
+   21 |     virtual void attack(Character &target) override;
+      |                         ~~~~~~~~~~~^~~~~~
+Floor-impl.cc:134383456:20: error: ‘class Enemy@enemy’ has no member named ‘isDead’
+Floor-impl.cc: In member function ‘bool Floor@floor::playerUseItem(Direction@enums)’:
+Floor-impl.cc:134383470:37: error: cannot convert ‘std::unique_ptr<Player@player>’ to ‘Player@player*’ in assignment
+Floor-impl.cc: In member function ‘void Floor@floor::enemyTurn()’:
+Floor-impl.cc:134383481:23: error: use of deleted function ‘std::unique_ptr<_Tp, _Dp>::unique_ptr(const std::unique_ptr<_Tp, _Dp>&) [with _Tp = Enemy@enemy; _Dp = std::default_delete<Enemy@enemy>]’
+In file included from /usr/include/c++/14/bits/shared_ptr_base.h:59,
+                 from /usr/include/c++/14/bits/shared_ptr.h:53,
+                 from /usr/include/c++/14/chrono:49,
+of module /usr/include/c++/14/chrono, imported at RandomEngine.cc:6,
+of module randomengine, imported at Floor-impl.cc:134383391:
+/usr/include/c++/14/bits/unique_ptr.h:516:7: note: declared here
+  516 |       unique_ptr(const unique_ptr&) = delete;
+      |       ^~~~~~~~~~
+Floor-impl.cc:134383481:23: note: use ‘-fdiagnostics-all-candidates’ to display considered candidates
+Floor-impl.cc:134383482:16: error: ‘bool Enemy@enemy::moveToggle’ is private within this context
+In module enemy, imported at Floor-impl.cc:134383382:
+Enemy.cc:8:8: note: declared private here
+    8 |   bool moveToggle = false;
+      |        ^
+Floor-impl.cc:134383482:26: error: expression cannot be used as a function
+Floor-impl.cc:134383484:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<Entity@entity*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+Floor-impl.cc:134383485:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::vector<Entity@entity*> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+Floor-impl.cc:134383490:28: error: ‘class Enemy@enemy’ has no member named ‘getMoveToggle’; did you mean ‘getmoveToggle’?
+Floor-impl.cc:134383495:32: error: ‘adjacent’ was not declared in this scope; did you mean ‘isAdjacent’?
+Floor-impl.cc:134383499:40: error: ‘bool Enemy@enemy::moveToggle’ is private within this context
+In module enemy, imported at Floor-impl.cc:134383382:
+Enemy.cc:8:8: note: declared private here
+    8 |   bool moveToggle = false;
+      |        ^
+Floor-impl.cc:134383499:50: error: expression cannot be used as a function
+Floor-impl.cc: In member function ‘void Floor@floor::handleEnemyDeath(Enemy@enemy*)’:
+Floor-impl.cc:134383530:38: error: ‘Merchant’ does not name a type
+Floor-impl.cc:134383530:46: error: expected ‘>’ before ‘*’ token
+Floor-impl.cc:134383530:46: error: expected ‘(’ before ‘*’ token
+Floor-impl.cc:134383530:47: error: expected primary-expression before ‘>’ token
+Floor-impl.cc:134383530:56: error: expected ‘)’ before ‘{’ token
+Floor-impl.cc:134383539:9: error: ‘it’ was not declared in this scope; did you mean ‘int’?
+Floor-impl.cc: In member function ‘void Floor@floor::getEmptyMap(std::istream&)’:
+Floor-impl.cc:134383547:5: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+In file included from /usr/include/c++/14/iosfwd:41,
+                 from /usr/include/c++/14/ios:40,
+                 from /usr/include/c++/14/istream:40,
+                 from /usr/include/c++/14/sstream:40,
+of module /usr/include/c++/14/sstream, imported at Floor-impl.cc:89588926:
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Floor-impl.cc:134383549:24: error: ‘line’ was not declared in this scope
+Floor-impl.cc:134383556:21: error: ‘terrainRow’ was not declared in this scope; did you mean ‘terrain’?
+Floor-impl.cc:134383557:21: error: ‘gridRow’ was not declared in this scope; did you mean ‘grid’?
+Floor-impl.cc:134383593:17: error: ‘class std::vector<std::vector<Entity@entity*> >’ has no member named ‘pushBack’; did you mean ‘push_back’?
+Floor-impl.cc:134383593:26: error: ‘terrainRow’ was not declared in this scope; did you mean ‘terrain’?
+Floor-impl.cc:134383594:24: error: ‘gridRow’ was not declared in this scope; did you mean ‘grid’?
+Floor-impl.cc:134383595:9: error: ‘tileTypes’ was not declared in this scope; did you mean ‘TileType’?
+Floor-impl.cc:134383595:29: error: ‘row’ was not declared in this scope
+Floor-impl.cc:134383600:29: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383616:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383630:30: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383639:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383654:29: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383694:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:134383863:47: error: a function-definition is not allowed here before ‘{’ token
+Floor-impl.cc:134383886:41: error: a function-definition is not allowed here before ‘{’ token
+Floor-impl.cc:134383888:2: error: expected ‘}’ at end of input
+Floor-impl.cc:134383544:43: note: to match this ‘{’
+In file included from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at Floor-impl.cc:22397236:
+/usr/include/c++/14/bits/unique_ptr.h: In instantiation of ‘std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...) [with _Tp = Player@player; _Args = {Player@player&}; __detail::__unique_ptr_t<_Tp> = __detail::__unique_ptr_t<Player@player>]’:
+Floor-impl.cc:134383438:67:   required from here
+/usr/include/c++/14/bits/unique_ptr.h:1076:30: error: invalid new-expression of abstract class type ‘Player@player’
+ 1076 |     { return unique_ptr<_Tp>(new _Tp(std::forward<_Args>(__args)...)); }
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module player, imported at Floor-impl.cc:134383389:
+Player.cc:9:14: note:   because the following virtual functions are pure within ‘Player@player’:
+    9 | export class Player : public Character {
+      |              ^
+Player.cc:18:18: note:     ‘virtual void Player@player::onTurn()’
+   18 |     virtual void onTurn() = 0;
+      |                  ^
+Player.cc:26:37: note:     ‘virtual std::unique_ptr<Player@player> Player@player::reset() const’
+   26 |     virtual std::unique_ptr<Player> reset() const = 0;
+      |                                     ^
+Player.cc:27:37: note:     ‘virtual std::unique_ptr<Player@player> Player@player::applyEffect(std::unique_ptr<Player@player>) const’
+   27 |     virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) const = 0;
+      |                                     ^
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39,
+        included from /usr/include/c++/14/chrono:3360,
+of module /usr/include/c++/14/chrono, imported at RandomEngine.cc:6,
+of module randomengine, imported at Floor-impl.cc:134383391:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_WidthPrecVisitor; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:3602:35:   required from ‘std::size_t std::__format::__int_from_arg(const std::basic_format_arg<_Context>&) [with _Context = std::basic_format_context<_Sink_iter<wchar_t>, wchar_t>; std::size_t = long unsigned int]’
+ 3602 |     { return std::visit_format_arg(_WidthPrecVisitor(), __arg); }
+      |              ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:625:39:   required from ‘std::size_t std::__format::_Spec<_CharT>::_M_get_precision(_Context&) const [with _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+  625 |             __prec = __format::__int_from_arg(__ctx.arg(_M_prec));
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:1510:39:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::__format::__formatter_fp<_CharT>::format(_Fp, std::basic_format_context<_Out, _CharT>&) const [with _Fp = float; _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 1510 |             __prec = _M_spec._M_get_precision(__fc);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/usr/include/c++/14/format:2168:22:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::formatter<_Tp, _CharT>::format(_Tp, std::basic_format_context<_Out, _CharT>&) const [with _Out = std::__format::_Sink_iter<wchar_t>; _Tp = float; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 2168 |         { return _M_f.format(__u, __fc); }
+      |                  ~~~~~~~~~~~^~~~~~~~~~~
+/usr/include/c++/14/format:4052:41:   required from ‘std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)> [with auto:36 = float]’
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |                                      ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3520:44:   required from ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3520 |               return std::forward<_Visitor>(__vis)(_M_val._M_flt);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:28:   required from ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_WidthPrecVisitor; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+TextDisplay-impl.cc:44793576:6: warning: ignoring attributes applied to ‘std::auto_ptr< <template-parameter-1-1> >’ after definition [-Wattributes]
+TextDisplay-impl.cc:44793576:6: note: during load of binding ‘::TextDisplay@textdisplay’
+TextDisplay-impl.cc: In member function ‘void TextDisplay@textdisplay::showGameUI() const’:
+TextDisplay-impl.cc:44793616:32: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:44793617:32: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:44793618:30: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:44793619:31: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:44793620:31: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39,
+        included from /usr/include/c++/14/chrono:3360,
+of module /usr/include/c++/14/chrono, imported at RandomEngine.cc:6,
+of module randomengine, imported at Floor.cc:13,
+of module floor, imported at TextDisplay-impl.cc:44793573:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format: In instantiation of ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_WidthPrecVisitor; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’:
+/usr/include/c++/14/format:3602:35:   required from ‘std::size_t std::__format::__int_from_arg(const std::basic_format_arg<_Context>&) [with _Context = std::basic_format_context<_Sink_iter<wchar_t>, wchar_t>; std::size_t = long unsigned int]’
+ 3602 |     { return std::visit_format_arg(_WidthPrecVisitor(), __arg); }
+      |              ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:625:39:   required from ‘std::size_t std::__format::_Spec<_CharT>::_M_get_precision(_Context&) const [with _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+  625 |             __prec = __format::__int_from_arg(__ctx.arg(_M_prec));
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:1510:39:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::__format::__formatter_fp<_CharT>::format(_Fp, std::basic_format_context<_Out, _CharT>&) const [with _Fp = float; _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 1510 |             __prec = _M_spec._M_get_precision(__fc);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+/usr/include/c++/14/format:2168:22:   required from ‘typename std::basic_format_context<_Out, _CharT>::iterator std::formatter<_Tp, _CharT>::format(_Tp, std::basic_format_context<_Out, _CharT>&) const [with _Out = std::__format::_Sink_iter<wchar_t>; _Tp = float; _CharT = wchar_t; typename std::basic_format_context<_Out, _CharT>::iterator = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>::iterator]’
+ 2168 |         { return _M_f.format(__u, __fc); }
+      |                  ~~~~~~~~~~~^~~~~~~~~~~
+/usr/include/c++/14/format:4052:41:   required from ‘std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)> [with auto:36 = float]’
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |                                      ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3520:44:   required from ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_Formatting_scanner<std::__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3520 |               return std::forward<_Visitor>(__vis)(_M_val._M_flt);
+      |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:28:   required from ‘decltype(auto) std::visit_format_arg(_Visitor&&, basic_format_arg<_Context>) [with _Visitor = __format::_Formatting_scanner<__format::_Sink_iter<wchar_t>, wchar_t>::_M_format_arg(std::size_t)::<lambda(auto:36&)>; _Context = basic_format_context<__format::_Sink_iter<wchar_t>, wchar_t>]’
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/14/format:4041:23:   required from ‘constexpr void std::__format::_Formatting_scanner<_Out, _CharT>::_M_format_arg(std::size_t) [with _Out = std::__format::_Sink_iter<wchar_t>; _CharT = wchar_t; std::size_t = long unsigned int]’
+ 4041 |         std::visit_format_arg([this](auto& __arg) {
+      |         ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+ 4042 |           using _Type = remove_reference_t<decltype(__arg)>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4043 |           using _Formatter = typename _Context::template formatter_type<_Type>;
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4044 |           if constexpr (is_same_v<_Type, monostate>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4045 |             __format::__invalid_arg_id_in_format_string();
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4046 |           else if constexpr (is_same_v<_Type, handle>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4047 |             __arg.format(this->_M_pc, this->_M_fc);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4048 |           else if constexpr (is_default_constructible_v<_Formatter>)
+      |           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4049 |             {
+      |             ~                 
+ 4050 |               _Formatter __f;
+      |               ~~~~~~~~~~~~~~~ 
+ 4051 |               this->_M_pc.advance_to(__f.parse(this->_M_pc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4052 |               this->_M_fc.advance_to(__f.format(__arg, this->_M_fc));
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4053 |             }
+      |             ~                 
+ 4054 |           else
+      |           ~~~~                
+ 4055 |             static_assert(__format::__formattable_with<_Type, _Context>);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4056 |         }, _M_fc.arg(__id));
+      |         ~~~~~~~~~~~~~~~~~~~   
+/usr/include/c++/14/format:4036:7:   required from here
+ 4036 |       _M_format_arg(size_t __id) override
+      |       ^~~~~~~~~~~~~
+/usr/include/c++/14/format:3567:66: error: ‘std::__format::_Arg_t std::basic_format_arg<std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t> >::_M_type’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |                                                            ~~~~~~^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3293:24: note: declared private here
+ 3293 |       __format::_Arg_t _M_type;
+      |                        ^~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3567:28: error: ‘decltype(auto) std::basic_format_arg<_Context>::_M_visit(_Visitor&&, std::__format::_Arg_t) [with _Visitor = std::__format::_WidthPrecVisitor; _Context = std::basic_format_context<std::__format::_Sink_iter<wchar_t>, wchar_t>]’ is private within this context
+ 3567 |       return __arg._M_visit(std::forward<_Visitor>(__vis), __arg._M_type);
+      |              ~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module /usr/include/c++/14/format, imported at /usr/include/c++/14/bits/chrono_io.h:39:
+/usr/include/c++/14/format:3499:9: note: declared private here
+ 3499 |         _M_visit(_Visitor&& __vis, __format::_Arg_t __type)
+      |         ^~~~~~~~
+Game-impl.cc: In function ‘void nextFloor()’:
+Game-impl.cc:44791852:9: error: ‘currFloor’ was not declared in this scope
+Game-impl.cc:44791853:9: error: ‘floors’ was not declared in this scope
+Game-impl.cc:44791853:48: error: ‘player’ was not declared in this scope
+Game-impl.cc:44791854:9: error: ‘td’ was not declared in this scope; did you mean ‘tm’?
+Game-impl.cc: At global scope:
+Game-impl.cc:44791857:11: error: ‘Direction@enums Game@game::getDirection’ is not a static data member of ‘class Game@game’
+Game-impl.cc:44791857:30: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+In file included from /usr/include/c++/14/iosfwd:41,
+                 from /usr/include/c++/14/ios:40,
+                 from /usr/include/c++/14/ostream:40,
+                 from /usr/include/c++/14/bits/unique_ptr.h:43,
+                 from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at Game-impl.cc:4:
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:44791868:6: error: ‘bool Game@game::isDirection’ is not a static data member of ‘class Game@game’
+Game-impl.cc:44791868:24: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc: In constructor ‘Game@game::Game(std::istream&)’:
+Game-impl.cc:44791881:9: error: ‘istream’ was not declared in this scope; did you mean ‘std::istream’?
+/usr/include/c++/14/iosfwd:140:41: note: ‘std::istream’ declared here
+  140 |   typedef basic_istream<char>           istream;
+      |                                         ^~~~~~~
+Game-impl.cc:44791882:9: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:44791884:19: error: ‘line’ was not declared in this scope
+Game-impl.cc:44791885:13: error: ‘iss’ was not declared in this scope; did you mean ‘is’?
+Game-impl.cc:44791887:50: error: ‘iss’ was not declared in this scope; did you mean ‘is’?
+Game-impl.cc: In member function ‘bool Game@game::init()’:
+Game-impl.cc:44791901:16: error: switch quantity not an integer
+Game-impl.cc:44791910:56: error: ‘Position’ was not declared in this scope
+Game-impl.cc:44791910:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:44791921:55: error: ‘Position’ was not declared in this scope
+Game-impl.cc:44791921:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:44791932:58: error: ‘Position’ was not declared in this scope
+Game-impl.cc:44791932:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:44791943:56: error: ‘Position’ was not declared in this scope
+Game-impl.cc:44791943:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:44791954:57: error: ‘Position’ was not declared in this scope
+Game-impl.cc:44791954:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:44791969:43: error: expected primary-expression before ‘)’ token
+Game-impl.cc: In member function ‘GameState@enums Game@game::run()’:
+Game-impl.cc:44791982:24: error: no matching function for call to ‘Game@game::endGame(bool)’
+In module game, imported at Game-impl.cc:1:
+Game.cc:30:10: note: candidate: ‘void Game@game::endGame() const’
+   30 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:30:10: note:   candidate expects 0 arguments, 1 provided
+Game-impl.cc:44791987:9: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:44791989:9: error: ‘vector’ was not declared in this scope; did you mean ‘std::vector’?
+In file included from /usr/include/c++/14/vector:66,
+of module /usr/include/c++/14/vector, imported at Game.cc:4,
+of module game, imported at Game-impl.cc:1:
+/usr/include/c++/14/bits/stl_vector.h:428:11: note: ‘std::vector’ declared here
+  428 |     class vector : protected _Vector_base<_Tp, _Alloc>
+      |           ^~~~~~
+Game-impl.cc:44791989:16: error: expected primary-expression before ‘bool’
+Game-impl.cc:44791992:31: error: ‘cmd’ was not declared in this scope
+Game-impl.cc:44791993:13: error: ‘istringstream’ was not declared in this scope; did you mean ‘std::istringstream’?
+/usr/include/c++/14/iosfwd:152:41: note: ‘std::istringstream’ declared here
+  152 |   typedef basic_istringstream<char>     istringstream;
+      |                                         ^~~~~~~~~~~~~
+Game-impl.cc:44791994:19: error: expected ‘;’ before ‘command’
+Game-impl.cc:44791995:13: error: ‘iss’ was not declared in this scope
+Game-impl.cc:44791995:20: error: ‘command’ was not declared in this scope
+Game-impl.cc:44791997:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792006:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792010:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792024:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792027:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792042:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792048:17: error: ‘enemy’ was not declared in this scope
+Game-impl.cc:44792057:27: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:44792068:12: error: no matching function for call to ‘Game@game::endGame(bool)’
+In module game, imported at Game-impl.cc:1:
+Game.cc:30:10: note: candidate: ‘void Game@game::endGame() const’
+   30 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:30:10: note:   candidate expects 0 arguments, 1 provided
+Game-impl.cc: At global scope:
+Game-impl.cc:44792072:6: error: no declaration matches ‘void Game@game::endGame(bool) const’
+In module game, imported at Game-impl.cc:1:
+Game.cc:30:10: note: candidate is: ‘void Game@game::endGame() const’
+   30 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:16:14: note: ‘class Game@game’ defined here
+   16 | export class Game {
+      |              ^~~~
+main.cc: In function ‘int main(int, char**)’:
+main.cc:31:25: error: ‘Gamestate’ has not been declared
+   31 |         if (g->run() == Gamestate::Finish) {
+      |                         ^~~~~~~~~
+main.cc:37:32: error: ‘GameState’ has not been declared
+   37 |         } else if (g->run() == GameState::Restart) {
+      |                                ^~~~~~~~~
+main.cc:39:32: error: ‘GameState’ has not been declared
+   39 |         } else if (g->run() == GameState::Quit) {
+      |                                ^~~~~~~~~
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1b): undefined reference to `main'
+collect2: error: ld returned 1 exit status

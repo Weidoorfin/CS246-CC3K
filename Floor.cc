@@ -1,33 +1,49 @@
 export module floor;
 
+import <iostream>;
+import <fstream>;
+import <sstream>;
+import <memory>;
+import <string>;
 import <vector>;
+import <algorithm>;
+
+import enums;
+import position;
+import randomengine;
+import abstractos;
+import player;
+import enemy;
+import enemyfactory;
+import item;
+import entity;
+import tile;
+import potion;
+import treasure;
+import treasurefactory;
+import potionfactory;
 
 import chamber;
-import enemy;
-import item;
-import tile;
-import position;
-import abstractos;
+
 
 export class Floor {
     Position stairs; // Position of the stairs
     bool complete = false;
 
-    vector<vector<Entity*>> terrian; // Types of tiles of terrain
-    vector<vector<Entity*>> grid; // record pointer, with movable entities
+    std::vector<std::vector<Entity*>> terrain; // Types of tiles of terrain
+    std::vector<std::vector<Entity*>> grid; // record pointer, with movable entities
     
-    vector<std::unique_ptr<Enemy>> enemies; // List of enemies on the floor
-    vector<std::unique_ptr<Potion>> potions; 
-    vector<std::unique_ptr<Treasure>> treasures;
-    vector<std::unique_ptr<Tile>> tiles;
-    vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
+    std::vector<std::unique_ptr<Enemy>> enemies; // List of enemies on the floor
+    std::vector<std::unique_ptr<Potion>> potions; 
+    std::vector<std::unique_ptr<Treasure>> treasures;
+    std::vector<std::unique_ptr<Tile>> tiles;
+    std::vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
     Position playerpos; // Position of the player
     Player *player; // Player on the floor ? // share_pointer?
 
  public:
-    explicit Floor(); // Default constructor
+    Floor(); // Default constructor
     explicit Floor(std::istream &is); // Constructor to read from input stream
-    explicit Floor(std::istream &is, int seed); // Constructor to read from input stream with seed
 
     // Accessories and mutators
     void setPlayer(std::unique_ptr<Player> p); // Set the player on the floor

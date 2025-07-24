@@ -5,17 +5,12 @@ import <vector>;
 import <map>;
 import <random>;
 import <algorithm>;
-import <chrono>;
 import <utility>;
 import PRNG;
 import config;
 
 
 RandomEngine::RandomEngine() {}
-
-void RandomEngine::setRandomSeed() {
-    global_seed = std::chrono::system_clock::now().time_since_epoch().count();
-}
 
 void RandomEngine::setSeed(uint32_t seed) {
     global_seed = seed;
@@ -26,21 +21,15 @@ uint32_t RandomEngine::getSeed() const {
 }
 
 std::vector<Direction> RandomEngine::genDirections() {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
     std::vector<Direction> directions {
         Direction::N, Direction::NE, Direction::E, Direction::SE,
         Direction::S, Direction::SW, Direction::W, Direction::NW
     };
-    std::shuffle(directions.begin(), directions.end(), std::default_random_engine rng{global_seed});
+    std::shuffle(directions.begin(), directions.end(), std::default_random_engine{global_seed});
     return directions; // return a random direction
 }
 
-bool RandomEngine::chance(int prob) const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+bool RandomEngine::chance(uint32_t prob) {
     PRNG rng{global_seed};
     // Check if the probability is within valid range
     if (prob < 0 || prob > 100) {
@@ -49,10 +38,7 @@ bool RandomEngine::chance(int prob) const {
     return rng(100) < prob; // return true with prob% chance
 }
 
-bool RandomEngine::chance(int num, int denom) const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+bool RandomEngine::chance(int num, int denom) {
     if (denom <= 0 || num < 0 || num > denom) {
         return false; // Invalid fraction, return false
     }
@@ -63,10 +49,7 @@ bool RandomEngine::chance(int num, int denom) const {
 }
 
 // requires l <= u
-std::vector<int> RandomEngine::genIndices(int l, int u) const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+std::vector<int> RandomEngine::genIndices(int l, int u) {
     std::vector<int> indices(l - u + 1);
     for (int i = l; i <= u; ++i) {
         indices[i - l] = i;
@@ -75,10 +58,7 @@ std::vector<int> RandomEngine::genIndices(int l, int u) const {
     return indices; // return a shuffled vector of indices in the range [l, u)
 }
 
-Race RandomEngine::genEnemyRace() const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+Race RandomEngine::genEnemyRace() {
     // calculate total frequency
     int total_freq = 0;
     for (const auto& [key, value] : EnemyConfig::enemyFrequency) {
@@ -96,10 +76,7 @@ Race RandomEngine::genEnemyRace() const {
     return result[0]; // return a random
 }
 
-PotionType RandomEngine::genPotionType() const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+PotionType RandomEngine::genPotionType() {
     // calculate total frequency
     int total_freq = 0;
     for (const auto& [key, value] : PotionConfig::potionFrequency) {
@@ -117,10 +94,7 @@ PotionType RandomEngine::genPotionType() const {
     return result[0]; // return a random potion type
 }
 
-TreasureType RandomEngine::genTreasureType() const {
-    if (global_seed == 0) {
-        setRandomSeed(); // Ensure a seed is set if not already
-    }
+TreasureType RandomEngine::genTreasureType() {
     // calculate total frequency
     int total_freq = 0;
     for (const auto& [key, value] : TreasureConfig::treasureFrequency) {

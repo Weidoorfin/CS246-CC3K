@@ -2,6 +2,7 @@ export module playerfactory;
 
 import <memory>;
 import player;
+import concreteplayer;
 import enums;
 import position;
 
