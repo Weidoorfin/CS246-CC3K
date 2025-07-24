@@ -3,6 +3,8 @@ module game;
 import <iostream>;
 import <memory>;
 import <string>;
+import <sstream>;
+import <vector>;
 
 import enums;
 import floor;
@@ -10,10 +12,13 @@ import player;
 import concreteenemies;
 import playerfactory;
 import textdisplay;
+import entity;
+import treasure;
+import potion;
 
 void nextFloor() {
         currFloor++;
-        floors[currFloor]->setPlayer(std::move(player));
+        floors[currFloor]->setPlayer(player);
         td->setLastAction("Player character has moved to the next floor.");
 }
 
@@ -31,6 +36,22 @@ Direction Game::getDirection(string s) {
 bool Game::isDirection(string s) {
     return (s == "N" || s == "NE" || s == "E" || s == "SE" ||
             s == "S" || s == "SW" || s == "W" || s == "NW");
+}
+
+void Game::applyEffects(Entity* item) {
+    if (!item) return;
+    
+    if (item->getEntityType() == EntityType::TREASURE) {
+        auto treasure = dynamic_cast<Treasure*>(item);
+        if (treasure) {
+            player = treasure->applyEffect(std::move(player));
+        }
+    } else if (item->getEntityType() == EntityType::POTION) {
+        auto potion = dynamic_cast<Potion*>(item);
+        if (potion) {
+            player = potion->applyEffect(std::move(player));
+        }
+    }
 }
 
 Game::Game() {
@@ -134,7 +155,7 @@ bool Game::init() {
 }
 
 GameState Game::run() {
-    floors[currFloor]->setPlayer(player.get());
+    floors[currFloor]->setPlayer(player);
     while (player->isAlive()) {
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
@@ -162,10 +183,12 @@ GameState Game::run() {
                     continue;
                 }
                 auto dir = getDirection(command);
-                if (!floors[currFloor]->playerMove(dir)) {
+                auto [moved, item] = floors[currFloor]->playerMove(dir);
+                if (!moved) {
                     std::cout << "Invalid place to move!" << std::endl;
                     continue;
                 }
+                applyEffects(item);
                 validCommands[0] = false; // Mark the command as used
                 td->setLastAction("Player character has moved to " + command + ".");
             } else if (command == "a") {
@@ -194,10 +217,12 @@ GameState Game::run() {
                 iss >> command; // Get the target direction for use item
                 if (isDirection(command)) {
                     auto dir = getDirection(command);
-                    if (!floors[currFloor]->playerUseItem(dir)) {
+                    auto [used, item] = floors[currFloor]->playerUseItem(dir);
+                    if (!used) {
                         std::cout << "No item to use!" << std::endl;
                         continue;
                     }
+                    applyEffects(item);
                 } else {
                     std::cout << "Invalid direction for use item." << std::endl;
                     continue;

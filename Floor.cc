@@ -7,6 +7,7 @@ import <memory>;
 import <string>;
 import <vector>;
 import <algorithm>;
+import <utility>;
 
 import enums;
 import position;
@@ -52,9 +53,9 @@ export class Floor {
     const std::vector<std::vector<Entity*>>& getTerrain() const; // Get the terrain of the floor
 
     // Player actions
-    bool playerMove(Direction dir); // Move the player in a direction
+    std::pair<bool, Entity*> playerMove(Direction dir); // Move the player in a direction, return success and item
     bool playerAttack(Direction dir); // Attack a character
-    bool playerUseItem(Direction dir); // Use an item
+    std::pair<bool, Entity*> playerUseItem(Direction dir); // Use an item, return success and item
     void enemyTurn(); // Perform enemy actions for the turn
     void handleEnemyDeath(Enemy* enemy); // Handle the death of an enemy
 

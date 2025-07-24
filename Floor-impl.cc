@@ -58,27 +58,21 @@ const std::vector<std::vector<Entity*>>& Floor::getTerrain() const {
     return terrain;
 }
 
-bool Floor::playerMove(Direction dir) {
+std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);
 
     Entity* nextEntity = grid[next.y][next.x];
-    if (nextEntity && !nextEntity->isSpace()) return false;
-
+    if (nextEntity && !nextEntity->isSpace()) return {false, nullptr};
 
     if (terrain[next.y][next.x]->getSymbol() == '/') {
         complete = true;
     }
 
-    if (nextEntity && nextEntity->getEntityType() == EntityType::TREASURE) {
-        auto treasure = dynamic_cast<Treasure*>(nextEntity);
-        treasure->applyEffect(player);
-        grid[next.y][next.x] = nullptr;
-    }
-
-    if (nextEntity && nextEntity->getEntityType() == EntityType::POTION) {
-        auto potion = dynamic_cast<Potion*>(nextEntity);
-        potion->applyEffect(player);
+    Entity* itemToReturn = nullptr;
+    if (nextEntity && (nextEntity->getEntityType() == EntityType::TREASURE || 
+                      nextEntity->getEntityType() == EntityType::POTION)) {
+        itemToReturn = nextEntity;
         grid[next.y][next.x] = nullptr;
     }
 
@@ -86,7 +80,7 @@ bool Floor::playerMove(Direction dir) {
     grid[next.y][next.x] = player;
     grid[curr.y][curr.x] = nullptr;
 
-    return true;
+    return {true, itemToReturn};
 }
 
 bool Floor::playerAttack(Direction dir) {
@@ -103,18 +97,16 @@ bool Floor::playerAttack(Direction dir) {
     return false;
 }
 
-bool Floor::playerUseItem(Direction dir) {
+std::pair<bool, Entity*> Floor::playerUseItem(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);
     if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
-        auto potion = dynamic_cast<Potion*>(grid[next.y][next.x]);
-        player = potion->applyEffect(std::make_unique<Player>(*player));
-        // Remove the item from the grid
+        Entity* potion = grid[next.y][next.x];
         grid[next.y][next.x] = nullptr;
-         // Notify observers of the item usage
-        return true;
+        // Notify observers of the item usage
+        return {true, potion};
     }
-    return false;
+    return {false, nullptr};
 }
 
 // Perform enemy actions for the turn
@@ -168,10 +160,12 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
     Position pos = enemy->getPos();
     grid[pos.y][pos.x] = nullptr;
 
-    if (auto merchant = dynamic_cast<Merchant*>(enemy)) {
+    if (enemy->getRace() == Race::MERCHANT) {
+        TreasureFactory tf;
         treasures.push_back(tf.createTreasure(TreasureType::SMALL, pos));
         grid[pos.y][pos.x] = treasures.back().get();
-    } else if (auto human = dynamic_cast<Human*>(enemy)) {
+    } else if (enemy->getRace() == Race::HUMAN) {
+        TreasureFactory tf;
         treasures.push_back(tf.createTreasure(TreasureType::MERCHANT, pos));
         grid[pos.y][pos.x] = treasures.back().get();
     }
@@ -179,7 +173,6 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
         [enemy](const std::unique_ptr<Enemy>& e) { return e.get() == enemy; });
     if (it != enemies.end()) enemies.erase(it);
 
-    
 }
 
 void Floor::getEmptyMap(std::istream &is) {
@@ -241,13 +234,13 @@ void Floor::getEmptyMap(std::istream &is) {
 }
 
 void Floor::identifyChambers() {
-    int height = tileTypes.size();
-    int width = tileTypes[0].size();
+    int height = terrain.size();
+    int width = terrain[0].size();
     std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            if (!visited[y][x] && tileTypes[y][x] == TileType::Floor) {
+            if (!visited[y][x] && terrain[y][x]->getSymbol() != '.') {
                 auto chamber = std::make_unique<Chamber>();
                 dfsFillChamber(x, y, chamber.get(), visited);
                 chambers.push_back(std::move(chamber));
@@ -258,7 +251,7 @@ void Floor::identifyChambers() {
 
 void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vector<bool>>& visited) {
 
-    if (!visited[y][x] || tileTypes[y][x] != TileType::Floor) return;
+    if (!visited[y][x] || terrain[y][x]->getSymbol() != '.') return;
 
     visited[y][x] = true;
     chamber->addTile(Position{x, y});
@@ -276,7 +269,6 @@ void Floor::GeneratePlayerpos() {
     int r = re.genIndices(0, chambers.size() - 1)[0];
     Position playerPos = chambers[r]->getRandomTile();
     chambers[r]->setWithPlayer(); // Mark the chamber as occupied by player
-    player->setPosition(playerPos);
 }
 
 void Floor::GenerateStairs() {
@@ -335,7 +327,7 @@ void Floor::GenerateEntities() {
 }
 
 void Floor::readFromStream(std::istream &is) {
-    string line;
+    std::string line;
     int y = 0;
     while (getline(is, line)) {
         int x = 0;
@@ -393,7 +385,7 @@ void Floor::readFromStream(std::istream &is) {
                 case 'H':
                     tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(Race::Human, pos));
+                    enemies.push_back(ef.createEnemy(Race::HUMAN, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'W':
@@ -496,9 +488,8 @@ void Floor::readFromStream(std::istream &is) {
             }
             x++;
         } // for (char c : line)
-        terrain.pushBack(terrainRow);
+        terrain.push_back(terrainRow);
         grid.push_back(gridRow);
-        tileTypes.push_back(row);
         y++;
     } // while (getline(is, line))
 }

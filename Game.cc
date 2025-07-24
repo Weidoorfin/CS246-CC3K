@@ -9,6 +9,9 @@ import floor;
 import player;
 import enums;
 import textdisplay;
+import entity;
+import treasure;
+import potion;
 
 const int MAXFLOOR = 5;
 
@@ -21,6 +24,7 @@ export class Game {
     void nextFloor();
     Direction getDirection(std::string s);
     bool isDirection(std::string s);
+    void applyEffects(Entity* item); // 添加这个方法
   public:
     Game();
     explicit Game(std::istream &is); // constructor with input stream, reading the floor from file
