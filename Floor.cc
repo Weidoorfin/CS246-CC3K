@@ -63,7 +63,7 @@ export class Floor {
     void resetAllEnemyMoveToggle(); // Reset all enemies' move toggle for new turn
 
   private:
-    void getEmptyMap(std::istream &is); // Read an empty map from input stream
+    void getEmptyMap(std::ifstream &is); // Read an empty map from input stream
     void identifyChambers(); // Identify chambers in the floor
     void dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vector<bool>>& visited); // Depth-first search to fill a chamber
     void GeneratePlayerpos(); // Generate the player position on the floor

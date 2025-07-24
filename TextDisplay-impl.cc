@@ -50,7 +50,7 @@ void TextDisplay::showGameUI() const {
     }
     auto player = floor->getPlayer();
     cout << "Race: " << player->getRaceName();
-    cout << "Gold: " << player->getGold() << endl;
+    cout << " Gold: " << player->getGold() << endl;
     cout << "HP: " << player->getCurrentHP() << endl;
     cout << "Atk: " << player->getAtk() << endl;
     cout << "Def: " << player->getDef() << endl;

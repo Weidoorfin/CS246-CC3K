@@ -1,20 +1,14 @@
 module tile;
 
+import enums;
 import entity;
 
-Tile::Tile(TileType type, Position pos)
-    : Entity{' ', 0, pos}, type{type} {
-    switch(type) {
-        case TileType::VerticalWall:
-            
-        
-        case TileType::HorizontalWall:
-        case TileType::Floor:
-        case TileType::Stair:
-        case TileType::Door:
-        case TileType::Nothing:
-        case TileType::Corridor:
-            break; // No additional initialization needed for these types
-    }
-    entity = EntityType::TILE; // Set the entity type to TILE
+
+Tile::Tile(TileType type, char symbol, int colour, Position pos)
+    : Entity{symbol, colour, pos}, type{type} {
+    entity = EntityType::TILE;
 }
+
+Tile::~Tile() {}
+
+TileType Tile::getTileType() { return type;  }

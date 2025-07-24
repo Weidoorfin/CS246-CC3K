@@ -7,5 +7,7 @@ import entity;
 export class Tile : public Entity {
     TileType type;
   public:
-    Tile(TileType type, Position pos);
+    Tile(TileType type, char symbol, int colour, Position pos);
+    virtual ~Tile() = 0;
+    TileType getTileType();
 };

@@ -6,6 +6,8 @@ PRNG.cc
 RandomEngine.cc
 Entity.cc
 Tile.cc
+ConcreteTiles.cc
+TileFactory.cc
 Character.cc
 Player.cc
 ConcretePlayer.cc
@@ -30,6 +32,8 @@ AbstractOS-impl.cc
 RandomEngine-impl.cc
 Entity-impl.cc
 Tile-impl.cc
+ConcreteTiles-impl.cc
+TileFactory-impl.cc
 Character-impl.cc
 Player-impl.cc
 ConcretePlayer-impl.cc

@@ -23,6 +23,7 @@ import randomengine;
 import treasurefactory;
 import potionfactory;
 import tile;
+import tilefactory;
 
 
 Floor::Floor(){
@@ -69,7 +70,8 @@ std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Entity* nextEntity = grid[next.y][next.x];
     if (nextEntity && !nextEntity->isSpace()) return {false, nullptr};
 
-    if (terrain[next.y][next.x]->getSymbol() == '/') {
+    auto nextTile = dynamic_cast<Tile*>(terrain[next.y][next.x]);
+    if (nextTile && nextTile->getTileType() == TileType::Stair) {
         complete = true;
     }
 
@@ -119,8 +121,8 @@ void Floor::enemyTurn() {
         return;
     }
     
-    for (int y = 0; y < grid[0].size(); ++y) {
-        for (int x = 0; x < grid.size(); ++x) {
+    for (size_t y = 0; y < grid[0].size(); ++y) {
+        for (size_t x = 0; x < grid.size(); ++x) {
             Entity* entity = grid[x][y];
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
@@ -177,10 +179,11 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
 
 }
 
-void Floor::getEmptyMap(std::istream &is) {
+void Floor::getEmptyMap(std::ifstream &is) {
     // Implementation for reading an empty map from the input stream
     // This will populate the grid and tileTypes with initial values
     std::string line;
+    TileFactory tf;
     int y = 0;
     while (getline(is, line)) {
         std::vector<Entity*> terrainRow;
@@ -190,39 +193,39 @@ void Floor::getEmptyMap(std::istream &is) {
             Position pos{x, y};
             switch (c) {
                 case '-':
-                    tiles.push_back(std::make_unique<Tile>(TileType::HorizontalWall, pos));
+                    tiles.push_back(tf.createTile(TileType::HorizontalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '|': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::VerticalWall, pos));
+                    tiles.push_back(tf.createTile(TileType::VerticalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '.':  
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tf.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '+': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Door, pos));
+                    tiles.push_back(tf.createTile(TileType::Door, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '#': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Corridor, pos));
+                    tiles.push_back(tf.createTile(TileType::Corridor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '/': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Stair, pos));
+                    tiles.push_back(tf.createTile(TileType::Stair, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     stairs = pos;
                     break;
                 // Handle generated entities
                 case ' ':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Nothing, pos));
+                    tiles.push_back(tf.createTile(TileType::Nothing, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
@@ -236,13 +239,14 @@ void Floor::getEmptyMap(std::istream &is) {
 }
 
 void Floor::identifyChambers() {
-    int height = terrain.size();
-    int width = terrain[0].size();
+    int height = static_cast<int>(terrain.size());
+    int width = static_cast<int>(terrain[0].size());
     std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            if (!visited[y][x] && terrain[y][x]->getSymbol() == '.') {
+            auto tile = dynamic_cast<Tile*>(terrain[y][x]);
+            if (tile && !visited[y][x] && tile->getTileType() == TileType::Floor) {
                 auto chamber = std::make_unique<Chamber>();
                 dfsFillChamber(x, y, chamber.get(), visited);
                 chambers.push_back(std::move(chamber));
@@ -253,14 +257,20 @@ void Floor::identifyChambers() {
 
 void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vector<bool>>& visited) {
 
-    if (visited[y][x] || terrain[y][x]->getSymbol() != '.') return;
+    if (visited[y][x]) return;
+    
+    auto tile = dynamic_cast<Tile*>(terrain[y][x]);
 
+    if (x < 0 || x >= terrain[0].size() || y < 0 || y >= terrain.size() || 
+        !tile || tile->getTileType() != TileType::Floor) {
+        return;
+    }
     visited[y][x] = true;
     chamber->addTile(Position{x, y});
 
     int dx[] = {1, -1, 0, 0};
     int dy[] = {0, 0, 1, -1};
-    for (int d = 0; d < 4; ++d) {
+    for (size_t d = 0; d < 4; ++d) {
         dfsFillChamber(x + dx[d], y + dy[d], chamber, visited);
     }
 }
@@ -268,20 +278,22 @@ void Floor::dfsFillChamber(int x, int y, Chamber* chamber, std::vector<std::vect
 void Floor::GeneratePlayerpos() {
     // Implementation for generating the player on the floor
     RandomEngine re;
-    int r = re.genIndices(0, chambers.size() - 1)[0];
+    size_t r = re.genIndices(0, chambers.size() - 1)[0];
     Position playerPos = chambers[r]->getRandomTile();
     chambers[r]->setWithPlayer(); // Mark the chamber as occupied by player
+    playerpos = playerPos; // Store the player's position
 }
 
 void Floor::GenerateStairs() {
     RandomEngine re;
+    TileFactory tilef;
     std::vector<int> indices = re.genIndices(0, chambers.size() - 1);
-    int r = 0;
+    size_t r = 0;
     while (r < indices.size() && !chambers[indices[r]]->isWithPlayer()) {
         r++;
     }
     stairs = chambers[r]->getRandomTile();
-    tiles.push_back(std::make_unique<Tile>(TileType::Stair, stairs));
+    tiles.push_back(tilef.createTile(TileType::Stair, stairs));
     terrain[stairs.y][stairs.x] = tiles.back().get(); // Set the stair tile in terrain
     grid[stairs.y][stairs.x] = nullptr; // Stairs are not occupied by any entity
     chambers[r]->addTile(stairs); // Add stairs
@@ -338,150 +350,151 @@ void Floor::readFromStream(std::istream &is) {
         EnemyFactory ef;
         PotionFactory pf;
         TreasureFactory tf;
+        TileFactory tilef;
         for (char c : line) {
             Position pos{x, y};
             switch (c) {
                 case '-':
-                    tiles.push_back(std::make_unique<Tile>(TileType::HorizontalWall, pos));
+                    tiles.push_back(tilef.createTile(TileType::HorizontalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '|': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::VerticalWall, pos));
+                    tiles.push_back(tilef.createTile(TileType::VerticalWall, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '.':  
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '+': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Door, pos));
+                    tiles.push_back(tilef.createTile(TileType::Door, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '#': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Corridor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Corridor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
                 case '/': 
-                    tiles.push_back(std::make_unique<Tile>(TileType::Stair, pos));
+                    tiles.push_back(tilef.createTile(TileType::Stair, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     stairs = pos;
                     break;
                 // Handle generated entities
                 case ' ':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Nothing, pos));
+                    tiles.push_back(tilef.createTile(TileType::Nothing, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr); 
                     break;
                 case '@': 
                     // Create player entity
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(player);
                     break;
                 case 'H':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::HUMAN, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'W':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::DWARF, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'E':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::ELF, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'O':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::ORCS, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'M':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::MERCHANT, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'D':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::DRAGON, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'L':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     enemies.push_back(ef.createEnemy(Race::HALFLING, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case '0':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::RH, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '1':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::BA, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '2':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::BD, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '3':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::PH, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '4':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::WA, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '5':
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     potions.push_back(pf.createPotion(PotionType::WD, pos));
                     gridRow.push_back(potions.back().get());
                     break;
                 case '6': // small
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     treasures.push_back(tf.createTreasure(TreasureType::SMALL, pos));
                     gridRow.push_back(treasures.back().get());
                     break;
                 case '7': // medium
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     treasures.push_back(tf.createTreasure(TreasureType::NORMAL, pos));
                     gridRow.push_back(treasures.back().get());
                     break;
                 case '8': // merchant
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     treasures.push_back(tf.createTreasure(TreasureType::MERCHANT, pos));
                     gridRow.push_back(treasures.back().get());
                     break;
                 case '9': // dragon
-                    tiles.push_back(std::make_unique<Tile>(TileType::Floor, pos));
+                    tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     treasures.push_back(tf.createTreasure(TreasureType::DRAGON, pos));
                     gridRow.push_back(treasures.back().get());
