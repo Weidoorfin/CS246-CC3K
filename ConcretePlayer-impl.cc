@@ -1,5 +1,6 @@
 module concreteplayer;
 
+import <string>;
 import <memory>;
 import <cmath>;
 import position;
@@ -19,6 +20,10 @@ std::unique_ptr<Player> Shade::reset() const {
     return std::make_unique<Shade>(*this);
 }
 
+std::string Shade::getRaceName() const {
+    return "Shade";
+}
+
 Drow::Drow(Position pos) : Player{Race::DROW, 150, 25, 15, pos} {
     currentHP = getMaxHP();
 }
@@ -30,6 +35,10 @@ std::unique_ptr<Player> Drow::reset() const {
 
 double Drow::getPotionMultiplier() const {
     return 1.5;
+}
+
+std::string Drow::getRaceName() const {
+    return "Drow";
 }
 
 Vampire::Vampire(Position pos) : Player{Race::VAMPIRE, 50, 25, 25, pos} {
@@ -62,6 +71,9 @@ std::unique_ptr<Player> Vampire::reset() const{
     return std::make_unique<Vampire>(*this);
 }
 
+std::string Vampire::getRaceName() const {
+    return "Vampire";
+}
 
 
 Goblin::Goblin(Position pos) : Player{Race::GOBLIN, 110, 15, 20, pos} {
@@ -95,6 +107,10 @@ std::unique_ptr<Player> Goblin::reset() const {
     return std::make_unique<Goblin>(*this);
 }
 
+std::string Goblin::getRaceName() const {
+    return "Goblin";
+}
+
 Troll::Troll(Position pos) : Player{Race::TROLL, 120, 25, 15, pos} {
     currentHP = getMaxHP();
 }
@@ -107,3 +123,6 @@ std::unique_ptr<Player> Troll::reset() const {
     return std::make_unique<Troll>(*this);
 }
 
+std::string Troll::getRaceName() const {
+    return "Troll";
+}

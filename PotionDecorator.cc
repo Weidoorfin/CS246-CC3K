@@ -26,6 +26,8 @@ public:
     virtual void attack(Character &target) override;
     virtual void onHit(Character &whoFrom) override;
     virtual double getPotionMultiplier() const override;
+    virtual std::string getRaceName() const override;
+    virtual int getCurrentHP() const override;
 
     virtual std::unique_ptr<Player> reset() const override;
     virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;

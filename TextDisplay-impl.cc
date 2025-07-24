@@ -48,11 +48,12 @@ void TextDisplay::showGameUI() const {
         }
         cout << endl;
     }
-    cout << "Race: " << floor->getPlayer()->getRace();
-    cout << "Gold: " << floor->getPlayer()->getGold() << endl;
-    cout << "HP: " << floor->getPlayer()->getCurrentHP() << endl;
-    cout << "Atk: " << floor->getPlayer()->getAtk() << endl;
-    cout << "Def: " << floor->getPlayer()->getDef() << endl;
+    auto player = floor->getPlayer();
+    cout << "Race: " << player->getRaceName();
+    cout << "Gold: " << player->getGold() << endl;
+    cout << "HP: " << player->getCurrentHP() << endl;
+    cout << "Atk: " << player->getAtk() << endl;
+    cout << "Def: " << player->getDef() << endl;
     cout << "Action: " << lastAction << endl;
 }
 

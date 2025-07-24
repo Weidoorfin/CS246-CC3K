@@ -1,5 +1,6 @@
 export module player;
 
+import <string>;
 import <memory>;
 import <cmath>;
 import enums;
@@ -22,6 +23,8 @@ export class Player : public Character {
     virtual void attack(Character &target) override;
     virtual void onHit(Character &whoFrom) override; // Handle the hit logic
     virtual double getPotionMultiplier() const;
+    virtual std::string getRaceName() const = 0;
+    virtual int getCurrentHP() const;
 
 
     virtual std::unique_ptr<Player> reset() const = 0;

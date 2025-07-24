@@ -58,6 +58,10 @@ const std::vector<std::vector<Entity*>>& Floor::getTerrain() const {
     return terrain;
 }
 
+Player* Floor::getPlayer() const {
+    return player;
+}
+
 std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);

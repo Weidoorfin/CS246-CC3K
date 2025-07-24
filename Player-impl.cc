@@ -67,6 +67,10 @@ double Player::getPotionMultiplier() const {
     return 1.0;
 }
 
-std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) {
+int Player::getCurrentHP() const {
+    return currentHP;
+}
+
+std::unique_ptr<Player> Player::applyEffect(std::unique_ptr<Player> player) {
     return player;
 }

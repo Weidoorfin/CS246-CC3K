@@ -25,6 +25,13 @@ void PotionDecorator::loseHP(int dec) { base->loseHP(dec); }
 double PotionDecorator::getPotionMultiplier() const {
     return base->getPotionMultiplier();
 }
+std::string PotionDecorator::getRaceName() const {
+    return base->getRaceName();
+}
+
+int PotionDecorator::getCurrentHP() const {
+    return base->getCurrentHP();
+}
 
 std::unique_ptr<Player> PotionDecorator::reset() const {
     return base->reset();
