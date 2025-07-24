@@ -32,18 +32,18 @@ Floor::Floor(){
     GeneratePlayerpos();
     GenerateStairs();
     GenerateEntities();
-    notifyObservers(); // Notify observers that the floor has been initialized
+     // Notify observers that the floor has been initialized
 }
 
 Floor::Floor(std::istream &is) {
     readFromStream(is);
-    notifyObservers(); // Notify observers that the floor has been initialized
+     // Notify observers that the floor has been initialized
 }
 
 Floor::Floor(std::istream &is, int seed) {
     readFromStream(is);
     // Set the random seed for the floor
-    notifyObservers(); // Notify observers that the floor has been initialized
+     // Notify observers that the floor has been initialized
 }
 
 void Floor::setPlayer(std::unique_ptr<Player> p) {
@@ -76,7 +76,7 @@ bool Floor::playerMove(Direction dir) {
         }
         player->move(dir);
         std::swap(grid[curr.y][curr.x], grid[next.y][next.x]);
-        notifyObservers(); // Notify observers of the player's move
+         // Notify observers of the player's move
         return true;
     }
     return false;
@@ -91,7 +91,7 @@ bool Floor::playerAttack(Direction dir) {
         player->attack(grid[next.y][next.x]);
         if (enemy->isDead()) {
             handleEnemyDeath(enemy);
-            notifyObservers(); // Notify observers of the enemy's death
+             // Notify observers of the enemy's death
             return true;
         }
     }
@@ -106,7 +106,7 @@ bool Floor::playerUseItem(Direction dir) {
         player->useItem(potion);
         // Remove the item from the grid
         grid[next.y][next.x] = nullptr;
-        notifyObservers(); // Notify observers of the item usage
+         // Notify observers of the item usage
         return true;
     }
     return false;
@@ -122,6 +122,7 @@ void Floor::enemyTurn() {
             Entity* entity = grid[x][y];
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
+                bool attacked = false;
                 if (enemy->getMoveToggle()) {
                     for (int dx = -1; dx <= 1 && !attacked; ++dx) {
                         for (int dy = -1; dy <= 1 && !attacked; ++dy) {
@@ -132,10 +133,12 @@ void Floor::enemyTurn() {
                                grid[ny][nx]->getEntityType() == EntityType::PLAYER) {
                                 enemy->attack(*player);
                                 enemy->moveToggle();
-                                notifyObservers(); // Notify observers of the attack
+                                attacked = true;
+                                 // Notify observers of the attack
                             }
                         }
                     }
+                    if (attacked) continue;
                     RandomEngine rng;
                     vector<Direction> directions = rng.genDirections();
 
@@ -144,7 +147,7 @@ void Floor::enemyTurn() {
                         if (grid[next.y][next.x]->isSpace()) {
                             enemy->move(dir);
                             std::swap(grid[enemy->getPos().y][enemy->getPos().x], grid[next.y][next.x]);
-                            notifyObservers();
+                            
                             break;
                         }
                     }
@@ -171,7 +174,7 @@ void Floor::handleEnemyDeath(Enemy* enemy) {
         [enemy](const std::unique_ptr<Enemy>& e) { return e.get() == enemy; });
     if (it != enemies.end()) enemies.erase(it);
 
-    notifyObservers();
+    
 }
 
 void Floor::getEmptyMap(std::istream &is) {
