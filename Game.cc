@@ -26,7 +26,7 @@ export class Game {
     Game(std::istream &is, int seed);
     bool init(); // initializing the game
     GameState run();
-    bool endGame() const; // end the game, return true if win, false if lose
+    void endGame() const; // end the game, return true if win, false if lose
     ~Game() = default; // default destructor, only used when main() is terminated
 };
 
