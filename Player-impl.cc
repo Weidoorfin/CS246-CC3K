@@ -8,7 +8,7 @@ import PRNG;
 import position;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
-    : Character{race, maxHP, atk, def, '@', 0, pos}, Gold{0}, totGold{0} {
+    : Character{race, maxHP, atk, def, '@', 21, pos}, Gold{0}, totGold{0} {
     entity = EntityType::PLAYER;
 }
 

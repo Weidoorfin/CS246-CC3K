@@ -1,6 +1,7 @@
 export module textdisplay;
 
 import <iostream>;
+import <string>;
 import <vector>;
 
 import abstractos;
@@ -15,4 +16,6 @@ export class TextDisplay {
     void setLastAction(const std::string& action);
     void intro() const;
     void showGameUI() const;
+  private:
+    std::string getColourCode(int colour) const;
 };

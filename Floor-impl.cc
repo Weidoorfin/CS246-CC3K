@@ -37,7 +37,7 @@ Floor::Floor(){
      // Notify observers that the floor has been initialized
 }
 
-Floor::Floor(std::istream &is) {
+Floor::Floor(std::istringstream &is) {
     readFromStream(is);
      // Notify observers that the floor has been initialized
 }
@@ -45,6 +45,7 @@ Floor::Floor(std::istream &is) {
 void Floor::setPlayer(Player* p) {
     player = p;
     player->setPos(playerpos);
+    grid[playerpos.y][playerpos.x] = player; // Place player in the grid
 }
 
 bool Floor::isComplete() const {
@@ -330,7 +331,7 @@ void Floor::GenerateEntities() {
         if (treasures.back()->getTreasureType() == TreasureType::DRAGON) {
             for (auto &dir : re.genDirections()) {
                 Position next = target(pos, dir);
-                if (grid[next.y][next.x]->isSpace()) {
+                if (terrain[next.y][next.x] && terrain[next.y][next.x]->isSpace()) {
                     enemies.push_back(ef.createEnemy(Race::DRAGON, next));
                     grid[next.y][next.x] = enemies.back().get();
                     break;
@@ -340,7 +341,7 @@ void Floor::GenerateEntities() {
     } // generate treasures
 }
 
-void Floor::readFromStream(std::istream &is) {
+void Floor::readFromStream(std::istringstream &is) {
     std::string line;
     int y = 0;
     while (getline(is, line)) {
@@ -396,6 +397,7 @@ void Floor::readFromStream(std::istream &is) {
                     tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(player);
+                    playerpos = pos; // Set player position
                     break;
                 case 'H':
                     tiles.push_back(tilef.createTile(TileType::Floor, pos));
@@ -418,7 +420,7 @@ void Floor::readFromStream(std::istream &is) {
                 case 'O':
                     tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    enemies.push_back(ef.createEnemy(Race::ORCS, pos));
+                    enemies.push_back(ef.createEnemy(Race::ORC, pos));
                     gridRow.push_back(enemies.back().get());
                     break;
                 case 'M':

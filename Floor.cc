@@ -44,7 +44,7 @@ export class Floor {
 
  public:
     Floor(); // Default constructor
-    explicit Floor(std::istream &is); // Constructor to read from input stream
+    explicit Floor(std::istringstream &is); // Constructor to read from input stream
 
     // Accessories and mutators
     void setPlayer(Player* p); // Set the player on the floor
@@ -69,7 +69,7 @@ export class Floor {
     void GeneratePlayerpos(); // Generate the player position on the floor
     void GenerateStairs(); // Generate stairs on the floor
     void GenerateEntities(); // Generate entities (enemies, items) on the floor
-    void readFromStream(std::istream &is); // Read floor data from input stream
+    void readFromStream(std::istringstream &is); // Read floor data from input stream
     Position target(Position curr, Direction dir); // Get the target position based on current position and direction
     bool isAdjacent(Position a, Position b); // Check if two positions are adjacent
 

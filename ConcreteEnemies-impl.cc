@@ -34,7 +34,7 @@ void Elf::attack(Character &target) {
 
 // Orc implementation //////////////////////////////
 Orc::Orc(Position pos)
-    : Enemy{Race::ORCS, 180, 30, 25, 'O', 0, pos} {}
+    : Enemy{Race::ORC, 180, 30, 25, 'O', 0, pos} {}
 
 Orc::~Orc() {}
 

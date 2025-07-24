@@ -1,6 +1,7 @@
 module textdisplay;
 
 import <iostream>;
+import <string>;
 import <memory>;
 import <vector>;
 import chamber;
@@ -38,12 +39,16 @@ void TextDisplay::showGameUI() const {
     int height = grid.size();
     int width = grid[0].size();
 
+
+
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             if (grid[y][x] == nullptr) {
                 cout << terrain[y][x]->getSymbol();
             } else {
+                cout << getColourCode(grid[y][x]->getColour());
                 cout << grid[y][x]->getSymbol();
+                cout << "\033[0m";
             }
         }
         cout << endl;
@@ -57,3 +62,12 @@ void TextDisplay::showGameUI() const {
     cout << "Action: " << lastAction << endl;
 }
 
+std::string TextDisplay::getColourCode(int colour) const {
+    switch (colour) {
+        case 21: return "\033[1;33m"; // Yellow
+        case 124: return "\033[1;31m"; // Red
+        case 184: return "\033[1;32m"; // Green
+        case 40: return "\033[1;34m"; // Blue
+        default: return "\033[0m"; // Reset
+    }
+}

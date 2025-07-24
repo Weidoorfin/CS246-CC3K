@@ -6,10 +6,15 @@ import <map>;
 import <random>;
 import <algorithm>;
 import enums;
+import PRNG;
 
+constexpr uint32_t DEFAULT_GLOBAL_SEED = 696969;
 
 export class RandomEngine {
-    inline static uint32_t global_seed = 69696969;
+    inline static uint32_t global_seed = DEFAULT_GLOBAL_SEED;
+    inline static PRNG prng{DEFAULT_GLOBAL_SEED};
+    inline static std::default_random_engine dre{DEFAULT_GLOBAL_SEED};
+
     // Frequency distribution of enemy based on their race
 public:
     RandomEngine();

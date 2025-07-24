@@ -7,6 +7,6 @@ import position;
 import player;
 
 Potion::Potion(PotionType type, Position pos)
-    : Item{'P', 0, pos}, type{type} {
+    : Item{'P', 40, pos}, type{type} {
     entity = EntityType::POTION; // Set the entity type to POTION
 }

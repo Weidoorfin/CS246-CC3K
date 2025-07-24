@@ -14,6 +14,8 @@ RandomEngine::RandomEngine() {}
 
 void RandomEngine::setSeed(uint32_t seed) {
     global_seed = seed;
+    prng.seed(seed);
+    dre.seed(seed);
 }
 
 uint32_t RandomEngine::getSeed() const {
@@ -25,17 +27,16 @@ std::vector<Direction> RandomEngine::genDirections() {
         Direction::N, Direction::NE, Direction::E, Direction::SE,
         Direction::S, Direction::SW, Direction::W, Direction::NW
     };
-    std::shuffle(directions.begin(), directions.end(), std::default_random_engine{global_seed});
+    std::shuffle(directions.begin(), directions.end(), dre);
     return directions; // return a random direction
 }
 
 bool RandomEngine::chance(uint32_t prob) {
-    PRNG rng{global_seed};
     // Check if the probability is within valid range
-    if (prob < 0 || prob > 100) {
-        return false; // Invalid probability, return false
+    if (prob > 100) {
+        prob = 100; // Invalid probability, return false
     }
-    return rng(100) < prob; // return true with prob% chance
+    return prng(100) < prob; // return true with prob% chance
 }
 
 bool RandomEngine::chance(int num, int denom) {
@@ -44,7 +45,7 @@ bool RandomEngine::chance(int num, int denom) {
     }
     std::vector<int> chances(denom, 0); // vector fill constructor
     std::fill(chances.begin(), chances.begin() + num, 1); // Fill with 1s for success
-    
+    std::shuffle(chances.begin(), chances.end(), dre);
     return chances[0];
 }
 
@@ -57,8 +58,8 @@ std::vector<int> RandomEngine::genIndices(int l, int u) {
     for (int i = l; i <= u; ++i) {
         indices[i - l] = i;
     }
-    std::shuffle(indices.begin(), indices.end(), std::default_random_engine{global_seed});
-    return indices; // return a shuffled vector of indices in the range [l, u)
+    std::shuffle(indices.begin(), indices.end(), dre);
+    return indices; // return a shuffled vector of indices in the range [l, u]
 }
 
 Race RandomEngine::genEnemyRace() {
@@ -75,7 +76,7 @@ Race RandomEngine::genEnemyRace() {
         }
     }
     // Shuffle the result to randomize the selection
-    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    std::shuffle(result.begin(), result.end(), dre);
     return result[0]; // return a random
 }
 
@@ -93,7 +94,7 @@ PotionType RandomEngine::genPotionType() {
         }
     }
     // Shuffle the result to randomize the selection
-    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    std::shuffle(result.begin(), result.end(), dre);
     return result[0]; // return a random potion type
 }
 
@@ -111,6 +112,6 @@ TreasureType RandomEngine::genTreasureType() {
         }
     }
     // Shuffle the result to randomize the selection
-    std::shuffle(result.begin(), result.end(), std::default_random_engine{global_seed});
+    std::shuffle(result.begin(), result.end(), dre);
     return result[0]; // return a random treasure type
 }

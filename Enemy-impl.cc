@@ -8,7 +8,7 @@ import entity;
 bool Enemy::globalMoveDisabled = false;
 
 Enemy::Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos)
-    : Character{race, maxHP, atk, def, symbol, colour, pos} {
+    : Character{race, maxHP, atk, def, symbol, 124, pos} {
     entity = EntityType::ENEMY; // Set the entity type to ENEMY
 }
 

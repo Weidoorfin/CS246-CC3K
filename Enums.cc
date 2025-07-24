@@ -1,6 +1,6 @@
 export module enums;
 
-export enum class Race {SHADE, DROW, VAMPIRE, TROLL, GOBLIN, HUMAN, DWARF, ELF, ORCS, MERCHANT, DRAGON, HALFLING};
+export enum class Race {SHADE, DROW, VAMPIRE, TROLL, GOBLIN, HUMAN, DWARF, ELF, ORC, MERCHANT, DRAGON, HALFLING};
 export enum class Direction {N, NE, E, SE, S, SW, W, NW};
 export enum class TreasureType {SMALL, NORMAL, MERCHANT, DRAGON};
 export enum class GameState {Finish, Restart, Quit};
