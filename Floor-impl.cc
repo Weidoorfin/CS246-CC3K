@@ -136,10 +136,26 @@ void Floor::enemyTurn() {
                 
                 bool attacked = false;
                 
-                if (isAdjacent(enemy->getPos(), player->getPos())) {
-                    enemy->attack(*player);
-                    enemy->toggleMove();
-                    attacked = true;
+                // Check if this enemy is a Dragon with special attack range
+                auto dragon = dynamic_cast<Dragon*>(enemy);
+                if (dragon && dragon->isGuarding()) {
+                    // Dragon attacks if player is adjacent to Dragon OR adjacent to its hoard
+                    Position hoardPos = dragon->getHoard()->getPos();
+                    bool playerNearHoard = isAdjacent(player->getPos(), hoardPos);
+                    bool playerNearDragon = isAdjacent(enemy->getPos(), player->getPos());
+                    
+                    if (playerNearDragon || playerNearHoard) {
+                        enemy->attack(*player);
+                        enemy->toggleMove();
+                        attacked = true;
+                    }
+                } else {
+                    // Normal enemy attack logic
+                    if (isAdjacent(enemy->getPos(), player->getPos())) {
+                        enemy->attack(*player);
+                        enemy->toggleMove();
+                        attacked = true;
+                    }
                 }
                 
                 if (!attacked) {
