@@ -46,7 +46,7 @@ export class Dragon : public Enemy {
     ~Dragon();
     void move(Direction dir) override; // Override move to do nothing
     void setHoardpos(Position pos);
-    Position getHoardpos(Position pos) const;
+    Position getHoardpos() const;
 };
 
 export class Halfling : public Enemy {

@@ -94,7 +94,7 @@ void Goblin::attack(Character &target) {
 }
 
 void Goblin::onHit(Character &whoFrom) {
-    int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
+    int damage = std::ceil((100.f / (100.f + whoFrom.getDef())) * whoFrom.getAtk());
     loseHP(damage);
     if (whoFrom.getRace() == Race::ORC) {
         loseHP(static_cast<int>(std::round(damage * 1.5)));

@@ -59,8 +59,7 @@ void Player::attack(Character &target) {
 }
 
 void Player::onHit(Character &whoFrom) {
-    std::cerr << "I am hit by ";
-    int damage = std::ceil((100 / (100 + getDef())) * whoFrom.getAtk());
+    int damage = std::ceil((100.f / (100.f + getDef())) * whoFrom.getAtk());
     std::cerr << damage << std::endl;
     loseHP(damage);
 }

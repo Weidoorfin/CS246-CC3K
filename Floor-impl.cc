@@ -21,6 +21,7 @@ import player;
 import enemyfactory;
 import randomengine;
 import treasurefactory;
+import concreteenemies;
 import potionfactory;
 import tile;
 import tilefactory;
@@ -340,7 +341,7 @@ void Floor::GenerateEntities() {
                 if (terrain[next.y][next.x] && terrain[next.y][next.x]->isSpace()) {
                     enemies.push_back(ef.createEnemy(Race::DRAGON, next));
 
-                    auto dragon = enemies.back().get();
+                    auto dragon = dynamic_cast<Dragon*>(enemies.back().get());
                     dragon->setHoardpos(pos); // Set hoard position for the dragon
                     grid[next.y][next.x] = enemies.back().get();
                     break;

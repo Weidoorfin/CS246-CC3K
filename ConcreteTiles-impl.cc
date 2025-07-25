@@ -17,7 +17,7 @@ Floor::Floor(Position pos)
     : Tile{TileType::Floor, '.', 0, pos} {}
 
 Stair::Stair(Position pos)
-    : Tile{TileType::Stair, '\\', 0, pos} {}
+    : Tile{TileType::Stair, '\\', 40, pos} {}
 
 Door::Door(Position pos)
     : Tile{TileType::Door, '+', 0, pos} {}
