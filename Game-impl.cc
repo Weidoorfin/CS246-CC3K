@@ -20,6 +20,7 @@ import position;
 void Game::nextFloor() {
     currFloor++;
     floors[currFloor]->setPlayer(player.get());
+    td->attach(floors[currFloor].get());
     td->setLastAction("Player character has moved to the next floor.");
 }
 
@@ -177,31 +178,36 @@ GameState Game::run() {
             iss >> command;
             if (isDirection(command)) {
                 if (!validCommands[0]) {
+                    td->showGameUI();
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
                 auto dir = getDirection(command);
                 auto [moved, item] = floors[currFloor]->playerMove(dir);
                 if (!moved) {
+                    td->showGameUI();
                     std::cout << "Invalid place to move!" << std::endl;
                     continue;
                 }
                 applyEffects(item);
                 validCommands[0] = false; // Mark the command as used
-                td->setLastAction("Player character has moved to " + command + ".");
+                td->setLastAction("Player character has moved to direction: " + command + ".");
             } else if (command == "a") {
                 iss >> command; // Get the target direction for attack
                 if (!validCommands[1]) {
+                    td->showGameUI();
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
                 if (isDirection(command)) {
                     auto dir = getDirection(command);
                     if (!floors[currFloor]->playerAttack(dir)) {
+                        td->showGameUI();
                         std::cout << "No enemy to attack!" << std::endl;
                         continue;
                     }
                 } else {
+                    td->showGameUI();
                     std::cout << "Invalid direction for attack." << std::endl;
                     continue;
                 }
@@ -209,6 +215,7 @@ GameState Game::run() {
                 td->setLastAction("Player character has attacked in direction " + command + ".");
             } else if (command == "u") {
                 if (!validCommands[2]) {
+                    td->showGameUI();
                     std::cout << "You have performed this action already." << std::endl;
                     continue;
                 }
@@ -217,11 +224,13 @@ GameState Game::run() {
                     auto dir = getDirection(command);
                     auto [used, item] = floors[currFloor]->playerUseItem(dir);
                     if (!used) {
+                        td->showGameUI();
                         std::cout << "No item to use!" << std::endl;
                         continue;
                     }
                     applyEffects(item);
                 } else {
+                    td->showGameUI();
                     std::cout << "Invalid direction for use item." << std::endl;
                     continue;
                 }
