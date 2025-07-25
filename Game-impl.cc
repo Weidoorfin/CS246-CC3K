@@ -18,7 +18,6 @@ import potion;
 import position;
 
 void Game::nextFloor() {
-    player = player->reset(); // Reset all potion effects when entering a new floor
     floors[currFloor]->setPlayer(player.get());
     td->attach(floors[currFloor].get());
     td->setLastAction("Player character has moved to the next floor.");
@@ -159,6 +158,7 @@ GameState Game::run() {
         // Check if player has reached stairs or performs any action.
         if (floors[currFloor]->isComplete()) {
             currFloor++;
+            player = player->reset(); // Reset all potion effects when entering a new floor
             if (currFloor < MAXFLOOR) {
                 nextFloor();
             } else {
