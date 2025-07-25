@@ -82,9 +82,9 @@ bool Game::init() {
     while (!player) {
         using namespace std;
         cout << "Please choose your race:" << endl;
-        std::string raceChoice;
+        string raceChoice;
         getline(cin, raceChoice);
-        char confirmChoice;
+        string confirmChoice;
         if (raceChoice == "Shade") {
             cout << "You have chosen Shade." << endl;
             cout << "Stats:" << endl;
@@ -92,7 +92,7 @@ bool Game::init() {
             cout << "Ability: Maginify the score by 1.5x at end of game." << endl;
             cout << "Please confirm your choice by input y" << endl;
             getline(cin, confirmChoice);
-            if (confirmChoice == 'y') {
+            if (confirmChoice == "y") {
                 player = PlayerFactory::createPlayer(Race::SHADE, Position{0, 0});
             }
         } else if (raceChoice == "Drow") {
@@ -102,7 +102,7 @@ bool Game::init() {
             cout << "Ability: All potion effects are magnified with 1.5x" << endl;
             cout << "Please confirm your choice by input y" << endl;
             getline(cin, confirmChoice);
-            if (confirmChoice == 'y') {
+            if (confirmChoice == "y") {
                 player = PlayerFactory::createPlayer(Race::DROW, Position{0, 0});
             }
         } else if (raceChoice == "Vampire") {
@@ -112,7 +112,7 @@ bool Game::init() {
             cout << "Ability: Gain 5 HP every successful attack, MaxHP not capped." << endl;
             cout << "Please confirm your choice by input y" << endl;
             getline(cin, confirmChoice);
-            if (confirmChoice == 'y') {
+            if (confirmChoice == "y") {
                 player = PlayerFactory::createPlayer(Race::VAMPIRE, Position{0, 0});
             }
         } else if (raceChoice == "Troll") {
@@ -122,7 +122,7 @@ bool Game::init() {
             cout << "Ability: Regenerate 5 HP every turn, capped at MaxHP." << endl;
             cout << "Please confirm your choice by input y" << endl;
             getline(cin, confirmChoice);
-            if (confirmChoice == 'y') {
+            if (confirmChoice == "y") {
                 player = PlayerFactory::createPlayer(Race::TROLL, Position{0, 0});
             }
         } else if (raceChoice == "Goblin") {
@@ -132,7 +132,7 @@ bool Game::init() {
             cout << "Ability: Steal 5 gold every successful slain" << endl;
             cout << "Please confirm your choice by input y" << endl;
             getline(cin, confirmChoice);
-            if (confirmChoice == 'y') {
+            if (confirmChoice == "y") {
                 player = PlayerFactory::createPlayer(Race::GOBLIN, Position{0, 0});
             }
         } else if (raceChoice == "q") {
@@ -165,7 +165,7 @@ GameState Game::run() {
         }
         // Reset enemy move toggles for new turn
         floors[currFloor]->resetAllEnemyMoveToggle();
-        auto item = floors[currFloor]->getItemAt(player->getPosition());
+        auto item = floors[currFloor]->getItemAt(player->getPos());
         applyEffects(item);
         
         td->showGameUI();

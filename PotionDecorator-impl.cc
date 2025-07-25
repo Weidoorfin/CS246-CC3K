@@ -5,16 +5,9 @@ import player;
 import character;
 import enums;
 
-PotionDecorator::PotionDecorator(std::unique_ptr<Player> wrapped)
-  : Player{
-      wrapped->getRace(),
-      wrapped->getMaxHP(),
-      wrapped->getAtk(),
-      wrapped->getDef(),
-      wrapped->getSymbol(),
-      wrapped->getColour(),
-      wrapped->getPos()
-    }, base{std::move(wrapped)}
+PotionDecorator::PotionDecorator(std::unique_ptr<Player> wrapped) 
+  : Player{wrapped->getRace(), wrapped->getMaxHP(), wrapped->getAtk(), wrapped->getDef(), wrapped->getPos()}, 
+    base{std::move(wrapped)}
 {}
 
 Race PotionDecorator::getRace() const { return base->getRace(); }
