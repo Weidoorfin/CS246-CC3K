@@ -18,6 +18,7 @@ import potion;
 import position;
 
 void Game::nextFloor() {
+    player = player->reset(); // Reset all potion effects when entering a new floor
     floors[currFloor]->setPlayer(player.get());
     td->attach(floors[currFloor].get());
     td->setLastAction("Player character has moved to the next floor.");
@@ -47,11 +48,13 @@ void Game::applyEffects(Entity* item) {
         auto treasure = dynamic_cast<Treasure*>(item);
         if (treasure) {
             player = treasure->applyEffect(std::move(player));
+            floors[currFloor]->setPlayer(player.get());
         }
     } else if (item->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(item);
         if (potion) {
             player = potion->applyEffect(std::move(player));
+            floors[currFloor]->setPlayer(player.get());
         }
     }
 }
