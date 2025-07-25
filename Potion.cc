@@ -10,6 +10,8 @@ export class Potion : public Item {
     PotionType type;
 public:
     Potion(PotionType type, Position pos);
-    virtual ~Potion() = default;
+    virtual ~Potion() = 0;
+
+    // apply the potion effect to the player
     virtual std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) = 0;
 };

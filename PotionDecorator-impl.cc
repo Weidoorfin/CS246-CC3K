@@ -10,6 +10,7 @@ PotionDecorator::PotionDecorator(std::unique_ptr<Player> wrapped)
     base{std::move(wrapped)}
 {}
 
+
 Race PotionDecorator::getRace() const { return base->getRace(); }
 int PotionDecorator::getAtk() const { return base->getAtk(); }
 int PotionDecorator::getDef() const { return base->getDef(); }

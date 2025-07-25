@@ -8,12 +8,17 @@ import enums;
 
 export class Treasure : public Item {
 protected:
-    int value; // Amount of gold this treasure is worth
-    TreasureType type; // Type of treasure
+    int value; 
+    TreasureType type;
 public:
     explicit Treasure(int value, Position pos);
+    // return the value of the treasure
     int getValue() const;
+
+    // returns the type of treasure
     TreasureType getTreasureType() const;
+
+    // apply the effect of the treasure to the player, player gains gold.
     std::unique_ptr<Player> applyEffect(std::unique_ptr<Player> player) override;
     virtual ~Treasure() = default;
 };

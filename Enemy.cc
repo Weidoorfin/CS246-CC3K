@@ -1,24 +1,24 @@
 export module enemy;
 
-import <iostream>; // DEBUG cerr
 import enums;
 import character;
 import position;
 
-
+// Abstract Enemy class
 export class Enemy: public Character {
   bool moveToggle = false;
   static bool globalMoveDisabled;
   public:
     Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos);
-    virtual ~Enemy() = default; // default destructor
-    void toggleMove(); // set move toggle to true
+    virtual ~Enemy() = 0;
+    // set moveToggle to true, indicating enemy has moved in the current turn
+    void toggleMove(); 
+    // return the moveToggle
     bool getmoveToggle() const;
+    // set MoveToggle to false
     void resetMoveToggle();
+    // toggle globalMoveDisabled
     static void toggleGlobalMovement();
+    // return true if global movement is disabled
     static bool isGlobalMovementDisabled();
-    void onHit(Character &whoFrom) override {
-      Character::onHit(whoFrom);
-      std::cerr << "Im hit, my HP is" << getcurrentHP() << std::endl;
-    }
 };

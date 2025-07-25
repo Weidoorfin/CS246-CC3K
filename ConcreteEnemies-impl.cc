@@ -39,13 +39,6 @@ Orc::Orc(Position pos)
 
 Orc::~Orc() {}
 
-void Orc::attack(Character &target) {
-    // Special attack logic for Orc
-    if (target.getRace() == Race::GOBLIN) {
-        // If the target is a Goblin, Orc deals additional damage
-        
-    }
-}
 // Merchant implementation //////////////////////////////
 Merchant::Merchant(Position pos)
     : Enemy{Race::MERCHANT, 30, 70, 5, 'M', 0, pos} {}
