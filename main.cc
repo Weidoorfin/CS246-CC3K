@@ -29,15 +29,16 @@ int main(int argc, char* argv[]) {
         if (!g->init()) {
             break; // If initialization fails, exit the loop
         }
-        if (g->run() == GameState::Finish) {
+        auto state = g->run();
+        if (state == GameState::Finish) {
             // If the game is over, ask if the player wants to play again
             char choice;
             cout << "Do you want to play again? (y/n): ";
             cin >> choice;
             playAgain = (choice == 'y');
-        } else if (g->run() == GameState::Restart) {
+        } else if (state == GameState::Restart) {
             continue;
-        } else if (g->run() == GameState::Quit) {
+        } else if (state == GameState::Quit) {
             // If the game is quit, exit the loop
             playAgain = false;
         }

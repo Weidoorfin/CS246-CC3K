@@ -44,7 +44,9 @@ void TextDisplay::showGameUI() const {
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             if (grid[y][x] == nullptr) {
+                cout << getColourCode(terrain[y][x]->getColour());
                 cout << terrain[y][x]->getSymbol();
+                cout << "\033[0m";
             } else {
                 cout << getColourCode(grid[y][x]->getColour());
                 cout << grid[y][x]->getSymbol();

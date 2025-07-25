@@ -23,6 +23,7 @@ void Character::move(Direction dir) {
             break;
         case Direction::NE:
             pos.x += 1; pos.y -= 1;
+            break;
         case Direction::E:
             pos.x += 1;
             break;

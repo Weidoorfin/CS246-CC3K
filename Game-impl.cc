@@ -46,10 +46,6 @@ void Game::applyEffects(Entity* item) {
     if (item->getEntityType() == EntityType::TREASURE) {
         auto treasure = dynamic_cast<Treasure*>(item);
         if (treasure) {
-            auto* dragonHoard = dynamic_cast<DragonHoard*>(treasure);
-            if (dragonHoard && floors[currFloor]->isHoardGuarded(dragonHoard)) {
-                return;
-            }
             player = treasure->applyEffect(std::move(player));
         }
     } else if (item->getEntityType() == EntityType::POTION) {
@@ -87,7 +83,7 @@ bool Game::init() {
         using namespace std;
         cout << "Please choose your race:" << endl;
         std::string raceChoice;
-        cin >> raceChoice;
+        getline(cin, raceChoice);
         char confirmChoice;
         if (raceChoice == "Shade") {
             cout << "You have chosen Shade." << endl;
@@ -95,7 +91,7 @@ bool Game::init() {
             cout << "MaxHP: 125, Atk: 25, Def: 25" << endl;
             cout << "Ability: Maginify the score by 1.5x at end of game." << endl;
             cout << "Please confirm your choice by input y" << endl;
-            cin >> confirmChoice;
+            getline(cin, confirmChoice);
             if (confirmChoice == 'y') {
                 player = PlayerFactory::createPlayer(Race::SHADE, Position{0, 0});
             }
@@ -105,7 +101,7 @@ bool Game::init() {
             cout << "MaxHP: 150, Atk: 25, Def: 15" << endl;
             cout << "Ability: All potion effects are magnified with 1.5x" << endl;
             cout << "Please confirm your choice by input y" << endl;
-            cin >> confirmChoice;
+            getline(cin, confirmChoice);
             if (confirmChoice == 'y') {
                 player = PlayerFactory::createPlayer(Race::DROW, Position{0, 0});
             }
@@ -115,7 +111,7 @@ bool Game::init() {
             cout << "StartHP: 50, Atk: 25, Def: 25" << endl;
             cout << "Ability: Gain 5 HP every successful attack, MaxHP not capped." << endl;
             cout << "Please confirm your choice by input y" << endl;
-            cin >> confirmChoice;
+            getline(cin, confirmChoice);
             if (confirmChoice == 'y') {
                 player = PlayerFactory::createPlayer(Race::VAMPIRE, Position{0, 0});
             }
@@ -125,7 +121,7 @@ bool Game::init() {
             cout << "MaxHP: 120, Atk: 25, Def: 15" << endl;
             cout << "Ability: Regenerate 5 HP every turn, capped at MaxHP." << endl;
             cout << "Please confirm your choice by input y" << endl;
-            cin >> confirmChoice;
+            getline(cin, confirmChoice);
             if (confirmChoice == 'y') {
                 player = PlayerFactory::createPlayer(Race::TROLL, Position{0, 0});
             }
@@ -135,7 +131,7 @@ bool Game::init() {
             cout << "MaxHP: 110, Atk: 15, Def: 20" << endl;
             cout << "Ability: Steal 5 gold every successful slain" << endl;
             cout << "Please confirm your choice by input y" << endl;
-            cin >> confirmChoice;
+            getline(cin, confirmChoice);
             if (confirmChoice == 'y') {
                 player = PlayerFactory::createPlayer(Race::GOBLIN, Position{0, 0});
             }
@@ -169,16 +165,19 @@ GameState Game::run() {
         }
         // Reset enemy move toggles for new turn
         floors[currFloor]->resetAllEnemyMoveToggle();
+        auto item = floors[currFloor]->getItemAt(player->getPosition());
+        applyEffects(item);
         
         td->showGameUI();
         std::string cmd;
-        std::cout << "Enter command (input e to finish round): " << std::endl;
         std::vector<bool> validCommands(3, true);
         bool finish = false;
         while (!finish) {
+            std::cout << "Enter command (input e to finish this round): " << std::endl;
             getline(std::cin, cmd);
             std::istringstream iss{cmd};
             std::string command;
+            if (iss.eof()) return GameState::Quit;
             iss >> command;
             if (isDirection(command)) {
                 if (!validCommands[0]) {
@@ -263,6 +262,7 @@ GameState Game::run() {
         }
         // Auto Enemy move
         floors[currFloor]->enemyTurn(); // Handle enemy actions
+        td->setLastAction("Enemy turn finished.");
     } // while (player->isAlive())
     endGame(false);
     return GameState::Finish; // Player has died, end the game

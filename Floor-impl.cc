@@ -66,6 +66,10 @@ Player* Floor::getPlayer() const {
     return player;
 }
 
+Entity* Floor::getItemAt(Position pos) const {
+    return grid[pos.y][pos.x];
+}
+
 std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);

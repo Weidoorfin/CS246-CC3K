@@ -52,6 +52,7 @@ export class Floor {
     const std::vector<std::vector<Entity*>>& getGrid() const; // Get the grid of entities
     const std::vector<std::vector<Entity*>>& getTerrain() const; // Get the terrain of the floor
     Player* getPlayer() const; // Get the player on the floor
+    Entity* getItemAt(Position pos) const; // Get the item at a specific position
 
     // Player actions
     std::pair<bool, Entity*> playerMove(Direction dir); // Move the player in a direction, return success and item
