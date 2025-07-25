@@ -36,4 +36,3 @@ bool Enemy::isGlobalMovementDisabled() {
 
 
 
-
