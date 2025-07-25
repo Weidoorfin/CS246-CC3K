@@ -4,6 +4,7 @@ import character;
 import enemy;
 import enums;
 import position;
+import treasure;
 
 // Human implementation //////////////////////////////
 Human::Human(Position pos)
@@ -68,16 +69,20 @@ Dragon::Dragon(Position pos)
 
 Dragon::~Dragon() {}
 
-void Dragon::setHoardpos(Position pos) {
-    hoardpos = pos;
+void Dragon::setHoard(DragonHoard* dragonHoard) {
+    hoard = dragonHoard;
 }
 
-Position Dragon::getHoardpos() const {
-    return hoardpos;
+DragonHoard* Dragon::getHoard() const {
+    return hoard;
+}
+
+bool Dragon::isGuarding() const {
+    return hoard != nullptr;
 }
 
 void Dragon::move(Direction dir) {
-    // non-operational move for Dragon
+    Enemy::move(dir);
 }
 
 // Halfling implementation //////////////////////////////

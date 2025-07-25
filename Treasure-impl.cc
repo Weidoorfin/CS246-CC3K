@@ -6,7 +6,6 @@ import position;
 import item;
 import player;
 
-
 Treasure::Treasure(int value, Position pos)
     : Item{'G', 21, pos}, value{value} {
     entity = EntityType::TREASURE; // Set the entity type to TREASURE

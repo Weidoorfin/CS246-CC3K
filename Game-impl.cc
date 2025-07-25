@@ -46,6 +46,10 @@ void Game::applyEffects(Entity* item) {
     if (item->getEntityType() == EntityType::TREASURE) {
         auto treasure = dynamic_cast<Treasure*>(item);
         if (treasure) {
+            auto* dragonHoard = dynamic_cast<DragonHoard*>(treasure);
+            if (dragonHoard && floors[currFloor]->isHoardGuarded(dragonHoard)) {
+                return;
+            }
             player = treasure->applyEffect(std::move(player));
         }
     } else if (item->getEntityType() == EntityType::POTION) {
