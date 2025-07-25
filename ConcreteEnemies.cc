@@ -3,6 +3,7 @@ export module concreteenemies;
 import enemy;
 import enums;
 import position;
+import treasure;
 
 export class Human : public Enemy {
   public:
@@ -40,13 +41,14 @@ export class Merchant : public Enemy {
 };
 
 export class Dragon : public Enemy {
-  Position hoardpos;
+  DragonHoard* hoard = nullptr;
   public:
     Dragon(Position pos);
     ~Dragon();
     void move(Direction dir) override; // Override move to do nothing
-    void setHoardpos(Position pos);
-    Position getHoardpos() const;
+    void setHoard(DragonHoard* dragonHoard);
+    DragonHoard* getHoard() const;
+    bool isGuarding() const;
 };
 
 export class Halfling : public Enemy {

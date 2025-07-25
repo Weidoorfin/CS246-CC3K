@@ -7,6 +7,7 @@ import <string>;
 import <vector>;
 import <sstream>;
 import <algorithm>;
+import <cmath>;
 
 import enums;
 import chamber;
@@ -152,11 +153,32 @@ void Floor::enemyTurn() {
 
                             if (grid[next.y][next.x] == nullptr && 
                                 terrain[next.y][next.x]->isFloor()) {
-                                enemy->move(dir);
-                                grid[next.y][next.x] = enemy;
-                                grid[y][x] = nullptr;
-                                enemy->toggleMove();
-                                break;
+                                
+                                // Check if this enemy is a Dragon with movement restrictions
+                                auto* dragon = dynamic_cast<Dragon*>(enemy);
+                                if (dragon && dragon->isGuarding()) {
+                                    // Check if Dragon can move to this position (within 1 tile of hoard)
+                                    Position hoardPos = dragon->getHoard()->getPos();
+                                    int deltaX = abs(next.x - hoardPos.x);
+                                    int deltaY = abs(next.y - hoardPos.y);
+                                    
+                                    if (deltaX <= 1 && deltaY <= 1) {
+                                        // Within range, can move
+                                        enemy->move(dir);
+                                        grid[next.y][next.x] = enemy;
+                                        grid[y][x] = nullptr;
+                                        enemy->toggleMove();
+                                        break;
+                                    }
+                                    // If not within range, try next direction
+                                } else {
+                                    // Normal enemy movement
+                                    enemy->move(dir);
+                                    grid[next.y][next.x] = enemy;
+                                    grid[y][x] = nullptr;
+                                    enemy->toggleMove();
+                                    break;
+                                }
                             }
                         }
                     }
@@ -336,13 +358,19 @@ void Floor::GenerateEntities() {
         treasures.push_back(tf.createTreasure(re.genTreasureType(), pos));
         grid[pos.y][pos.x] = treasures.back().get();
         if (treasures.back()->getTreasureType() == TreasureType::DRAGON) {
+            auto* dragonHoard = dynamic_cast<DragonHoard*>(treasures.back().get());
+            
             for (auto &dir : re.genDirections()) {
                 Position next = target(pos, dir);
                 if (terrain[next.y][next.x] && terrain[next.y][next.x]->isSpace()) {
                     enemies.push_back(ef.createEnemy(Race::DRAGON, next));
-
-                    auto dragon = dynamic_cast<Dragon*>(enemies.back().get());
-                    dragon->setHoardpos(pos); // Set hoard position for the dragon
+                    auto* dragon = dynamic_cast<Dragon*>(enemies.back().get());
+                    
+                    // 只设置 Dragon 的 hoard 指针
+                    if (dragon && dragonHoard) {
+                        dragon->setHoard(dragonHoard);
+                    }
+                    
                     grid[next.y][next.x] = enemies.back().get();
                     break;
                 }
@@ -519,6 +547,8 @@ void Floor::readFromStream(std::istringstream &is) {
         grid.push_back(gridRow);
         y++;
     } // while (getline(is, line))
+    
+    bindDragonsToHoards();
 }
 
 Position target(Position curr, Direction dir) {
@@ -560,6 +590,36 @@ void Floor::resetAllEnemyMoveToggle() {
     }
 }
 
+bool Floor::isHoardGuarded(DragonHoard* hoard) const {
+    if (!hoard) return false;
+    
+    Position hoardPos = hoard->getPos();
+    
+    // 检查附近8个方向是否有活着的Dragon守护这个hoard
+    for (int dx = -1; dx <= 1; ++dx) {
+        for (int dy = -1; dy <= 1; ++dy) {
+            if (dx == 0 && dy == 0) continue; // 跳过宝藏自身位置
+            
+            Position searchPos{hoardPos.x + dx, hoardPos.y + dy};
+            // 检查边界
+            if (searchPos.x >= 0 && searchPos.y >= 0 && 
+                searchPos.y < grid.size() && searchPos.x < grid[searchPos.y].size()) {
+                
+                Entity* entity = grid[searchPos.y][searchPos.x];
+                if (entity && entity->getEntityType() == EntityType::ENEMY) {
+                    auto* dragon = dynamic_cast<Dragon*>(entity);
+                    if (dragon && dragon->isAlive() && dragon->isGuarding() && 
+                        dragon->getHoard() == hoard) {
+                        return true; // 找到活着的守护龙
+                    }
+                }
+            }
+        }
+    }
+    
+    return false; // 没有找到守护龙
+}
+
 Position Floor::target(Position curr, Direction dir) {
     switch(dir) {
         case Direction::N:
@@ -585,4 +645,45 @@ Position Floor::target(Position curr, Direction dir) {
 
 bool Floor::isAdjacent(Position a, Position b) {
     return (abs(a.x - b.x) <= 1 && abs(a.y - b.y) <= 1 && !(a.x == b.x && a.y == b.y));
+}
+
+void Floor::bindDragonsToHoards() {
+    // 遍历所有 DragonHoard，为每个寻找附近的 Dragon
+    for (auto& treasure : treasures) {
+        if (treasure->getTreasureType() == TreasureType::DRAGON) {
+            auto* dragonHoard = dynamic_cast<DragonHoard*>(treasure.get());
+            if (!dragonHoard) continue;
+            
+            Position hoardPos = dragonHoard->getPos();
+            Dragon* nearbyDragon = nullptr;
+            
+            // 搜索附近8个方向的 Dragon
+            for (int dx = -1; dx <= 1; ++dx) {
+                for (int dy = -1; dy <= 1; ++dy) {
+                    if (dx == 0 && dy == 0) continue; // 跳过当前位置
+                    
+                    Position searchPos{hoardPos.x + dx, hoardPos.y + dy};
+                    // 检查边界
+                    if (searchPos.x >= 0 && searchPos.y >= 0 && 
+                        searchPos.y < grid.size() && searchPos.x < grid[searchPos.y].size()) {
+                        
+                        Entity* entity = grid[searchPos.y][searchPos.x];
+                        if (entity && entity->getEntityType() == EntityType::ENEMY) {
+                            auto* dragon = dynamic_cast<Dragon*>(entity);
+                            if (dragon && !dragon->isGuarding()) {
+                                nearbyDragon = dragon;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (nearbyDragon) break;
+            }
+            
+            // 只设置 Dragon 的 hoard 指针，不设置 DragonHoard 的 guardian
+            if (nearbyDragon) {
+                nearbyDragon->setHoard(dragonHoard);
+            }
+        }
+    }
 }

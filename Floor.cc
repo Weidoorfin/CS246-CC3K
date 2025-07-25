@@ -61,6 +61,7 @@ export class Floor {
     void handleEnemyDeath(Enemy* enemy); // Handle the death of an enemy
     void toggleAllEnemyMovement(); // Toggle movement for all enemies on the floor
     void resetAllEnemyMoveToggle(); // Reset all enemies' move toggle for new turn
+    bool isHoardGuarded(DragonHoard* hoard) const; // Check if a DragonHoard is guarded
 
   private:
     void getEmptyMap(std::ifstream &is); // Read an empty map from input stream
@@ -70,6 +71,7 @@ export class Floor {
     void GenerateStairs(); // Generate stairs on the floor
     void GenerateEntities(); // Generate entities (enemies, items) on the floor
     void readFromStream(std::istringstream &is); // Read floor data from input stream
+    void bindDragonsToHoards(); // Bind Dragons to nearby DragonHoards
     Position target(Position curr, Direction dir); // Get the target position based on current position and direction
     bool isAdjacent(Position a, Position b); // Check if two positions are adjacent
 
