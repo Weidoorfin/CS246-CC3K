@@ -70,9 +70,13 @@ std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Position next = target(curr, dir);
 
     Entity* nextEntity = grid[next.y][next.x];
-    if (nextEntity && !nextEntity->isSpace()) return {false, nullptr};
+    Tile* nextTile = dynamic_cast<Tile*>(terrain[next.y][next.x]);
 
-    auto nextTile = dynamic_cast<Tile*>(terrain[next.y][next.x]);
+    // makes sure next tile and entity are both space
+    if (nextEntity && !(nextEntity->isSpace() && nextTile->isSpace()))
+        return {false, nullptr};
+
+    
     if (nextTile && nextTile->getTileType() == TileType::Stair) {
         complete = true;
     }

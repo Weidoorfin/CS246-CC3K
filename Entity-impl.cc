@@ -16,7 +16,7 @@ int Entity::getColour() const { return colour; }
 Position Entity::getPos() const { return pos; }
 bool Entity::isSpace() const {
     return (symbol == '.' || symbol == '#' || symbol == '+' || symbol == '/' 
-                ||symbol == 'G');
+                || symbol == 'G');
 }
 bool Entity::isFloor() const {
     return (symbol == '.');
