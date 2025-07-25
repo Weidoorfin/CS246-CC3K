@@ -8,5 +8,6 @@ import position;
 
 export class PlayerFactory {
 public:
+    // Creates a player
     static std::unique_ptr<Player> createPlayer(Race race, Position pos);
 };

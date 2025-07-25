@@ -21,13 +21,18 @@ public:
 
     void setSeed(uint32_t seed);
     uint32_t getSeed() const;
-
-    bool chance(uint32_t prob); // produce true for prob% of times
-    bool chance(int num, int denom); // produce true for num/denom of times
-    std::vector<int> genIndices(int l, int u); // generate a shuffled vector of indices in the range [l, u)
-    std::vector<Direction> genDirections(); // generate a shuffled vector of directions
-    Race genEnemyRace(); // generate a random enemy based on the predefined probability distribution
-    PotionType genPotionType(); // generate a random potion type based on the predefined probability distribution
-    TreasureType genTreasureType(); // generate a random treasure type based on the
+    // produce true for prob% of times
+    bool chance(uint32_t prob);
+     // produce true for num/denom of times
+    bool chance(int num, int denom);
+    // generate a shuffled vector of indices in the range [l, u]
+    std::vector<int> genIndices(int l, int u);
+    // generate a shuffled vector of directions
+    std::vector<Direction> genDirections();
+    // generate a random enemy based on the predefined probability distribution in config
+    Race genEnemyRace(); 
+    // generate a random potion type based on the predefined probability distribution in config
+    PotionType genPotionType();
+    // generate a random treasure type based on the predefined probability distribution in config
+    TreasureType genTreasureType(); 
 };
-

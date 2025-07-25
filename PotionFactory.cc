@@ -8,5 +8,6 @@ import enums;
 
 export class PotionFactory {
 public:
+    // Creates a potion of the specified type. 
     static std::unique_ptr<Potion> createPotion(PotionType type, Position pos);
 };

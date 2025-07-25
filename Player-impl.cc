@@ -13,6 +13,7 @@ Player::Player(Race race, int maxHP, int atk, int def, Position pos)
     entity = EntityType::PLAYER;
 }
 
+Player::~Player() {} 
 
 int Player::getGold() const {
     return Gold;
@@ -60,7 +61,6 @@ void Player::attack(Character &target) {
 
 void Player::onHit(Character &whoFrom) {
     int damage = std::ceil((100.f / (100.f + getDef())) * whoFrom.getAtk());
-    std::cerr << damage << std::endl;
     loseHP(damage);
 }
 

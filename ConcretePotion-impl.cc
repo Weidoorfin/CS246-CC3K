@@ -1,6 +1,5 @@
 module concretepotion;
 
-import <iostream>; //DEBUG cerr
 import <memory>;
 import <cmath>;
 import potion;
@@ -24,7 +23,6 @@ PH::PH(Position pos) : Potion(PotionType::PH, pos) {}
 std::unique_ptr<Player> PH::applyEffect(std::unique_ptr<Player> player) {
     double amount = 10.0;
     amount = amount * player->getPotionMultiplier();
-    std::cerr << "PH: " << amount << std::endl;
     player->loseHP(static_cast<int>(std::round(amount)));
     return player;
 }

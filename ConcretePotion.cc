@@ -6,6 +6,8 @@ import enums;
 import position;
 import player;
 
+// All the concrete potion classes overrides the applyEffect method
+
 export class RH : public Potion {
 public:
     RH(Position pos = Position{0, 0});

@@ -6,8 +6,10 @@ import position;
 import enemy;
 import concreteenemies;
 
+// Enemy factory class
 export class EnemyFactory {
   public:
-    explicit EnemyFactory();
+    EnemyFactory();
+    // Factory method that returns an enemy of the required race
     std::unique_ptr<Enemy> createEnemy(Race race, Position pos);
 };
