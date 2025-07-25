@@ -1,6 +1,9 @@
 export module enums;
 
-enum class PlayerRace {Shade, Drow, Vampire, Troll, Goblin};
-enum class Direction {N, NE, E, SE, S, SW, W, NW};
-enum class EnemyType {Human, Dwarf, Elf, Orcs, Merchant, Halfing};
-enum class PotionType {BA, BD, PH, WA, WD, RH};
+export enum class Race {SHADE, DROW, VAMPIRE, TROLL, GOBLIN, HUMAN, DWARF, ELF, ORC, MERCHANT, DRAGON, HALFLING};
+export enum class Direction {N, NE, E, SE, S, SW, W, NW};
+export enum class TreasureType {SMALL, NORMAL, MERCHANT, DRAGON};
+export enum class GameState {Finish, Restart, Quit};
+export enum class EntityType {UNINITIALIZED, PLAYER, ENEMY, POTION, TREASURE, TILE};
+export enum class PotionType {BA, BD, PH, WA, WD, RH};
+export enum class TileType {Nothing, VerticalWall, HorizontalWall, Floor, Stair, Door, Corridor};

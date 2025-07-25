@@ -1,9 +1,5 @@
-export module position
+export module position;
 
-export class Position {
+export struct Position {
     int x, y;
-  public:
-    Position(int x, int y);
-    Position getPos() const;
-    ~Position();
 };

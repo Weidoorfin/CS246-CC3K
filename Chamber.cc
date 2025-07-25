@@ -1,23 +1,23 @@
 export module chamber;
 
+
 import <vector>;
-
+import <utility>;
 import position;
+import randomengine;
 
-#ifndef CHAMBER_H
-#define CHAMBER_H
-
-#include <vector>
-
-#include "position.h"
-
-class Chamber {
-    int id;
-    vector<vector<char>> validArea;
+export class Chamber {
+    bool withPlayer = false;
+    struct Status {
+      Position pos;
+      bool occupied;
+    };
+    std::vector<Status> validArea;
   public:
-    bool contains(Position pos) const;
-    Position getRamdomFloorPile() const;
-    bool isFloorPile(Position pos) const;
+    Chamber() = default;
+    bool isWithPlayer() const;
+    void setWithPlayer();
+    void addTile(Position pos);
+    Position getRandomTile(); // produces a position of a random unoccupied tile in chamber
+    bool isValidTile(Status s);
 };
-
-#endif

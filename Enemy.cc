@@ -1,21 +1,24 @@
 export module enemy;
 
+import <iostream>; // DEBUG cerr
 import enums;
 import character;
-import subject;
-import observer;
 import position;
-import chamber;
 
-export class Enemy: public Character, public Observer {
-    EnemyType Type;
+
+export class Enemy: public Character {
+  bool moveToggle = false;
+  static bool globalMoveDisabled;
   public:
-    virtual void automove() = 0;
-    virtual int dropGold() = 0;
-    virtual bool isHostile() const = 0;
-    virtual void setHostile(bool hostile) = 0;
-    virtual bool isInRange(Position pos) const = 0;
-    virtual Chamber getChamber() = 0;
-    virtual update(Subject Subject) = 0;
+    Enemy(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos);
+    virtual ~Enemy() = default; // default destructor
+    void toggleMove(); // set move toggle to true
+    bool getmoveToggle() const;
+    void resetMoveToggle();
+    static void toggleGlobalMovement();
+    static bool isGlobalMovementDisabled();
+    void onHit(Character &whoFrom) override {
+      Character::onHit(whoFrom);
+      std::cerr << "Im hit, my HP is" << getcurrentHP() << std::endl;
+    }
 };
-

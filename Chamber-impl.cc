@@ -1,0 +1,34 @@
+module chamber;
+
+import randomengine;
+
+bool Chamber::isWithPlayer() const {
+    return withPlayer;
+}
+
+void Chamber::setWithPlayer() {
+    withPlayer = true;
+}
+
+void Chamber::addTile(Position pos) {
+    validArea.push_back({pos, false});
+}
+
+//
+
+Position Chamber::getRandomTile() {
+    int size = validArea.size();
+    RandomEngine re;
+    std::vector<int> indices = re.genIndices(0, size - 1);
+    for (int idx : indices) {
+        if (!validArea[idx].occupied) {
+            validArea[idx].occupied = true; // Mark the tile as occupied
+            return validArea[idx].pos; // Return the position of the unoccupied tile
+        }
+    }
+    return Position{-1, -1}; // Return an invalid position if no unoccupied tile is found
+}
+
+bool Chamber::isValidTile(Status s) {
+    return s.occupied;
+}

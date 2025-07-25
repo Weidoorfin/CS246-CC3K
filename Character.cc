@@ -1,15 +1,24 @@
 export module character;
 
-import entity;
 import enums;
+import position;
+import entity;
 
 export class Character: public Entity {
+    Race race;
+    int maxHP, atk, def;
   protected:
-    int CurrentHP, MaxHP, Atk, Def;
+    int currentHP;
   public:
-    virtual void Attack(Direction dir) = 0;
-    virtual void Defence(Direction dir) = 0;
-    virtual void onHit(Character &whoFrom) = 0;
-    virtual void Move(Direction dir);
-    virtual bool isAlive() const = 0;
+    Character(Race race, int maxHP, int atk, int def, char symbol, int colour, Position pos);
+    virtual ~Character() = 0;
+    virtual int getAtk() const;
+    virtual int getDef() const;
+    virtual int getMaxHP() const;
+    virtual Race getRace() const;
+    bool isAlive() const;
+    virtual void move(Direction dir);
+    virtual void attack(Character &target); // Handle the attack logic
+    virtual void onHit(Character &whoFrom); // Handle the hit logic
+    int getcurrentHP() const { return currentHP; } // cerr DEBUG
 };

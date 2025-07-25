@@ -1,28 +1,48 @@
-// syslibs
+// main.cc
+// This file is part of CC3K, a C++ roguelike game.
+
 import <iostream>;
-import <string>;
-// modules
+import <fstream>;
+import <memory>;
+
 import game;
-import playerfactory;
-import display;
+import randomengine;
 import enums;
 
 using namespace std;
 
-int main() {
-    Display display;
-    Game game;
-    PlayerRace Race;
-
-    while(true) {
-        display.init();
-        game.init();
-        cout << "Chamber Crawler 3000 (CC3K)!" << endl;
-        cout << "Please select your Race to start" << endl;
-        // ... further complete
-        string choice;
-        cin >> choice;
-    } // while
-
+int main(int argc, char* argv[]) {
+    bool playAgain = true;
+    while (playAgain) {
+        unique_ptr<Game> g;
+        if (argc == 3) {
+            ifstream inFile{argv[1]};
+            RandomEngine rng;
+            rng.setSeed(stoi(argv[2]));
+            g = make_unique<Game>(inFile);
+        } else if (argc == 2) {
+            ifstream inFile{argv[1]};
+            g = make_unique<Game>(inFile);
+        } else {
+            g = make_unique<Game>();
+        }
+        if (!g->init()) {
+            break; // If initialization fails, exit the loop
+        }
+        auto state = g->run();
+        if (state == GameState::Finish) {
+            // If the game is over, ask if the player wants to play again
+            char choice;
+            cout << "Do you want to play again? (y/n): ";
+            cin >> choice;
+            playAgain = (choice == 'y');
+        } else if (state == GameState::Restart) {
+            continue;
+        } else if (state == GameState::Quit) {
+            // If the game is quit, exit the loop
+            playAgain = false;
+        }
+        cout << "Game Over! Thanks for playing!" << endl;
+    }
     return 0;
 } // main
