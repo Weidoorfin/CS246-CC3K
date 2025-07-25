@@ -48,13 +48,13 @@ void Game::applyEffects(Entity* item) {
         auto treasure = dynamic_cast<Treasure*>(item);
         if (treasure) {
             player = treasure->applyEffect(std::move(player));
-            floors[currFloor]->setPlayer(player.get());
+            floors[currFloor]->renewPlayer(player.get());
         }
     } else if (item->getEntityType() == EntityType::POTION) {
         auto potion = dynamic_cast<Potion*>(item);
         if (potion) {
             player = potion->applyEffect(std::move(player));
-            floors[currFloor]->setPlayer(player.get());
+            floors[currFloor]->renewPlayer(player.get());
         }
     }
 }

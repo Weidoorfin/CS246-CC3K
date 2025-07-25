@@ -50,6 +50,10 @@ void Floor::setPlayer(Player* p) {
     grid[playerpos.y][playerpos.x] = player; // Place player in the grid
 }
 
+void Floor::renewPlayer(Player* p) {
+    player = p;
+}
+
 bool Floor::isComplete() const {
     return complete;
 }
