@@ -55,7 +55,7 @@ void Character::attack(Character &target) {
 
 void Character::onHit(Character &whoFrom) {
     // Implements basic hit logic
-    int damage = ceil((100 / (100 + getDef())) * whoFrom.getAtk());
+    int damage = ceil((100.f / (100.f + getDef())) * whoFrom.getAtk());
     if (damage < currentHP) {
         currentHP -= damage;
     } else {

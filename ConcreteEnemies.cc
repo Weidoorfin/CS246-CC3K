@@ -40,10 +40,13 @@ export class Merchant : public Enemy {
 };
 
 export class Dragon : public Enemy {
+  Position hoardpos;
   public:
     Dragon(Position pos);
     ~Dragon();
     void move(Direction dir) override; // Override move to do nothing
+    void setHoardpos(Position pos);
+    Position getHoardpos(Position pos) const;
 };
 
 export class Halfling : public Enemy {

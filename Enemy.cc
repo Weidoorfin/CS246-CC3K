@@ -1,8 +1,10 @@
 export module enemy;
 
+import <iostream>; // DEBUG cerr
 import enums;
 import character;
 import position;
+
 
 export class Enemy: public Character {
   bool moveToggle = false;
@@ -15,4 +17,8 @@ export class Enemy: public Character {
     void resetMoveToggle();
     static void toggleGlobalMovement();
     static bool isGlobalMovementDisabled();
+    void onHit(Character &whoFrom) override {
+      Character::onHit(whoFrom);
+      std::cerr << "Im hit, my HP is" << getcurrentHP() << std::endl;
+    }
 };

@@ -68,6 +68,14 @@ Dragon::Dragon(Position pos)
 
 Dragon::~Dragon() {}
 
+void Dragon::setHoardpos(Position pos) {
+    hoardpos = pos;
+}
+
+Position Dragon::getHoardpos() const {
+    return hoardpos;
+}
+
 void Dragon::move(Direction dir) {
     // non-operational move for Dragon
 }

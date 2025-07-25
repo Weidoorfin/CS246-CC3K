@@ -98,8 +98,8 @@ bool Floor::playerAttack(Direction dir) {
         player->attack(*enemy);  // Dereference the pointer to pass as reference
         if (!enemy->isAlive()) {
             handleEnemyDeath(enemy);
-            return true;
         }
+        return true;
     }
     return false;
 }
@@ -146,17 +146,15 @@ void Floor::enemyTurn() {
 
                     for (auto &dir : directions) {
                         Position next = target(enemy->getPos(), dir);
-                        // 检查边界
                         if (next.y >= 0 && next.y < grid.size() && 
                             next.x >= 0 && next.x < grid[next.y].size()) {
-                            // 检查目标位置是否为空且是可走的地面
+
                             if (grid[next.y][next.x] == nullptr && 
                                 terrain[next.y][next.x]->isFloor()) {
-                                // 移动敌人
                                 enemy->move(dir);
                                 grid[next.y][next.x] = enemy;
                                 grid[y][x] = nullptr;
-                                enemy->toggleMove(); // 标记已经行动过
+                                enemy->toggleMove();
                                 break;
                             }
                         }
@@ -341,6 +339,9 @@ void Floor::GenerateEntities() {
                 Position next = target(pos, dir);
                 if (terrain[next.y][next.x] && terrain[next.y][next.x]->isSpace()) {
                     enemies.push_back(ef.createEnemy(Race::DRAGON, next));
+
+                    auto dragon = enemies.back().get();
+                    dragon->setHoardpos(pos); // Set hoard position for the dragon
                     grid[next.y][next.x] = enemies.back().get();
                     break;
                 }

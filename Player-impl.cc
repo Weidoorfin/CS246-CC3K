@@ -1,5 +1,6 @@
 module player;
 
+import <iostream>; // delete
 import <memory>;
 import <cmath>;
 import enums;
@@ -8,7 +9,7 @@ import PRNG;
 import position;
 
 Player::Player(Race race, int maxHP, int atk, int def, Position pos)
-    : Character{race, maxHP, atk, def, '@', 21, pos}, Gold{0}, totGold{0} {
+    : Character{race, maxHP, atk, def, '@', 40, pos}, Gold{0}, totGold{0} {
     entity = EntityType::PLAYER;
 }
 
@@ -58,7 +59,9 @@ void Player::attack(Character &target) {
 }
 
 void Player::onHit(Character &whoFrom) {
-    int damage = std::ceil((100 / (100 + whoFrom.getDef())) * whoFrom.getAtk());
+    std::cerr << "I am hit by ";
+    int damage = std::ceil((100 / (100 + getDef())) * whoFrom.getAtk());
+    std::cerr << damage << std::endl;
     loseHP(damage);
 }
 

@@ -8,7 +8,7 @@ import player;
 
 
 Treasure::Treasure(int value, Position pos)
-    : Item{'G', 184, pos}, value{value} {
+    : Item{'G', 21, pos}, value{value} {
     entity = EntityType::TREASURE; // Set the entity type to TREASURE
 }
 

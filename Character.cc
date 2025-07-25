@@ -20,4 +20,5 @@ export class Character: public Entity {
     virtual void move(Direction dir);
     virtual void attack(Character &target); // Handle the attack logic
     virtual void onHit(Character &whoFrom); // Handle the hit logic
+    int getcurrentHP() const { return currentHP; } // cerr DEBUG
 };

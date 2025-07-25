@@ -18,7 +18,6 @@ import potion;
 import position;
 
 void Game::nextFloor() {
-    currFloor++;
     floors[currFloor]->setPlayer(player.get());
     td->attach(floors[currFloor].get());
     td->setLastAction("Player character has moved to the next floor.");
@@ -156,6 +155,7 @@ GameState Game::run() {
         // Game loop will keep running until the player dies
         // Check if player has reached stairs or performs any action.
         if (floors[currFloor]->isComplete()) {
+            currFloor++;
             if (currFloor < MAXFLOOR) {
                 nextFloor();
             } else {
