@@ -48,6 +48,7 @@ export class Floor {
 
     // Accessories and mutators
     void setPlayer(Player* p); // Set the player on the floor
+    void renewPlayer(Player* p);
     bool isComplete() const; // Check if the floor is complete
     const std::vector<std::vector<Entity*>>& getGrid() const; // Get the grid of entities
     const std::vector<std::vector<Entity*>>& getTerrain() const; // Get the terrain of the floor
