@@ -28,9 +28,17 @@ import tile;
 import tilefactory;
 
 
-Floor::Floor(){
+Floor::Floor(bool DLC) {
     // Initialize the grid with empty chambers
-    std::ifstream emptyMap{"emptyfloor.txt"};
+    std::string floor;
+    if (DLC) {
+        RandomEngine re;
+        FloorName floorName = re.genFloorName();
+        floor = detectDLC(floorName);
+    } else {
+        floor = "emptyfloor.txt";
+    }
+    std::ifstream emptyMap(floor);
     getEmptyMap(emptyMap);
     identifyChambers();
     GeneratePlayerpos();
@@ -708,10 +716,24 @@ void Floor::bindDragonsToHoards() {
                 if (nearbyDragon) break;
             }
             
-            // 只设置 Dragon 的 hoard 指针，不设置 DragonHoard 的 guardian
+            
             if (nearbyDragon) {
                 nearbyDragon->setHoard(dragonHoard);
             }
         }
     }
 }
+
+std::string Floor::detectDLC(FloorName floorName) const {
+    switch (floorName) {
+        case FloorName::DEFAULT:
+            return "emptyfloor.txt";
+        case FloorName::DLC1:
+            return "emptyfloor_DLC1.txt";
+        case FloorName::DLC2:
+            return "emptyfloor_DLC2.txt";
+        default:
+            return "emptyfloor.txt"; // Default case
+    }
+}
+

@@ -115,3 +115,22 @@ TreasureType RandomEngine::genTreasureType() {
     std::shuffle(result.begin(), result.end(), dre);
     return result[0]; // return a random treasure type
 }
+
+
+FloorName RandomEngine::genFloorName() {
+    // calculate total frequency
+    int total_freq = 0;
+    for (const auto& [key, value] : FloorConfig::floorFrequency) {
+        total_freq += value;
+    }
+    std::vector<FloorName> result;
+    // build frequency array
+    for (const auto& [key, value] : FloorConfig::floorFrequency) {
+        for (int i = 0; i < value; ++i) {
+            result.push_back(key);
+        }
+    }
+    // Shuffle the result to randomize the selection
+    std::shuffle(result.begin(), result.end(), dre);
+    return result[0]; // return a random treasure type
+}

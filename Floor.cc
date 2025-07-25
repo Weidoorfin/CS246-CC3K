@@ -40,11 +40,13 @@ export class Floor {
     std::vector<std::unique_ptr<Tile>> tiles;
     std::vector<std::unique_ptr<Chamber>> chambers; // Chambers in the floor
     Position playerpos; // Position of the player
-    Player *player; // Player on the floor ?
+    Player *player; // Player on the floor
+
 
  public:
+
     // Constructors
-    Floor();
+    Floor(bool DLC);
     // Constructor with infile
     explicit Floor(std::istringstream &is); // Constructor to read from input stream
 
@@ -140,4 +142,7 @@ export class Floor {
 
     // checks if two positions are adjacent by comparing their coordinates
     bool isAdjacent(Position a, Position b);
+
+    // detect DLC
+    std::string detectDLC(FloorName floorName) const;
 };

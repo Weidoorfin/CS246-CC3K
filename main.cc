@@ -8,11 +8,21 @@ import <memory>;
 import game;
 import randomengine;
 import enums;
+import floor;
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
     bool playAgain = true;
+    string dlc;
+    cout << "Do you want to enable DLC content? (Input 'DLC' to enable, any other input will disable): ";
+    cout << "You Must do it here before starting the game." << endl;
+    getline(cin, dlc);
+    if (dlc == "DLC") {
+        Game::DLC = true; // Enable DLC content if the user inputs "DLC"
+    } else {
+        Game::DLC = false; // Default to false if any other input
+    }
     while (playAgain) {
         unique_ptr<Game> g;
         if (argc == 3) {
