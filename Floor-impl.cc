@@ -93,7 +93,7 @@ std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
 bool Floor::playerAttack(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);
-    if (grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
+    if (grid[next.y][next.x] && grid[next.y][next.x]->getEntityType() == EntityType::ENEMY) {
         auto enemy = dynamic_cast<Enemy*>(grid[next.y][next.x]);
         player->attack(*enemy);  // Dereference the pointer to pass as reference
         if (!enemy->isAlive()) {
@@ -107,7 +107,7 @@ bool Floor::playerAttack(Direction dir) {
 std::pair<bool, Entity*> Floor::playerUseItem(Direction dir) {
     Position curr = player->getPos();
     Position next = target(curr, dir);
-    if (grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
+    if (grid[next.y][next.x] && grid[next.y][next.x]->getEntityType() == EntityType::POTION) {
         Entity* potion = grid[next.y][next.x];
         grid[next.y][next.x] = nullptr;
         // Notify observers of the item usage
@@ -122,9 +122,9 @@ void Floor::enemyTurn() {
         return;
     }
     
-    for (size_t y = 0; y < grid[0].size(); ++y) {
-        for (size_t x = 0; x < grid.size(); ++x) {
-            Entity* entity = grid[x][y];
+    for (size_t x = 0; x < grid[0].size(); ++x) {
+        for (size_t y = 0; y < grid.size(); ++y) {
+            Entity* entity = grid[y][x];
             if (entity && entity->getEntityType() == EntityType::ENEMY) {
                 Enemy* enemy = dynamic_cast<Enemy*>(entity);
                 
@@ -146,11 +146,19 @@ void Floor::enemyTurn() {
 
                     for (auto &dir : directions) {
                         Position next = target(enemy->getPos(), dir);
-                        if (grid[next.y][next.x]->isSpace()) {
-                            enemy->move(dir);
-                            std::swap(grid[enemy->getPos().y][enemy->getPos().x], grid[next.y][next.x]);
-                            enemy->toggleMove();
-                            break;
+                        // 检查边界
+                        if (next.y >= 0 && next.y < grid.size() && 
+                            next.x >= 0 && next.x < grid[next.y].size()) {
+                            // 检查目标位置是否为空且是可走的地面
+                            if (grid[next.y][next.x] == nullptr && 
+                                terrain[next.y][next.x]->isFloor()) {
+                                // 移动敌人
+                                enemy->move(dir);
+                                grid[next.y][next.x] = enemy;
+                                grid[y][x] = nullptr;
+                                enemy->toggleMove(); // 标记已经行动过
+                                break;
+                            }
                         }
                     }
                 }
@@ -380,7 +388,7 @@ void Floor::readFromStream(std::istringstream &is) {
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
                     break;
-                case '/': 
+                case '\\': 
                     tiles.push_back(tilef.createTile(TileType::Stair, pos));
                     terrainRow.push_back(tiles.back().get());
                     gridRow.push_back(nullptr);
@@ -396,7 +404,7 @@ void Floor::readFromStream(std::istringstream &is) {
                     // Create player entity
                     tiles.push_back(tilef.createTile(TileType::Floor, pos));
                     terrainRow.push_back(tiles.back().get());
-                    gridRow.push_back(player);
+                    gridRow.push_back(nullptr);
                     playerpos = pos; // Set player position
                     break;
                 case 'H':
