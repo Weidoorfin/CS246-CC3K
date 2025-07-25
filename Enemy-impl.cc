@@ -33,7 +33,3 @@ void Enemy::toggleGlobalMovement() {
 bool Enemy::isGlobalMovementDisabled() {
     return globalMoveDisabled;
 }
-
-
-
-
