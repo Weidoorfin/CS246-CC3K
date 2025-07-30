@@ -7,3 +7,5 @@ export enum class GameState {Finish, Restart, Quit};
 export enum class EntityType {UNINITIALIZED, PLAYER, ENEMY, POTION, TREASURE, TILE};
 export enum class PotionType {BA, BD, PH, WA, WD, RH};
 export enum class TileType {Nothing, VerticalWall, HorizontalWall, Floor, Stair, Door, Corridor};
+
+export enum class FloorName {DEFAULT, DLC1, DLC2};

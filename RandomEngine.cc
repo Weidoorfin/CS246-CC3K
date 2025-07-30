@@ -34,5 +34,7 @@ public:
     // generate a random potion type based on the predefined probability distribution in config
     PotionType genPotionType();
     // generate a random treasure type based on the predefined probability distribution in config
-    TreasureType genTreasureType(); 
+    TreasureType genTreasureType();
+    // generate a floor name based on the predefined probability distribution in config
+    FloorName genFloorName();
 };

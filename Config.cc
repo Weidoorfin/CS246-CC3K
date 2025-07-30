@@ -53,3 +53,13 @@ namespace TreasureConfig {
     // Maximum number of treasures allowed per floor.
     export inline const int MaxTreasuresPerFloor = 10;
 }
+
+// Configuration values for floor generation
+namespace FloorConfig {
+    export inline const std::map<FloorName, int> floorFrequency = {
+        {FloorName::DEFAULT,    1},
+        {FloorName::DLC1,       2},
+        {FloorName::DLC2,       3}
+    };
+    export inline const int MaxFloors = 1;
+}

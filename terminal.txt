@@ -1,0 +1,229 @@
+Chamber-impl.cc: In member function ‘Position@position Chamber@chamber::getRandomTile()’:
+Chamber-impl.cc:29:1: warning: control reaches end of non-void function [-Wreturn-type]
+   29 | }
+      | ^
+Floor-impl.cc: In member function ‘void Floor@floor::setPlayer(std::unique_ptr<Player@player>)’:
+Floor-impl.cc:4657944:23: error: cannot convert ‘std::remove_reference<std::unique_ptr<Player@player>&>::type’ {aka ‘std::unique_ptr<Player@player>’} to ‘Player@player*’ in assignment
+Floor-impl.cc:4657945:13: error: ‘class Player@player’ has no member named ‘setPosition’
+Floor-impl.cc: In member function ‘const std::vector<std::vector<Tile@tile*> >& Floor@floor::getTerrain() const’:
+Floor-impl.cc:4657957:12: error: invalid initialization of reference of type ‘const std::vector<std::vector<Tile@tile*> >&’ from expression of type ‘const std::vector<std::vector<Entity@entity*> >’
+Floor-impl.cc: In member function ‘bool Floor@floor::playerMove(Direction@enums)’:
+Floor-impl.cc:4657964:66: error: ‘STAIR’ is not a member of ‘EntityType@enums’
+Floor-impl.cc:4657968:43: error: cannot convert ‘std::unique_ptr<Player@player>’ to ‘Player@player*’ in assignment
+Floor-impl.cc: In member function ‘bool Floor@floor::playerAttack(Direction@enums)’:
+Floor-impl.cc:4657985:23: error: cannot convert ‘__gnu_cxx::__alloc_traits<std::allocator<Entity@entity*>, Entity@entity*>::value_type’ {aka ‘Entity@entity*’} to ‘Character@character&’
+In module player, imported at Floor-impl.cc:4657919:
+Player.cc:22:36: note:   initializing argument 1 of ‘virtual void Player@player::attack(Character@character&)’
+   22 |     virtual void attack(Character &target) override;
+      |                         ~~~~~~~~~~~^~~~~~
+Floor-impl.cc:4657986:20: error: ‘class Enemy@enemy’ has no member named ‘isDead’
+Floor-impl.cc: In member function ‘bool Floor@floor::playerUseItem(Direction@enums)’:
+Floor-impl.cc:4658000:37: error: cannot convert ‘std::unique_ptr<Player@player>’ to ‘Player@player*’ in assignment
+Floor-impl.cc: In member function ‘void Floor@floor::enemyTurn()’:
+Floor-impl.cc:4658011:23: error: use of deleted function ‘std::unique_ptr<_Tp, _Dp>::unique_ptr(const std::unique_ptr<_Tp, _Dp>&) [with _Tp = Enemy@enemy; _Dp = std::default_delete<Enemy@enemy>]’
+In file included from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at Floor-impl.cc:776324:
+/usr/include/c++/14/bits/unique_ptr.h:516:7: note: declared here
+  516 |       unique_ptr(const unique_ptr&) = delete;
+      |       ^~~~~~~~~~
+Floor-impl.cc:4658011:23: note: use ‘-fdiagnostics-all-candidates’ to display considered candidates
+Floor-impl.cc:4658012:16: error: ‘bool Enemy@enemy::moveToggle’ is private within this context
+In module enemy, imported at Floor-impl.cc:4657912:
+Enemy.cc:8:8: note: declared private here
+    8 |   bool moveToggle = false;
+      |        ^~~~~~~~~~
+Floor-impl.cc:4658012:26: error: expression cannot be used as a function
+Floor-impl.cc:4658014:23: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<Entity@entity*>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+Floor-impl.cc:4658015:27: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<std::vector<Entity@entity*> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+Floor-impl.cc:4658020:28: error: ‘class Enemy@enemy’ has no member named ‘getMoveToggle’; did you mean ‘getmoveToggle’?
+Floor-impl.cc:4658025:32: error: ‘adjacent’ was not declared in this scope; did you mean ‘isAdjacent’?
+Floor-impl.cc:4658029:40: error: ‘bool Enemy@enemy::moveToggle’ is private within this context
+In module enemy, imported at Floor-impl.cc:4657912:
+Enemy.cc:8:8: note: declared private here
+    8 |   bool moveToggle = false;
+      |        ^~~~~~~~~~
+Floor-impl.cc:4658029:50: error: expression cannot be used as a function
+Floor-impl.cc: In member function ‘void Floor@floor::handleEnemyDeath(Enemy@enemy*)’:
+Floor-impl.cc:4658060:38: error: ‘Merchant’ does not name a type
+Floor-impl.cc:4658060:46: error: expected ‘>’ before ‘*’ token
+Floor-impl.cc:4658060:46: error: expected ‘(’ before ‘*’ token
+Floor-impl.cc:4658060:47: error: expected primary-expression before ‘>’ token
+Floor-impl.cc:4658060:56: error: expected ‘)’ before ‘{’ token
+Floor-impl.cc:4658069:9: error: ‘it’ was not declared in this scope; did you mean ‘int’?
+Floor-impl.cc: In member function ‘void Floor@floor::getEmptyMap(std::istream&)’:
+Floor-impl.cc:4658077:5: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+In file included from /usr/include/c++/14/iosfwd:41,
+                 from /usr/include/c++/14/ios:40,
+                 from /usr/include/c++/14/ostream:40,
+                 from /usr/include/c++/14/bits/unique_ptr.h:43:
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Floor-impl.cc:4658079:24: error: ‘line’ was not declared in this scope
+Floor-impl.cc:4658086:21: error: ‘terrainRow’ was not declared in this scope; did you mean ‘terrain’?
+Floor-impl.cc:4658087:21: error: ‘gridRow’ was not declared in this scope; did you mean ‘grid’?
+Floor-impl.cc:4658123:17: error: ‘class std::vector<std::vector<Entity@entity*> >’ has no member named ‘pushBack’; did you mean ‘push_back’?
+Floor-impl.cc:4658123:26: error: ‘terrainRow’ was not declared in this scope; did you mean ‘terrain’?
+Floor-impl.cc:4658124:24: error: ‘gridRow’ was not declared in this scope; did you mean ‘grid’?
+Floor-impl.cc:4658125:9: error: ‘tileTypes’ was not declared in this scope; did you mean ‘TileType’?
+Floor-impl.cc:4658125:29: error: ‘row’ was not declared in this scope
+Floor-impl.cc:4658130:29: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658146:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658160:30: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658169:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658184:29: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658224:27: error: qualified-id in declaration before ‘(’ token
+Floor-impl.cc:4658393:47: error: a function-definition is not allowed here before ‘{’ token
+Floor-impl.cc:4658416:41: error: a function-definition is not allowed here before ‘{’ token
+Floor-impl.cc:4658418:2: error: expected ‘}’ at end of input
+Floor-impl.cc:4658074:43: note: to match this ‘{’
+/usr/include/c++/14/bits/unique_ptr.h: In instantiation of ‘std::__detail::__unique_ptr_t<_Tp> std::make_unique(_Args&& ...) [with _Tp = Player@player; _Args = {Player@player&}; __detail::__unique_ptr_t<_Tp> = __detail::__unique_ptr_t<Player@player>]’:
+Floor-impl.cc:4657968:68:   required from here
+/usr/include/c++/14/bits/unique_ptr.h:1076:30: error: invalid new-expression of abstract class type ‘Player@player’
+ 1076 |     { return unique_ptr<_Tp>(new _Tp(std::forward<_Args>(__args)...)); }
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In module player, imported at Floor-impl.cc:4657919:
+Player.cc:9:14: note:   because the following virtual functions are pure within ‘Player@player’:
+    9 | export class Player : public Character {
+      |              ^~~~~~
+Player.cc:27:37: note:     ‘virtual std::unique_ptr<Player@player> Player@player::reset() const’
+   27 |     virtual std::unique_ptr<Player> reset() const = 0;
+      |                                     ^~~~~
+TextDisplay-impl.cc: In member function ‘void TextDisplay@textdisplay::showGameUI() const’:
+TextDisplay-impl.cc:1552660:32: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:1552661:32: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:1552662:30: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:1552663:31: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+TextDisplay-impl.cc:1552664:31: error: ‘const class Floor@floor’ has no member named ‘getPlayer’; did you mean ‘setPlayer’?
+Game-impl.cc: In function ‘void nextFloor()’:
+Game-impl.cc:1552572:9: error: ‘currFloor’ was not declared in this scope
+Game-impl.cc:1552573:9: error: ‘floors’ was not declared in this scope
+Game-impl.cc:1552573:48: error: ‘player’ was not declared in this scope
+Game-impl.cc:1552574:9: error: ‘td’ was not declared in this scope; did you mean ‘std’?
+Game-impl.cc: At global scope:
+Game-impl.cc:1552577:11: error: ‘Direction@enums Game@game::getDirection’ is not a static data member of ‘class Game@game’
+Game-impl.cc:1552577:30: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+In file included from /usr/include/c++/14/iosfwd:41,
+                 from /usr/include/c++/14/ios:40,
+                 from /usr/include/c++/14/ostream:40,
+                 from /usr/include/c++/14/bits/unique_ptr.h:43,
+                 from /usr/include/c++/14/memory:78,
+of module /usr/include/c++/14/memory, imported at Game-impl.cc:4:
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:1552588:6: error: ‘bool Game@game::isDirection’ is not a static data member of ‘class Game@game’
+Game-impl.cc:1552588:24: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc: In constructor ‘Game@game::Game(std::istream&)’:
+Game-impl.cc:1552601:9: error: ‘istream’ was not declared in this scope; did you mean ‘std::istream’?
+/usr/include/c++/14/iosfwd:140:41: note: ‘std::istream’ declared here
+  140 |   typedef basic_istream<char>           istream;
+      |                                         ^~~~~~~
+Game-impl.cc:1552602:9: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:1552604:19: error: ‘line’ was not declared in this scope
+Game-impl.cc:1552605:13: error: ‘iss’ was not declared in this scope; did you mean ‘is’?
+Game-impl.cc:1552607:50: error: ‘iss’ was not declared in this scope; did you mean ‘is’?
+Game-impl.cc: In member function ‘bool Game@game::init()’:
+Game-impl.cc:1552621:16: error: switch quantity not an integer
+Game-impl.cc:1552630:56: error: ‘Position’ was not declared in this scope
+Game-impl.cc:1552630:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:1552641:55: error: ‘Position’ was not declared in this scope
+Game-impl.cc:1552641:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:1552652:58: error: ‘Position’ was not declared in this scope
+Game-impl.cc:1552652:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:1552663:56: error: ‘Position’ was not declared in this scope
+Game-impl.cc:1552663:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:1552674:57: error: ‘Position’ was not declared in this scope
+Game-impl.cc:1552674:30: error: ‘createPlayer’ was not declared in this scope
+Game-impl.cc:1552689:43: error: expected primary-expression before ‘)’ token
+Game-impl.cc: In member function ‘GameState@enums Game@game::run()’:
+Game-impl.cc:1552702:24: error: no matching function for call to ‘Game@game::endGame(bool)’
+In module game, imported at Game-impl.cc:1:
+Game.cc:29:10: note: candidate: ‘void Game@game::endGame() const’
+   29 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:29:10: note:   candidate expects 0 arguments, 1 provided
+Game-impl.cc:1552707:9: error: ‘string’ was not declared in this scope; did you mean ‘std::string’?
+/usr/include/c++/14/bits/stringfwd.h:77:33: note: ‘std::string’ declared here
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+Game-impl.cc:1552709:9: error: ‘vector’ was not declared in this scope; did you mean ‘std::vector’?
+In file included from /usr/include/c++/14/vector:66,
+of module /usr/include/c++/14/vector, imported at Game.cc:4,
+of module game, imported at Game-impl.cc:1:
+/usr/include/c++/14/bits/stl_vector.h:428:11: note: ‘std::vector’ declared here
+  428 |     class vector : protected _Vector_base<_Tp, _Alloc>
+      |           ^~~~~~
+Game-impl.cc:1552709:16: error: expected primary-expression before ‘bool’
+Game-impl.cc:1552712:31: error: ‘cmd’ was not declared in this scope
+Game-impl.cc:1552713:13: error: ‘istringstream’ was not declared in this scope; did you mean ‘std::istringstream’?
+/usr/include/c++/14/iosfwd:152:41: note: ‘std::istringstream’ declared here
+  152 |   typedef basic_istringstream<char>     istringstream;
+      |                                         ^~~~~~~~~~~~~
+Game-impl.cc:1552714:19: error: expected ‘;’ before ‘command’
+Game-impl.cc:1552715:13: error: ‘iss’ was not declared in this scope
+Game-impl.cc:1552715:20: error: ‘command’ was not declared in this scope
+Game-impl.cc:1552717:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552726:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552730:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552744:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552747:22: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552762:17: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552768:17: error: ‘enemy’ was not declared in this scope
+Game-impl.cc:1552777:27: error: ‘validCommands’ was not declared in this scope
+Game-impl.cc:1552788:12: error: no matching function for call to ‘Game@game::endGame(bool)’
+In module game, imported at Game-impl.cc:1:
+Game.cc:29:10: note: candidate: ‘void Game@game::endGame() const’
+   29 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:29:10: note:   candidate expects 0 arguments, 1 provided
+Game-impl.cc: At global scope:
+Game-impl.cc:1552792:6: error: no declaration matches ‘void Game@game::endGame(bool) const’
+In module game, imported at Game-impl.cc:1:
+Game.cc:29:10: note: candidate is: ‘void Game@game::endGame() const’
+   29 |     void endGame() const; // end the game, return true if win, false if lose
+      |          ^~~~~~~
+Game.cc:15:14: note: ‘class Game@game’ defined here
+   15 | export class Game {
+      |              ^~~~
+main.cc: In function ‘int main(int, char**)’:
+main.cc:31:25: error: ‘Gamestate’ has not been declared
+   31 |         if (g->run() == Gamestate::Finish) {
+      |                         ^~~~~~~~~
+main.cc:37:32: error: ‘GameState’ has not been declared
+   37 |         } else if (g->run() == GameState::Restart) {
+      |                                ^~~~~~~~~
+main.cc:39:32: error: ‘GameState’ has not been declared
+   39 |         } else if (g->run() == GameState::Quit) {
+      |                                ^~~~~~~~~
+/usr/bin/ld: Potion-impl.o: warning: relocation against `_ZTVW6potion6Potion' in read-only section `.text'
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1b): undefined reference to `main'
+/usr/bin/ld: ConcreteDecorator-impl.o: in function `Player@player::~Player()':
+/u6/j2486che/cs246/work/s25project/Player.cc:15:(.text._ZNW6player6PlayerD2Ev[_ZNW6player6PlayerD5Ev]+0x26): undefined reference to `Character@character::~Character()'
+/usr/bin/ld: ConcreteEnemies-impl.o: in function `Enemy@enemy::~Enemy()':
+/u6/j2486che/cs246/work/s25project/ConcreteEnemies-impl.cc:11:(.text._ZNW5enemy5EnemyD2Ev[_ZNW5enemy5EnemyD5Ev]+0x26): undefined reference to `Character@character::~Character()'
+/usr/bin/ld: ConcretePlayer-impl.o:(.data.rel.ro._ZTVW14concreteplayer5Troll[_ZTVW14concreteplayer5Troll]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: ConcretePlayer-impl.o:(.data.rel.ro._ZTVW14concreteplayer6Goblin[_ZTVW14concreteplayer6Goblin]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: ConcretePlayer-impl.o:(.data.rel.ro._ZTVW14concreteplayer7Vampire[_ZTVW14concreteplayer7Vampire]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: ConcretePlayer-impl.o:(.data.rel.ro._ZTVW14concreteplayer4Drow[_ZTVW14concreteplayer4Drow]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: ConcretePlayer-impl.o:(.data.rel.ro._ZTVW14concreteplayer5Shade[_ZTVW14concreteplayer5Shade]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: ConcretePotion-impl.o: in function `Potion@potion::~Potion()':
+/u6/j2486che/cs246/work/s25project/Potion.cc:13:(.text._ZNW6potion6PotionD2Ev[_ZNW6potion6PotionD5Ev]+0x13): undefined reference to `vtable for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2WD[_ZTIW14concretepotion2WD]+0x10): undefined reference to `typeinfo for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2WA[_ZTIW14concretepotion2WA]+0x10): undefined reference to `typeinfo for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2BD[_ZTIW14concretepotion2BD]+0x10): undefined reference to `typeinfo for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2BA[_ZTIW14concretepotion2BA]+0x10): undefined reference to `typeinfo for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2PH[_ZTIW14concretepotion2PH]+0x10): undefined reference to `typeinfo for Potion@potion'
+/usr/bin/ld: ConcretePotion-impl.o:(.data.rel.ro._ZTIW14concretepotion2RH[_ZTIW14concretepotion2RH]+0x10): more undefined references to `typeinfo for Potion@potion' follow
+/usr/bin/ld: Player-impl.o:(.data.rel.ro._ZTVW6player6Player[_ZTVW6player6Player]+0x98): undefined reference to `Player@player::applyEffect(std::unique_ptr<Player@player, std::default_delete<Player@player> >)'
+/usr/bin/ld: Potion-impl.o: in function `Potion@potion::Potion(PotionType@enums, Position@position)':
+/u6/j2486che/cs246/work/s25project/Potion-impl.cc:10:(.text+0x37): undefined reference to `vtable for Potion@potion'
+/usr/bin/ld: warning: creating DT_TEXTREL in a PIE
+collect2: error: ld returned 1 exit status

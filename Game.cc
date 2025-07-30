@@ -16,10 +16,14 @@ import potion;
 const int MAXFLOOR = 5;
 
 export class Game {
+  public:
+    inline static bool DLC = false; // static variable to indicate if DLC is enabled
+  private:
     int currFloor = 0;
     std::vector<std::unique_ptr<Floor>> floors; // owns-a
     std::unique_ptr<Player> player;
     std::unique_ptr<TextDisplay> td;
+
 
     // private methods
 

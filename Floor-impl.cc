@@ -28,9 +28,17 @@ import tile;
 import tilefactory;
 
 
-Floor::Floor(){
+Floor::Floor(bool DLC) {
     // Initialize the grid with empty chambers
-    std::ifstream emptyMap{"emptyfloor.txt"};
+    std::string floor;
+    if (DLC) {
+        RandomEngine re;
+        FloorName floorName = re.genFloorName();
+        floor = detectDLC(floorName);
+    } else {
+        floor = "emptyfloor.txt";
+    }
+    std::ifstream emptyMap(floor);
     getEmptyMap(emptyMap);
     identifyChambers();
     GeneratePlayerpos();
@@ -82,7 +90,7 @@ std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Tile* nextTile = dynamic_cast<Tile*>(terrain[next.y][next.x]);
 
     // makes sure next tile and entity are both space
-    if (nextEntity && !(nextEntity->isSpace() && nextTile->isSpace()))
+    if ((nextEntity && !(nextEntity->isSpace()) || !(nextTile->isSpace())))
         return {false, nullptr};
 
     
@@ -623,13 +631,11 @@ bool Floor::isHoardGuarded(DragonHoard* hoard) const {
     
     Position hoardPos = hoard->getPos();
     
-    // 检查附近8个方向是否有活着的Dragon守护这个hoard
     for (int dx = -1; dx <= 1; ++dx) {
         for (int dy = -1; dy <= 1; ++dy) {
-            if (dx == 0 && dy == 0) continue; // 跳过宝藏自身位置
+            if (dx == 0 && dy == 0) continue;
             
             Position searchPos{hoardPos.x + dx, hoardPos.y + dy};
-            // 检查边界
             if (searchPos.x >= 0 && searchPos.y >= 0 && 
                 searchPos.y < grid.size() && searchPos.x < grid[searchPos.y].size()) {
                 
@@ -638,14 +644,14 @@ bool Floor::isHoardGuarded(DragonHoard* hoard) const {
                     auto* dragon = dynamic_cast<Dragon*>(entity);
                     if (dragon && dragon->isAlive() && dragon->isGuarding() && 
                         dragon->getHoard() == hoard) {
-                        return true; // 找到活着的守护龙
+                        return true;
                     }
                 }
             }
         }
     }
     
-    return false; // 没有找到守护龙
+    return false;
 }
 
 Position Floor::target(Position curr, Direction dir) {
@@ -676,7 +682,6 @@ bool Floor::isAdjacent(Position a, Position b) {
 }
 
 void Floor::bindDragonsToHoards() {
-    // 遍历所有 DragonHoard，为每个寻找附近的 Dragon
     for (auto& treasure : treasures) {
         if (treasure->getTreasureType() == TreasureType::DRAGON) {
             auto* dragonHoard = dynamic_cast<DragonHoard*>(treasure.get());
@@ -685,13 +690,11 @@ void Floor::bindDragonsToHoards() {
             Position hoardPos = dragonHoard->getPos();
             Dragon* nearbyDragon = nullptr;
             
-            // 搜索附近8个方向的 Dragon
             for (int dx = -1; dx <= 1; ++dx) {
                 for (int dy = -1; dy <= 1; ++dy) {
-                    if (dx == 0 && dy == 0) continue; // 跳过当前位置
+                    if (dx == 0 && dy == 0) continue;
                     
                     Position searchPos{hoardPos.x + dx, hoardPos.y + dy};
-                    // 检查边界
                     if (searchPos.x >= 0 && searchPos.y >= 0 && 
                         searchPos.y < grid.size() && searchPos.x < grid[searchPos.y].size()) {
                         
@@ -708,10 +711,24 @@ void Floor::bindDragonsToHoards() {
                 if (nearbyDragon) break;
             }
             
-            // 只设置 Dragon 的 hoard 指针，不设置 DragonHoard 的 guardian
+            
             if (nearbyDragon) {
                 nearbyDragon->setHoard(dragonHoard);
             }
         }
     }
 }
+
+std::string Floor::detectDLC(FloorName floorName) const {
+    switch (floorName) {
+        case FloorName::DEFAULT:
+            return "emptyfloor.txt";
+        case FloorName::DLC1:
+            return "emptyfloor_DLC1.txt";
+        case FloorName::DLC2:
+            return "emptyfloor_DLC2.txt";
+        default:
+            return "emptyfloor.txt"; // Default case
+    }
+}
+

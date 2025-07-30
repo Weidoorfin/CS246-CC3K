@@ -60,7 +60,7 @@ void Game::applyEffects(Entity* item) {
 
 Game::Game() {
     for (int i = 0; i < MAXFLOOR; ++i) {
-        floors.push_back(std::make_unique<Floor>());
+        floors.push_back(std::make_unique<Floor>(DLC));
     }
 }
 
@@ -141,7 +141,15 @@ bool Game::init() {
             cout << "Quitting the game." << endl;
             return false; // Exit the game
         } else {
-            cout << "Invalid choice. Please choose a valid race." << endl;
+            cout << "You have chosen Shade." << endl;
+            cout << "Stats:" << endl;
+            cout << "MaxHP: 125, Atk: 25, Def: 25" << endl;
+            cout << "Ability: Maginify the score by 1.5x at end of game." << endl;
+            cout << "Please confirm your choice by input y" << endl;
+            getline(cin, confirmChoice);
+            if (confirmChoice == "y") {
+                player = PlayerFactory::createPlayer(Race::SHADE, Position{0, 0});
+            }
         }
     }
     // Initialize the display grid or any other setup needed
