@@ -90,7 +90,7 @@ std::pair<bool, Entity*> Floor::playerMove(Direction dir) {
     Tile* nextTile = dynamic_cast<Tile*>(terrain[next.y][next.x]);
 
     // makes sure next tile and entity are both space
-    if (nextEntity && !(nextEntity->isSpace() && nextTile->isSpace()))
+    if ((nextEntity && !(nextEntity->isSpace()) || !(nextTile->isSpace())))
         return {false, nullptr};
 
     
