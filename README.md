@@ -1,6 +1,7 @@
 # CS246 - Chamber Crawler 3000 (CC3K)
 
 A rogue-like game with command line style
+## Version: 1.1.1
 
 ## Player Manual
 
@@ -28,7 +29,16 @@ After entering the game, you can input the following commands:
 - `u dir` The direction you want to use item at
 - `f` Toggle enemy movements
 - `e` End current round
-- `r` Restart game
-- `q` Quit game
+- `r` Restart game - back to Race selection
+- `q` Quit game - program terminates
 > Dir here refers to a direction, directions are one of `N, NW, W, SW, S, SE, E, NE`
-Any 
+
+Each player round is consist of a *movement*, an *attack* and an *use*.
+
+You can perform those actions once per round, and the round will finish once all three actions has been performed. You can end round early by entering `e`
+
+### Game end conditions
+Players need to move to **stair** to enter the next floor, and after finishing 5th floor, player is considered **win** the game. The score of the game is total gold collected throught the game
+
+At anytime hp is dropped below 0, player is considered **lose**
+
